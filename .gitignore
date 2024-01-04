@@ -6,10 +6,10 @@
 /bazel-out
 
 # Node
-/frontend/dist
-/frontend/node_modules
-/frontend/npm-debug.log
-/frontend/yarn-error.log
+/front-end/dist
+/front-end/node_modules
+/front-end/npm-debug.log
+/front-end/yarn-error.log
 
 # IDEs and editors
 .idea/
@@ -21,21 +21,21 @@
 *.sublime-workspace
 
 # Visual Studio Code
-/frontend/.vscode/*
-/frontend/!.vscode/settings.json
-/frontend/!.vscode/tasks.json
-/frontend/!.vscode/launch.json
-/frontend/!.vscode/extensions.json
-/frontend/.history/*
+/front-end/.vscode/*
+/front-end/!.vscode/settings.json
+/front-end/!.vscode/tasks.json
+/front-end/!.vscode/launch.json
+/front-end/!.vscode/extensions.json
+/front-end/.history/*
 
 # Miscellaneous
-/frontend/.angular/cache
-/frontend/.sass-cache/
-/frontend/connect.lock
-/frontend/coverage
-/frontend/libpeerconnection.log
-/frontend/testem.log
-/frontend/typings
+/front-end/.angular/cache
+/front-end/.sass-cache/
+/front-end/connect.lock
+/front-end/coverage
+/front-end/libpeerconnection.log
+/front-end/testem.log
+/front-end/typings
 
 # System files
 .DS_Store
