@@ -38,10 +38,33 @@ export class ProductoComponent {
 	protected agregarItemCarrito () : any {
 		this.msj.mensajeEsperarToast();
 		try {
-			this.apiProductos.agregarItemCarrito(this.idProducto);
-			this.msj.mensajeGenericoToast('Se agregó al carrito', 'success');
+			const busquedaProd = this.apiProductos.validarProductoCarrito(this.idProducto);
+
+			if (busquedaProd == null) {
+				this.apiProductos.agregarItemCarrito(this.idProducto);
+				this.msj.mensajeGenericoToast('Se agregó al carrito', 'success');
+				return;
+			}
+
+			const productosEnCarrito : any = this.apiProductos.productosEnCarrito(this.idProducto);
+
+			if ((Number(productosEnCarrito) + 1) > this.producto.stock) {
+				this.msj.mensajeGenerico('Actualmente cuentas con ' +productosEnCarrito+(productosEnCarrito == 1 ? ' producto' : ' productos')+' en tu carrito, e intentas agregar ' + 1 + ' más, lo cual no es posible', 'warning', this.producto.stock + ' productos en stock');
+				return;
+			}
+
+			this.msj.mensajeConfirmacionCustom('Al parecer ya se agregó este artículo a tu carrito. ¿Desea agregar 1 más?', 'question', 'Artículo en carrito').then(
+				respuestaMensaje => {
+					if ( respuestaMensaje.isConfirmed ) {
+						this.msj.mensajeGenericoToast('Se agregó al carrito', 'success');
+						this.apiProductos.agregarItemCarrito(this.idProducto);
+						return;
+					}
+				}
+			);
 		} catch (e) {
-			this.msj.mensajeGenericoToast('error', 'error');
+			console.log(e);
+			this.msj.mensajeGenerico('error', 'error');
 		}
 	}
 }

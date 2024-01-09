@@ -102,6 +102,7 @@ button {
 	-webkit-animation-fill-mode: both;
 	animation-fill-mode: both;
 	border: 0;
+	min-width: 350px !important;
 	box-shadow: 0 5px 30px 0 rgba(82, 63, 105, 0.2);
 }
 
@@ -1326,6 +1327,14 @@ button {
 
 .t-justify {
 	text-align: justify !important;
+}
+
+.w-30 {
+	width: 30% !important;
+}
+
+.w-70 {
+	width: 70% !important;
 }
 
 .w-100 {

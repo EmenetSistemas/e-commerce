@@ -9,11 +9,14 @@ import { ProductoComponent } from './components/producto/producto.component';
 import { DetalleProductoComponent } from './modules/detalle-producto/detalle-producto.component';
 import { ModalService } from "./services/modal/modal.service";
 import { BsModalService } from "ngx-bootstrap/modal";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forChild(HomeRoutes)
+    RouterModule.forChild(HomeRoutes),
+    FormsModule,
+    ReactiveFormsModule
   ],
   declarations: [
     ProductosComponent,
