@@ -71,7 +71,7 @@ export class ProductosService {
 		const itemExistente = carritoCompras.items.find((item : any) => item.idItem === idItem);
 	
 		if (itemExistente) {
-			itemExistente.cantidad += cantidad;
+			itemExistente.cantidad = Number(itemExistente.cantidad) + Number(cantidad);
 		} else {
 			const nuevoItem = {
 				idItem: idItem,
@@ -81,5 +81,9 @@ export class ProductosService {
 		}
 	
 		return carritoCompras;
+	}
+
+	public productosEnCarrito (idProducto : number) : Observable<any> {
+		return carritoCompras.items.find((item : any) => item.idItem === idProducto)?.cantidad ?? 0;
 	}
 }

@@ -39,9 +39,17 @@ export class ProductoComponent {
 		this.msj.mensajeEsperarToast();
 		try {
 			const busquedaProd = this.apiProductos.validarProductoCarrito(this.idProducto);
+
 			if (busquedaProd == null) {
 				this.apiProductos.agregarItemCarrito(this.idProducto);
 				this.msj.mensajeGenericoToast('Se agregó al carrito', 'success');
+				return;
+			}
+
+			const productosEnCarrito : any = this.apiProductos.productosEnCarrito(this.idProducto);
+
+			if ((Number(productosEnCarrito) + 1) > this.producto.stock) {
+				this.msj.mensajeGenerico('Actualmente cuentas con ' +productosEnCarrito+(productosEnCarrito == 1 ? ' producto' : ' productos')+' en tu carrito, e intentas agregar ' + 1 + ' más, lo cual no es posible', 'warning', this.producto.stock + ' productos en stock');
 				return;
 			}
 

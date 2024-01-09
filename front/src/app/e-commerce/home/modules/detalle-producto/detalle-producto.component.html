@@ -160,22 +160,31 @@
                         <div class="col-lg-3 col-md-12 col-12">
                             <div class="card">
                                 <div class="card-body" style="padding-top: 25px;">
-                                    <h5><b>Stock dispopnible</b></h5>
-                                    <p style="color:gray">Almacenado y enviado por <b>Emenet</b></p>
-                                    <br>
-                                    <div class="input-group mb-3">
-                                        <span class="input-group-text" id="basic-addon1"><b>Cantidad</b></span>
-                                        <input type="number" class="form-control" placeholder="Cantidad"
-                                               aria-label="Cantidad" aria-describedby="basic-addon1"
-                                               [(ngModel)]="cantidad" name="cantidadInput">
-                                    </div>
-                                    <p style="color:gray; margin-top: -15px;" class="t-center">({{producto.stock}})
-                                        disponibles</p>
-                                    <br>
-                                    <button class="btn btn-primary form-control">Comprar</button>
-                                    <button class="btn btn-info form-control" style="margin-top: 5px;" (click)="agregarItemCarrito()">
-                                        <b><i class="bi bi-cart-plus"></i></b>
-                                    </button>
+                                    <form autocomplete="off" [formGroup]="formVentaProducto">
+                                        <h5><b>Stock dispopnible</b></h5>
+                                        <p style="color:gray">Almacenado y enviado por <b>Emenet</b></p>
+                                        <br>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1"><b>Total</b></span>
+                                            <input type="text" readonly class="form-control t-center" placeholder="Total"
+                                                   aria-label="Cantidad" aria-describedby="basic-addon1" value="{{'$'+((this.ultimaCantidad * (producto.precio - (producto.precio * producto.descuento))) | number:'1.2-2')}}">
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1"><b>Cantidad</b></span>
+                                            <input #cantidadInput type="number" class="form-control t-center" placeholder="Cantidad"
+                                                   aria-label="Cantidad" aria-describedby="basic-addon1"
+                                                   formControlName="cantidad"
+                                                   (keypress)="soloNumeros($event)"
+                                                   (input)="validarStock()">
+                                        </div>
+                                        <p style="color:gray; margin-top: -15px;" class="t-center">({{producto.stock}})
+                                            disponibles</p>
+                                        <br>
+                                        <button class="btn btn-primary form-control">Comprar</button>
+                                        <button class="btn btn-info form-control" style="margin-top: 5px;" (click)="agregarItemCarrito()">
+                                            <b><i class="bi bi-cart-plus"></i></b>
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>

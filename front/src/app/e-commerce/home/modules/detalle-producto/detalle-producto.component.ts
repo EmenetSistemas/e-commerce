@@ -1,48 +1,73 @@
-import { Component, Input, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { ModalService } from '../../services/modal/modal.service';
 import { ProductosService } from '../../services/productos/productos.service';
 import { MensajesService } from 'src/app/services/mensajes/mensajes.service';
+import FGenerico from 'src/app/shared/util/funciones-genericas';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
 	selector: 'app-detalle-producto',
 	templateUrl: './detalle-producto.component.html',
 	styleUrls: ['./detalle-producto.component.css']
 })
-export class DetalleProductoComponent implements OnInit {
-	@Input() idProducto : any = {};
+export class DetalleProductoComponent extends FGenerico implements OnInit {
+	@Input() idProducto: any = {};
+	@ViewChild('cantidadInput') cantidadInput!: ElementRef;
 
-	protected producto : any = {};
-	protected cantidad: number = 1;
+	protected formVentaProducto!: FormGroup;
 
-	constructor (
+	protected producto: any = {};
+	protected ultimaCantidad: any = 1;
+
+	constructor(
 		private modalService: ModalService,
 		private apiProductos: ProductosService,
-		private msj : MensajesService
-	) { }
+		private msj: MensajesService,
+		private fb: FormBuilder,
+		private renderer: Renderer2
+	) {
+		super();
+	}
 
 	ngOnInit(): void {
+		this.crearFormVentaProducto();
 		this.obtenerDetalleProductoPorId(this.idProducto);
 	}
 
-	private obtenerDetalleProductoPorId ( idProducto : number ) : any {
+	private crearFormVentaProducto(): void {
+		this.formVentaProducto = this.fb.group({
+			cantidad: ['1', [Validators.required, Validators.pattern('[0-9]*')]]
+		});
+	}
+
+	private obtenerDetalleProductoPorId(idProducto: number): any {
 		this.producto = this.apiProductos.obtenerDetalleProductoPorId(idProducto);
 	}
 
-	protected agregarItemCarrito () : any {
+	protected agregarItemCarrito(): any {
 		this.msj.mensajeEsperarToast();
 		try {
+			const cantidad = this.formVentaProducto.get('cantidad')?.value;
 			const busquedaProd = this.apiProductos.validarProductoCarrito(this.idProducto);
+
 			if (busquedaProd == null) {
-				this.apiProductos.agregarItemCarrito(this.idProducto, this.cantidad);
+				this.apiProductos.agregarItemCarrito(this.idProducto, cantidad);
 				this.msj.mensajeGenericoToast('Se agregó al carrito', 'success');
 				return;
 			}
 
-			this.msj.mensajeConfirmacionCustom('Al parecer ya se agregó este artículo a tu carrito. ¿Desea agregar '+this.cantidad+' más?', 'question', 'Artículo en carrito').then(
+			const productosEnCarrito : any = this.apiProductos.productosEnCarrito(this.idProducto);
+
+			if ((Number(productosEnCarrito) + Number(cantidad)) > this.producto.stock) {
+				this.msj.mensajeGenerico('Actualmente cuentas con ' +productosEnCarrito+(productosEnCarrito == 1 ? ' producto' : ' productos')+' en tu carrito, e intentas agregar ' + cantidad + ' más, lo cual no es posible', 'warning', this.producto.stock + ' productos en stock');
+				return;
+			}
+
+			this.msj.mensajeConfirmacionCustom('Al parecer ya se agregó este artículo a tu carrito. ¿Desea agregar ' + cantidad + ' más?', 'question', 'Artículo en carrito').then(
 				respuestaMensaje => {
-					if ( respuestaMensaje.isConfirmed ) {
+					if (respuestaMensaje.isConfirmed) {
 						this.msj.mensajeGenericoToast('Se agregó al carrito', 'success');
-						this.apiProductos.agregarItemCarrito(this.idProducto, this.cantidad);
+						this.apiProductos.agregarItemCarrito(this.idProducto, cantidad);
 						return;
 					}
 				}
@@ -51,6 +76,28 @@ export class DetalleProductoComponent implements OnInit {
 			console.log(e);
 			this.msj.mensajeGenerico('error', 'error');
 		}
+	}
+
+	protected validarStock(): any {
+		const cantidad = this.formVentaProducto.get('cantidad')?.value;
+
+		if (cantidad <= 0) {
+			this.formVentaProducto.get('cantidad')?.setValue('1');
+			this.ultimaCantidad = 1;
+			this.msj.mensajeGenericoToast('Se debe colocar una cantidad entre 1 y el stock disponible', 'warning');
+			this.seleccionarTexto();
+		} else if (cantidad > this.producto.stock) {
+			this.formVentaProducto.get('cantidad')?.setValue(this.ultimaCantidad ?? 1);
+			this.msj.mensajeGenericoToast('Cantidad de productos fuera de stock', 'error');
+			this.seleccionarTexto();
+		} else {
+			this.ultimaCantidad = cantidad;
+		}
+	}
+
+	private seleccionarTexto() {
+		const inputEl = this.cantidadInput.nativeElement;
+		this.renderer.selectRootElement(inputEl).select();
 	}
 
 	public cerrarModal() {
