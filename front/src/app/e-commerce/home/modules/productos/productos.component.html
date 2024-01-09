@@ -105,7 +105,7 @@
 
     <ng-container *ngIf="this.productosMostrar.length > 0; else destacados">
         <section *ngFor="let producto of this.productosMostrar">
-            <app-producto [producto]="producto"></app-producto>
+            <app-producto [idProducto]="producto.id"></app-producto>
         </section>
     </ng-container>
     <ng-template #destacados>

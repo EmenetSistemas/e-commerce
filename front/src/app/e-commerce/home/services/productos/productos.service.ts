@@ -31,12 +31,14 @@ export class ProductosService {
 		let productosDestacados : any = [];
 		productos.forEach((producto : any) => {
 			if (producto.calificaciones > mediaCalificaciones) {
-				console.log(producto.calificaciones);
-				console.log(mediaCalificaciones);
 				productosDestacados = [...productosDestacados, producto];
 			}
 		});
 
 		return productosDestacados;
+	}
+
+	public obtenerDetalleProductoPorId ( idProducto : number ) : Observable<any> {
+		return productos.find((producto : any) => producto.id == idProducto);
 	}
 }

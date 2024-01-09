@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalService } from '../../services/modal/modal.service';
+import { ProductosService } from '../../services/productos/productos.service';
 
 @Component({
 	selector: 'app-detalle-producto',
@@ -7,14 +8,21 @@ import { ModalService } from '../../services/modal/modal.service';
 	styleUrls: ['./detalle-producto.component.css']
 })
 export class DetalleProductoComponent implements OnInit {
-	@Input() producto : any = {};
+	@Input() idProducto : any = {};
+
+	protected producto : any = {};
 
 	constructor (
-		private modalService: ModalService
+		private modalService: ModalService,
+		private apiProductos: ProductosService
 	) { }
 
 	ngOnInit(): void {
-		console.log(this.producto);
+		this.obtenerDetalleProductoPorId(this.idProducto);
+	}
+
+	private obtenerDetalleProductoPorId ( idProducto : number ) : any {
+		this.producto = this.apiProductos.obtenerDetalleProductoPorId(idProducto);
 	}
 
 	public cerrarModal() {
