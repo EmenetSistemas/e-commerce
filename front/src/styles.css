@@ -1336,21 +1336,9 @@ button {
 	max-height: 100px;
 }
 
-.btns-product-conj {
-	margin-top: 10px;
-}
-
 @media (max-width: 575px) {
 	.content-porduct {
 		text-align: center !important;
-	}
-
-	.btns-product .btn {
-		width: 100% !important;
-	}
-
-	.btns-product-conj {
-		margin-top: -10px;
 	}
 }
 
@@ -1363,17 +1351,8 @@ button {
 	margin-top: -15px !important;
 }
 
-.btns-product {
-	margin-bottom: -15px !important;
-	margin-top: -15px !important;
-}
-
 .float-left {
 	float: left !important;
-}
-
-.btns-product-conj {
-	margin-left: 1px !important;
 }
 
 a {

@@ -35,10 +35,10 @@ export class ProductoComponent {
 		this.modalService.abrirModalConComponente(DetalleProductoComponent, dataModal);
 	}
 
-	protected agregarItemCarrito ( idProducto : number ) : any {
+	protected agregarItemCarrito () : any {
 		this.msj.mensajeEsperarToast();
 		try {
-			this.apiProductos.agregarItemCarrito(idProducto);
+			this.apiProductos.agregarItemCarrito(this.idProducto);
 			this.msj.mensajeGenericoToast('Se agregó al carrito', 'success');
 		} catch (e) {
 			this.msj.mensajeGenericoToast('error', 'error');
