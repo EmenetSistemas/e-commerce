@@ -1,10 +1,10 @@
 <div class="col-12 apartado-producto">
-    <div class="card" (click)="abrirModalDetalleProducto();">
+    <div class="card">
         <div class="row">
-            <div class="col-md-3 col-sm-5 col-12 t-center d-flex justify-content-center align-items-center">
+            <div class="col-md-3 col-sm-5 col-12 t-center d-flex justify-content-center align-items-center" (click)="abrirModalDetalleProducto();">
                 <img src="{{producto.imagen}}" class="img-fluid rounded-start producto" alt="...">
             </div>
-            <div class="col-md-7 col-sm-4 col-12">
+            <div class="col-md-7 col-sm-4 col-12" (click)="abrirModalDetalleProducto();">
                 <h5 class="content-porduct card-title" style="margin-top: -15px;">{{producto.nombre}}</h5>
 
                 <div class="ui-search-item__group__element ui-search-price__part-without-link content-porduct card-text t-justify">
@@ -43,7 +43,7 @@
                     </button>
                 </div>
                 <div class="col-sm-12 col-6 t-right btns-product">
-                    <button class="btn btn-warning">
+                    <button class="btn btn-warning" (click)="agregarItemCarrito(producto.id)">
                         <b style="color: white;">
                             <i class="bi bi-cart-plus"></i>
                         </b>

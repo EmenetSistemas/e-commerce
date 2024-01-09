@@ -13,8 +13,6 @@ export class CarritoComprasComponent implements OnInit {
 	constructor(private apiProductos: ProductosService) {}
 
 	ngOnInit(): void {
-		this.obtenerItemsCarritoCompras();
-
 		setInterval(() => {
 			this.obtenerNoItemsCarritoCompras();
 		}, 1000);
@@ -24,7 +22,7 @@ export class CarritoComprasComponent implements OnInit {
 		this.noItemsCarrito = this.apiProductos.obtenerNoItemsCarritoCompras();
 	}
 
-	private obtenerItemsCarritoCompras(items: any = 0): any {
+	protected obtenerItemsCarritoCompras(): any {
 		this.itemsCarrito = this.apiProductos.obtenerItemsCarritoCompras();
 	}
 }

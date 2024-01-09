@@ -32,4 +32,8 @@ export class ProductoComponent {
 		};
 		this.modalService.abrirModalConComponente(DetalleProductoComponent, dataModal);
 	}
+
+	protected agregarItemCarrito ( idProducto : number ) : any {
+		this.apiProductos.agregarItemCarrito(idProducto);
+	}
 }

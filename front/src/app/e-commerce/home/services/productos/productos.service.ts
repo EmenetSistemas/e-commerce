@@ -43,10 +43,15 @@ export class ProductosService {
 	}
 
 	public obtenerNoItemsCarritoCompras () : Observable<any> {
-		return carritoCompras.length;
+		return carritoCompras.items.length;
 	}
 
 	public obtenerItemsCarritoCompras () : Observable<any> {
-		return productos.filter((producto : any) => carritoCompras.includes(producto.id));
+		return productos.filter((producto : any) => carritoCompras.items.includes(producto.id));
+	}
+
+	public agregarItemCarrito ( idItem : number) : Observable<any> {
+		carritoCompras.items = [...carritoCompras.items, idItem];
+		return carritoCompras;
 	}
 }
