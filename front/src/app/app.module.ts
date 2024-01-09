@@ -9,6 +9,7 @@ import { NavbarComponent } from './e-commerce/home/components/navbar/navbar.comp
 import { WelcomeComponent } from './e-commerce/home/components/welcome/welcome.component';
 import { HomeModule } from './e-commerce/home/home.module';
 import { FooterComponent } from './e-commerce/home/components/footer/footer.component';
+import { CarritoComprasComponent } from './e-commerce/home/components/carrito-compras/carrito-compras.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { FooterComponent } from './e-commerce/home/components/footer/footer.comp
     HomeComponent,
     NavbarComponent,
     WelcomeComponent,
-    FooterComponent
+    FooterComponent,
+    CarritoComprasComponent
   ],
   imports: [
     BrowserModule,

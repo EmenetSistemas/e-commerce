@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { categorias, productos } from '../../../../../environments/environment';
+import { carritoCompras, categorias, productos } from '../../../../../environments/environment';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -40,5 +40,13 @@ export class ProductosService {
 
 	public obtenerDetalleProductoPorId ( idProducto : number ) : Observable<any> {
 		return productos.find((producto : any) => producto.id == idProducto);
+	}
+
+	public obtenerNoItemsCarritoCompras () : Observable<any> {
+		return carritoCompras.length;
+	}
+
+	public obtenerItemsCarritoCompras () : Observable<any> {
+		return productos.filter((producto : any) => carritoCompras.includes(producto.id));
 	}
 }
