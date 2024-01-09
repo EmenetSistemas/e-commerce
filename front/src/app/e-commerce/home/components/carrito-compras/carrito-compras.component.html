@@ -15,10 +15,13 @@
             <ng-container *ngIf="i < 3">
                 <li class="message-item">
                     <a href="javascript:void(0)">
-                        <img src="{{producto.imagen}}" alt="" class="rounded-circle">
-                        <div>
+                        <div class="w-30 t-center t-center d-flex justify-content-center align-items-center">
+                            <img src="{{producto.imagen}}" class="img-fluid rounded-start">
+                        </div>
+                        <div class="w-70">
                             <h4>{{producto.nombre}}</h4>
-                            <p>{{producto.descripcion}}</p>
+                            <p>$ {{producto.precio | number:'1.2-2'}}</p>
+                            <p>Cantidad: {{producto.cantidad}}</p>
                         </div>
                     </a>
                 </li>

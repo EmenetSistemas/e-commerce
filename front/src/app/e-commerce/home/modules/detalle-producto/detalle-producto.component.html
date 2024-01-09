@@ -92,7 +92,7 @@
                                                 <span class="andes-money-amount__currency-symbol"
                                                     aria-hidden="true">$</span>
                                                 <span class="andes-money-amount__fraction"
-                                                    aria-hidden="true">{{producto.precio}}</span>
+                                                    aria-hidden="true">{{producto.precio | number:'1.2-2'}}</span>
                                             </s>
                                             <span class="ui-search-price__second-line__label"
                                                 *ngIf="producto.descuento  != 0">
@@ -108,15 +108,8 @@
                                                     aria-roledescription="Precio">
                                                     <span class="andes-money-amount__currency-symbol"
                                                         aria-hidden="true">$</span>
-                                                    <span class="andes-money-amount__integer" aria-hidden="true">{{
-                                                        (producto.precio -
-                                                        (producto.precio *
-                                                        producto.descuento)).toLocaleString('es-ES', {
-                                                        minimumFractionDigits: 0 }).split(',')[0] }}</span>
-                                                    <span class="andes-money-amount__decimal" aria-hidden="true">.{{
-                                                        (producto.precio -
-                                                        (producto.precio *
-                                                        producto.descuento)).toFixed(2).split('.')[1] }}</span>
+                                                    <span class="andes-money-amount__integer" aria-hidden="true">{{(producto.precio - (producto.precio * producto.descuento)) | number:'1.0-0'}}</span>
+                                                    <span class="andes-money-amount__decimal" aria-hidden="true">.{{(producto.precio - (producto.precio * producto.descuento)).toFixed(2).split('.')[1]}}</span>
                                                 </span>
                                             </div>
                                         </div>
@@ -173,13 +166,14 @@
                                     <div class="input-group mb-3">
                                         <span class="input-group-text" id="basic-addon1"><b>Cantidad</b></span>
                                         <input type="number" class="form-control" placeholder="Cantidad"
-                                            aria-label="Cantidad" aria-describedby="basic-addon1" value="1">
+                                               aria-label="Cantidad" aria-describedby="basic-addon1"
+                                               [(ngModel)]="cantidad" name="cantidadInput">
                                     </div>
                                     <p style="color:gray; margin-top: -15px;" class="t-center">({{producto.stock}})
                                         disponibles</p>
                                     <br>
                                     <button class="btn btn-primary form-control">Comprar</button>
-                                    <button class="btn btn-info form-control" style="margin-top: 5px;">
+                                    <button class="btn btn-info form-control" style="margin-top: 5px;" (click)="agregarItemCarrito()">
                                         <b><i class="bi bi-cart-plus"></i></b>
                                     </button>
                                 </div>

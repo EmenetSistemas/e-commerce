@@ -49,7 +49,7 @@ export class MensajesService {
 	mensajeGenericoToast(mensaje: string, tipo: string, tiempo: number = 3000) {
 		let Toast: any = Swal.mixin({
 			toast: true,
-			position: 'top-end',
+			position: 'bottom-end',
 			showConfirmButton: false,
 			timer: tiempo,
 			timerProgressBar: true,
@@ -92,7 +92,7 @@ export class MensajesService {
 
 		Swal.fire({
 			toast: true,
-			position: 'top-end',
+			position: 'bottom-end',
 			showConfirmButton: false,
 			text: 'Espere un momento...',
 			icon: 'info',
