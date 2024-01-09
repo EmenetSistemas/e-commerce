@@ -5,5 +5,8 @@ export const AppRoutes : Routes = [
     {
         path : '',
         component : HomeComponent
+    }, {
+        path : '**',
+        component : HomeComponent
     }
 ];
