@@ -1,0 +1,24 @@
+.btn-inicio {
+    width: 100%;
+    padding: 10px;
+    background: #232F3E;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+    margin-top: 20px;
+}
+
+.btn-inicio:hover {
+    background: #567192;
+}
+
+.info-footer {
+    text-align: center;
+    background: #131A22;
+    color: white;
+}
+
+.footer {
+    flex-shrink: 0;
+    width: 100%;
+}

@@ -1,0 +1,197 @@
+<div class="modal-body">
+    <div class="pagetitle">
+        <h1>{{producto.nombre}}</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">{{producto.categoria}}</li>
+                <li class="breadcrumb-item active">{{producto.apartado}}</li>
+            </ol>
+        </nav>
+    </div>
+    <section class="section profile formsWTitle">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body card-detalle-producto">
+                        <!--Producto y descripción-->
+                        <div class="col-lg-3 col-md-5 col-12">
+                            <div class="card">
+                                <img src="{{producto.imagen}}" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <br><br>
+                                    <div class="card">
+                                        <div class="card-body" style="margin-bottom: -20px !important;">
+                                            <div class="accordion accordion-flush" id="totalBloqueCerrar">
+                                                <div class="accordion-item">
+                                                    <h2 id="flush-headingOne" class="accordion-header">
+                                                        <button #accordionButton type="button" data-bs-toggle="collapse"
+                                                            data-bs-target="#descripcion-producto" aria-expanded="false"
+                                                            aria-controls="flush-collapseOne" class="accordion-button">
+                                                            <h5 class="card-title title-categorias-ipad">Descripción
+                                                            </h5>
+                                                        </button>
+                                                    </h2>
+                                                    <div id="descripcion-producto"
+                                                        class="accordion-collapse collapse show"
+                                                        aria-labelledby="flush-headingOne"
+                                                        data-bs-parent="#accordionFlushExample">
+                                                        <div class="accordion-body">
+                                                            {{producto.descripcion}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--Extras-->
+                        <div class="col-lg-6 col-md-7 col-12">
+                            <div class="card">
+                                <div class="card-body" style="padding-top: 25px; font-size: 15px;">
+                                    <!--header-->
+                                    <div>
+                                        <h5><b>Sobre el producto</b></h5>
+                                        <br>
+                                        <section style="margin-top: -20px;">
+                                            <div style="float: left;"><b>{{producto.calificacion}}.0&nbsp;</b></div>
+                                            <div style="float: left; margin-top: -4px;" class="rating">
+                                                <input type="radio" id="star5" name="rating" value="5"
+                                                    [checked]="(producto.calificacion == 5)" disabled><label for="star5"
+                                                    disabled></label>
+                                                <input type="radio" id="star4" name="rating" value="4"
+                                                    [checked]="(producto.calificacion == 4)" disabled><label for="star4"
+                                                    disabled></label>
+                                                <input type="radio" id="star4" name="rating" value="3"
+                                                    [checked]="(producto.calificacion == 3)" disabled><label for="star4"
+                                                    disabled></label>
+                                                <input type="radio" id="star3" name="rating" value="2"
+                                                    [checked]="(producto.calificacion == 2)" disabled><label for="star3"
+                                                    disabled></label>
+                                                <input type="radio" id="star3" name="rating" value="1"
+                                                    [checked]="(producto.calificacion == 1)" disabled><label for="star3"
+                                                    disabled></label>
+                                            </div>
+                                            <div style="float: left;"><b>&nbsp;|</b>&nbsp;{{producto.calificaciones}} calificaciones
+                                            </div>
+                                        </section>
+                                    </div>
+
+                                    <br>
+                                    <hr>
+
+                                    <!--body precio-->
+                                    <div
+                                        class="ui-search-item__group__element ui-search-price__part-without-link content-porduct card-text t-justify">
+                                        <div class="ui-search-price ui-search-price--size-medium">
+                                            <s class="andes-money-amount ui-search-price__part ui-search-price__part--small ui-search-price__original-value andes-money-amount--previous andes-money-amount--cents-superscript andes-money-amount--compact"
+                                                style="font-size:16px" role="img" aria-label="Antes: 138 pesos"
+                                                aria-roledescription="Precio">
+                                                <span class="andes-money-amount__currency-symbol"
+                                                    aria-hidden="true">$</span>
+                                                <span class="andes-money-amount__fraction"
+                                                    aria-hidden="true">{{producto.precio}}</span>
+                                            </s>
+                                            <span class="ui-search-price__second-line__label"
+                                                *ngIf="producto.descuento  != 0">
+                                                &nbsp;<span
+                                                    class="ui-search-price__discount">{{producto.descuento*100}}%
+                                                    OFF</span>
+                                            </span>
+                                            <div class="ui-search-price__second-line">
+                                                <span
+                                                    class="andes-money-amount ui-search-price__part ui-search-price__part--medium andes-money-amount--cents-superscript"
+                                                    style="font-size:24px" role="img"
+                                                    aria-label="124 pesos con 20 centavos"
+                                                    aria-roledescription="Precio">
+                                                    <span class="andes-money-amount__currency-symbol"
+                                                        aria-hidden="true">$</span>
+                                                    <span class="andes-money-amount__integer" aria-hidden="true">{{
+                                                        (producto.precio -
+                                                        (producto.precio *
+                                                        producto.descuento)).toLocaleString('es-ES', {
+                                                        minimumFractionDigits: 0 }).split(',')[0] }}</span>
+                                                    <span class="andes-money-amount__decimal" aria-hidden="true">.{{
+                                                        (producto.precio -
+                                                        (producto.precio *
+                                                        producto.descuento)).toFixed(2).split('.')[1] }}</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr>
+
+                                    <!--body características-->
+                                    <div class="card"
+                                        style="margin-top: 0px !important; margin-bottom: -5px !important;">
+                                        <div class="card-body" style="margin-bottom: -20px !important;">
+                                            <div class="accordion accordion-flush" id="totalBloqueCerrar">
+                                                <div class="accordion-item">
+                                                    <h2 id="flush-headingOne" class="accordion-header">
+                                                        <button #accordionButton type="button" data-bs-toggle="collapse"
+                                                            data-bs-target="#caracteristicas-producto"
+                                                            aria-expanded="false" aria-controls="flush-collapseOne"
+                                                            class="accordion-button">
+                                                            <h5 class="card-title title-categorias-ipad">
+                                                                Características
+                                                            </h5>
+                                                        </button>
+                                                    </h2>
+                                                    <div id="caracteristicas-producto"
+                                                        class="accordion-collapse collapse show"
+                                                        aria-labelledby="flush-headingOne"
+                                                        data-bs-parent="#accordionFlushExample">
+                                                        <div class="accordion-body">
+                                                            <table class="table table-striped">
+                                                                <tbody>
+                                                                    <tr *ngFor="let caracteristica of producto.caracteristicas">
+                                                                        <th scope="row">{{caracteristica.titulo}}</th>
+                                                                        <td>{{caracteristica.descripcion}}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--Stock y opciones-->
+                        <div class="col-lg-3 col-md-12 col-12">
+                            <div class="card">
+                                <div class="card-body" style="padding-top: 25px;">
+                                    <h5><b>Stock dispopnible</b></h5>
+                                    <p style="color:gray">Almacenado y enviado por <b>Emenet</b></p>
+                                    <br>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1"><b>Cantidad</b></span>
+                                        <input type="number" class="form-control" placeholder="Cantidad"
+                                            aria-label="Cantidad" aria-describedby="basic-addon1" value="1">
+                                    </div>
+                                    <p style="color:gray; margin-top: -15px;" class="t-center">({{producto.stock}})
+                                        disponibles</p>
+                                    <br>
+                                    <button class="btn btn-primary form-control">Comprar</button>
+                                    <button class="btn btn-info form-control" style="margin-top: 5px;">
+                                        <b><i class="bi bi-cart-plus"></i></b>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="cerrarModal()"><b>Cerrar</b></button>
+</div>

@@ -1,0 +1,29 @@
+.card {
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+}
+
+.rating {
+    display: inline-block;
+    unicode-bidi: bidi-override;
+    direction: rtl;
+}
+
+.rating input {
+    display: none;
+}
+
+.rating label {
+    float: right;
+    color: #aaa;
+    font-size: 20px;
+}
+
+.rating label:before {
+    content: '★';
+}
+
+.rating input:checked~label,
+.rating input:checked {
+    color: #ffcc00;
+}
