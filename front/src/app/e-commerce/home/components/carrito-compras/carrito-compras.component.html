@@ -1,0 +1,41 @@
+<a class="nav-link nav-icon" href="javascript:void(0)" data-bs-toggle="dropdown" style="color: white;" (click)="obtenerItemsCarritoCompras()">
+    <i class="bi bi-cart"></i>
+    <span class="badge bg-info badge-number t-bold">{{this.noItemsCarrito}}</span>
+</a>
+
+<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+    <li class="dropdown-header">
+        Tienes {{this.noItemsCarrito}} {{this.noItemsCarrito == 1 ? 'artículo' : 'artículos' }} en tu carrito
+        <a href="#" *ngIf="noItemsCarrito > 3"><span class="badge rounded-pill bg-primary p-2 ms-2">Ver todo</span></a>
+    </li>
+    <section *ngIf="this.noItemsCarrito > 0">
+        <li><hr class="dropdown-divider"></li>
+
+        <section *ngFor="let producto of itemsCarrito; let i = index">
+            <ng-container *ngIf="i < 3">
+                <li class="message-item">
+                    <a href="javascript:void(0)">
+                        <img src="{{producto.imagen}}" alt="" class="rounded-circle">
+                        <div>
+                            <h4>{{producto.nombre}}</h4>
+                            <p>{{producto.descripcion}}</p>
+                        </div>
+                    </a>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+            </ng-container>
+        </section>        
+
+        <section *ngIf="this.noItemsCarrito > 3">
+            <li class="message-item t-center">
+                <div>
+                    <h4 class="t-bold" align="center">...</h4>
+                </div>
+            </li>
+    
+            <li><hr class="dropdown-divider"></li>
+        </section>
+    
+        <li class="dropdown-footer"><a href="#">Proceder a la compra</a></li>
+    </section>
+</ul>

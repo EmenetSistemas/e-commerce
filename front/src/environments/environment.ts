@@ -511,6 +511,6 @@ export const productos : any = [
     }
 ];
 
-export const carritoCompras : any = [
-    
-];
+export const carritoCompras : any = {
+    items : []
+};
