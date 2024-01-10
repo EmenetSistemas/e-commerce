@@ -1,0 +1,45 @@
+<div class="col-12 apartado-producto section dashboard">
+    <div class="card">
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-5 col-12 t-center d-flex justify-content-center align-items-center">
+                <img src="{{producto.imagen}}" class="img-fluid rounded-start producto" alt="...">
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-7 col-12">
+                <div class="w-70 f-left">
+                    <h5 class="content-porduct card-title" style="margin-top: -15px;">{{producto.nombre}}</h5>
+                </div>
+
+                <div class="w-30 f-left ui-search-price__second-line sp-text t-bold">
+                    <span
+                        class="andes-money-amount ui-search-price__part ui-search-price__part--medium andes-money-amount--cents-superscript"
+                        style="font-size:24px" role="img" aria-label="124 pesos con 20 centavos"
+                        aria-roledescription="Precio">
+                        <span class="andes-money-amount__currency-symbol" aria-hidden="true">$</span>
+                        <span class="andes-money-amount__integer" aria-hidden="true">{{ ((producto.precio -
+                            (producto.precio * producto.descuento)) | number:'1.0-0') }}</span>
+                        <span class="andes-money-amount__decimal" aria-hidden="true">.{{ (producto.precio -
+                            (producto.precio * producto.descuento)).toFixed(2).split('.')[1] }}</span>
+                    </span>
+                </div>
+
+                <div class="w-100 f-left ui-search-item__group__element ui-search-price__part-without-link content-porduct card-text t-justify" style="margin-top: 10px;">
+                    <div class="ui-search-price ui-search-price--size-medium">
+                        <div class="ui-search-price__second-line">
+                            <span
+                                class="andes-money-amount ui-search-price__part ui-search-price__part--medium andes-money-amount--cents-superscript"
+                                style="font-size:24px" role="img" aria-label="124 pesos con 20 centavos"
+                                aria-roledescription="Precio">
+                                <span class="andes-money-amount__currency-symbol" aria-hidden="true">
+                                    Cantidad: <input type="number" class="cantidad" value="{{cantidadProducto}}">
+                                </span><br>
+                                <span class="andes-money-amount__currency-symbol" aria-hidden="true">
+                                    ({{producto.stock}}) disponibles
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

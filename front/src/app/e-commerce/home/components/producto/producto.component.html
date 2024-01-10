@@ -8,7 +8,7 @@
                 </li>
 
                 <li>
-                    <a class="dropdown-item" href="javascript:void(0)">
+                    <a class="dropdown-item" href="javascript:void(0)" (click)="abrirModal('detalleCompra')">
                         <span class="badge bg-primary"><span class="bi bi-currency-dollar"></span></span>&nbsp;Comprar
                     </a>
                 </li>
@@ -18,17 +18,17 @@
                     </a>
                 </li>
                 <li>
-                    <a class="dropdown-item" href="javascript:void(0)" (click)="abrirModalDetalleProducto();">
+                    <a class="dropdown-item" href="javascript:void(0)" (click)="abrirModal('detalleProducto')">
                         <span class="badge bg-warning t-bold"><span class="bi bi-info-circle-fill"></span></span>&nbsp;Ver más
                     </a>
                 </li>
             </ul>
         </div>
         <div class="row">
-            <div class="col-lg-3 col-md-3 col-sm-5 col-12 t-center d-flex justify-content-center align-items-center" (click)="abrirModalDetalleProducto();">
+            <div class="col-lg-3 col-md-3 col-sm-5 col-12 t-center d-flex justify-content-center align-items-center" (click)="abrirModal('detalleProducto')">
                 <img src="{{producto.imagen}}" class="img-fluid rounded-start producto" alt="...">
             </div>
-            <div class="col-lg-8 col-md-8 col-sm-6 col-12" (click)="abrirModalDetalleProducto();">
+            <div class="col-lg-8 col-md-8 col-sm-6 col-12" (click)="abrirModal('detalleProducto')">
                 <h5 class="content-porduct card-title" style="margin-top: -15px;">{{producto.nombre}}</h5>
 
                 <div class="ui-search-item__group__element ui-search-price__part-without-link content-porduct card-text t-justify">

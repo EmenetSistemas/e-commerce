@@ -10,6 +10,8 @@ import { DetalleProductoComponent } from './modules/detalle-producto/detalle-pro
 import { ModalService } from "./services/modal/modal.service";
 import { BsModalService } from "ngx-bootstrap/modal";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { VentaProductoComponent } from './modules/venta-producto/venta-producto.component';
+import { ProductoVentaComponent } from './components/producto-venta/producto-venta.component';
 
 @NgModule({
   imports: [
@@ -23,7 +25,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ServiciosComponent,
     DestacadosComponent,
     ProductoComponent,
-    DetalleProductoComponent
+    DetalleProductoComponent,
+    VentaProductoComponent,
+    ProductoVentaComponent
   ],
   providers: [
     ModalService,
