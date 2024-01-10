@@ -18,11 +18,14 @@
                         <div class="w-30 t-center t-center d-flex justify-content-center align-items-center">
                             <img src="{{producto.imagen}}" class="img-fluid rounded-start">
                         </div>
-                        <div class="w-70">
+                        <div class="w-50">
                             <h4>{{producto.nombre}}</h4>
                             <p>C/U: $ {{(producto.precio - (producto.precio * producto.descuento)) | number:'1.2-2'}}</p>
                             <p>Cantidad: {{producto.cantidad}}</p>
                             <p *ngIf="producto.cantidad > 1">Total: $ {{((producto.precio - (producto.precio * producto.descuento)) * producto.cantidad) | number:'1.2-2'}}</p>
+                        </div>
+                        <div class="w-20 t-center t-center d-flex justify-content-center align-items-center" (click)="this.eliminarItemCarrito(producto.id)">
+                            <i class="bi bi-trash3-fill" style="color: red;"></i>
                         </div>
                     </a>
                 </li>

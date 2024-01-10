@@ -44,4 +44,9 @@ export class CarritoComprasComponent implements OnInit {
 			break;
 		}
 	}
+
+	protected eliminarItemCarrito (idProducto : number) : any {
+		this.apiProductos.eliminarItemCarrito(idProducto);
+		this.obtenerNoItemsCarritoCompras();
+	}
 }

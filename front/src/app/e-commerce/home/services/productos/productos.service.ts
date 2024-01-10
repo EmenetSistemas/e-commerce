@@ -79,6 +79,14 @@ export class ProductosService {
 		return carritoCompras;
 	}
 
+	public eliminarItemCarrito (idProducto : number) : Observable<any> {
+		carritoCompras.items = carritoCompras.items.filter(
+			(item : any) => item.idItem !== idProducto
+		);
+
+		return carritoCompras;
+	}
+
 	public productosEnCarrito (idProducto : number) : Observable<any> {
 		return carritoCompras.items.find((item : any) => item.idItem === idProducto)?.cantidad ?? 0;
 	}
