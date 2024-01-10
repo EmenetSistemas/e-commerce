@@ -26,14 +26,18 @@ export class VentaProductoComponent implements OnInit {
 	}
 
 	public obtenerCantidadTotal () : any {
-		return Number (this.productos.items.reduce(
-			(total : any, producto : any) => total + producto.cantidad,
-			0
-		));
+		return this.productos.items.length;
 	}
 
 	protected obtenerTotalSegunProductos () : any {
 		return this.apiProductos.obtenerTotalSegunProductos(this.productos.items);
+	}
+
+	protected cambioCantidadProducto (data: any) : void {
+		const producto = this.productos.items.find((item : any) => item.idItem == data.idProducto);
+		if (producto) {
+			producto.cantidad = data.cantidad;
+		}
 	}
 
 	public cerrarModal() {

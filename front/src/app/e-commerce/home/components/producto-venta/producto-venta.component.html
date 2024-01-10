@@ -30,7 +30,9 @@
                                 style="font-size:24px" role="img" aria-label="124 pesos con 20 centavos"
                                 aria-roledescription="Precio">
                                 <span class="andes-money-amount__currency-symbol" aria-hidden="true">
-                                    Cantidad: <input type="number" class="cantidad" value="{{cantidadProducto}}">
+                                    <form autocomplete="off" [formGroup]="formVentaProducto" class="form-wo-stl">
+                                        Cantidad: <input #cantidadInput type="number" formControlName="cantidad" class="cantidad" (keypress)="soloNumeros($event)" (input)="validarStock()">
+                                    </form>
                                 </span><br>
                                 <span class="andes-money-amount__currency-symbol" aria-hidden="true">
                                     ({{producto.stock}}) disponibles
