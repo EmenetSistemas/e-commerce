@@ -3,6 +3,7 @@ import { ProductosService } from '../../services/productos/productos.service';
 import { VentaProductoComponent } from '../../modules/venta-producto/venta-producto.component';
 import { ModalService } from '../../services/modal/modal.service';
 import { carritoCompras } from 'src/environments/environment';
+import { MensajesService } from 'src/app/services/mensajes/mensajes.service';
 
 @Component({
 	selector: 'app-carrito-compras',
@@ -15,7 +16,8 @@ export class CarritoComprasComponent implements OnInit {
 
 	constructor(
 		private apiProductos: ProductosService,
-		private modalService: ModalService
+		private modalService: ModalService,
+		private msj : MensajesService
 	) {}
 
 	ngOnInit(): void {
@@ -43,5 +45,17 @@ export class CarritoComprasComponent implements OnInit {
 				this.modalService.abrirModalConComponente(VentaProductoComponent, dataModal2);
 			break;
 		}
+	}
+
+	protected eliminarItemCarrito (idProducto : number) : any {
+		this.msj.mensajeConfirmacionCustom('¿Está seguro de eliminar el producto del carrito de compras?', 'question', 'Eliminar del carrito').then(
+			respuestaMensaje => {
+				if ( respuestaMensaje.isConfirmed ) {
+					this.apiProductos.eliminarItemCarrito(idProducto);
+					this.obtenerNoItemsCarritoCompras();
+				}
+				return;
+			}
+		);
 	}
 }

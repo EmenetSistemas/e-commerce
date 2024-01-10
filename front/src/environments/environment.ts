@@ -512,5 +512,37 @@ export const productos : any = [
 ];
 
 export const carritoCompras : any = {
-    items : []
+    items : [
+        {
+            idItem : 1,
+            cantidad : 2
+        }, {
+            idItem : 2,
+            cantidad : 2
+        }, {
+            idItem : 3,
+            cantidad : 2
+        }, {
+            idItem : 4,
+            cantidad : 2
+        }, {
+            idItem : 5,
+            cantidad : 2
+        }, {
+            idItem : 6,
+            cantidad : 2
+        }, {
+            idItem : 7,
+            cantidad : 2
+        }, {
+            idItem : 8,
+            cantidad : 2
+        }, {
+            idItem : 9,
+            cantidad : 2
+        }, {
+            idItem : 10,
+            cantidad : 2
+        }
+    ]
 };
