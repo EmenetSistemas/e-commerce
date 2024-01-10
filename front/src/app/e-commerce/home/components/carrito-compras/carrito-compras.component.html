@@ -20,8 +20,9 @@
                         </div>
                         <div class="w-70">
                             <h4>{{producto.nombre}}</h4>
-                            <p>$ {{producto.precio | number:'1.2-2'}}</p>
+                            <p>C/U: $ {{producto.precio | number:'1.2-2'}}</p>
                             <p>Cantidad: {{producto.cantidad}}</p>
+                            <p *ngIf="producto.cantidad > 1">Total: $ {{(producto.precio * producto.cantidad) | number:'1.2-2'}}</p>
                         </div>
                     </a>
                 </li>
