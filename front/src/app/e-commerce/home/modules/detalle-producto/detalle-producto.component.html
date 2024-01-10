@@ -180,7 +180,7 @@
                                         <p style="color:gray; margin-top: -15px;" class="t-center">({{producto.stock}})
                                             disponibles</p>
                                         <br>
-                                        <button class="btn btn-primary form-control">Comprar</button>
+                                        <button #btnCerrar class="btn btn-primary form-control" (click)="abrirModal('detalleCompra')">Comprar</button>
                                         <button class="btn btn-info form-control" style="margin-top: 5px;" (click)="agregarItemCarrito()">
                                             <b><i class="bi bi-cart-plus"></i></b>
                                         </button>

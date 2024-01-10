@@ -1,0 +1,44 @@
+.apartado-producto {
+    margin-top: 30px !important;
+}
+
+.andes-money-amount {
+    font-size: 15px !important;
+}
+
+.sp-text {
+    text-align: right;
+    padding-right: 10px;
+}
+
+.card-title {
+    margin-bottom: -10px;
+}
+
+.cantidad {
+    text-align: center;
+    border-radius: 10px;
+    height: 15px;
+    width: 70px;
+    background: rgb(238, 238, 238);
+    border: none;
+}
+
+.cantidad :focus {
+    border: none;
+}
+
+.cantidad :active {
+    border: none;
+}
+
+@media (max-width: 575px) {
+	.card-title {
+		text-align: left !important;
+        padding-left: 10px !important;
+	}
+}
+
+.form-wo-stl {
+    margin-bottom: -20px !important;
+}

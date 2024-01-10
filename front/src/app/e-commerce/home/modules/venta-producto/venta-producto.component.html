@@ -1,0 +1,40 @@
+<div class="modal-body">
+    <div class="pagetitle">
+        <h1>{{this.productosVenta > 1 ? 'Productos' : 'Producto'}}</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">Detalles</li>
+                <li class="breadcrumb-item active">Compra</li>
+            </ol>
+        </nav>
+    </div>
+
+    <section class="section profile formsWTitle">
+        <div class="row">
+            <div class="col-12">
+                <!--Productos detalle-->
+                <div class="col-lg-9 col-12 apartado-productos">
+                    <section *ngFor="let producto of this.productosVenta" style="margin-top: -45px;">
+                        <app-producto-venta [idProducto]="producto.id" [cantidadProducto]="producto.cantidad" (selectionChange)="cambioCantidadProducto($event)"></app-producto-venta>
+                    </section>
+                    <br>
+                </div>
+    
+                <!--Costo total compra-->
+                <div class="col-lg-3 col-12 card-precio">
+                    <div class="card">
+                        <div class="card-body">
+                            <p style="color:gray">Subtotal ({{this.obtenerCantidadTotal()+(this.obtenerCantidadTotal() > 1 ? ' productos' : ' producto')}}): <b>$ {{this.obtenerTotalSegunProductos() | number:'1.2-2'}}</b></p>
+                            <button class="btn btn-primary form-control">Proceder al pago</button>
+                            <br>&nbsp;
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="cerrarModal()"><b>Cerrar</b></button>
+</div>

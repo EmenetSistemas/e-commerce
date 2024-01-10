@@ -46,22 +46,18 @@ export class ProductosService {
 		return carritoCompras.items.length;
 	}
 
-	public obtenerCantidadProductoPorId ( idItem : number ) : Observable<any> {
-		return carritoCompras.items.length;
-	}
-
-	public obtenerItemsCarritoCompras(): Observable<any> {
-		const itemsCarritoIds = carritoCompras.items.map((item: any) => item.idItem);
+	public obtenerItemsCarritoCompras( data : any = carritoCompras): Observable<any> {
+		const itemsCarritoIds = data.items.map((item: any) => item.idItem);
 	
 		return productos.filter((producto: any) => {
 			if (itemsCarritoIds.includes(producto.id)) {
-				const itemEnCarrito = carritoCompras.items.find((item: any) => item.idItem === producto.id);
+				const itemEnCarrito = data.items.find((item: any) => item.idItem === producto.id);
 				producto.cantidad = itemEnCarrito.cantidad;
 				return true;
 			}
 			return false;
 		});
-	}	
+	}
 
 	public validarProductoCarrito ( idItem : number ) : Observable<any> {
 		return carritoCompras.items.find((item : any) => item.idItem == idItem) ?? null;
@@ -85,5 +81,18 @@ export class ProductosService {
 
 	public productosEnCarrito (idProducto : number) : Observable<any> {
 		return carritoCompras.items.find((item : any) => item.idItem === idProducto)?.cantidad ?? 0;
+	}
+
+	public obtenerTotalSegunProductos ( dataProductos : any ) : any {
+		let totalPorProductos = 0;
+		dataProductos.forEach((itSearch : any) => {
+			productos.forEach((producto : any) => {
+				if (producto.id == itSearch.idItem) {
+					totalPorProductos += ((producto.precio - (producto.precio * producto.descuento)) * itSearch.cantidad);
+				}
+			});
+		});
+
+		return totalPorProductos;
 	}
 }

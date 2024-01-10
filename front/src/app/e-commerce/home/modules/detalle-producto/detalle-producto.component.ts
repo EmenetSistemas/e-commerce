@@ -4,6 +4,7 @@ import { ProductosService } from '../../services/productos/productos.service';
 import { MensajesService } from 'src/app/services/mensajes/mensajes.service';
 import FGenerico from 'src/app/shared/util/funciones-genericas';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { VentaProductoComponent } from '../venta-producto/venta-producto.component';
 
 @Component({
 	selector: 'app-detalle-producto',
@@ -13,6 +14,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class DetalleProductoComponent extends FGenerico implements OnInit {
 	@Input() idProducto: any = {};
 	@ViewChild('cantidadInput') cantidadInput!: ElementRef;
+	@ViewChild('btnCerrar') btnCerrar!: ElementRef;
 
 	protected formVentaProducto!: FormGroup;
 
@@ -98,6 +100,26 @@ export class DetalleProductoComponent extends FGenerico implements OnInit {
 	private seleccionarTexto() {
 		const inputEl = this.cantidadInput.nativeElement;
 		this.renderer.selectRootElement(inputEl).select();
+	}
+
+	protected abrirModal ( modal : string ) : any {
+		this.cerrarModal();
+
+		setTimeout(() => {
+			switch (modal) {
+				case 'detalleCompra':
+					const dataModal2 = {
+						productos : {
+							items : [{
+								idItem : this.idProducto,
+								cantidad : this.formVentaProducto.get('cantidad')?.value
+							}]
+						}
+					};
+					this.modalService.abrirModalConComponente(VentaProductoComponent, dataModal2);
+				break;
+			}
+		}, 150);
 	}
 
 	public cerrarModal() {
