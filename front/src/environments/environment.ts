@@ -550,9 +550,14 @@ export const carritoCompras : any = {
 export const pedidos : any = [
     {
         idPedido : 1,
-        fechaPedido : '',
-        direccionEntrega : '',
-        fechaEntrega : '',
-        productos : []
+        fechaPedido : '11-01-2024',
+        direccionEntrega : 'Calzada Guadalupe Victoria, San Pedro Cholula, Ocoyoacac, Mex. 52757',
+        fechaEntrega : '16-01-2024',
+        productos : [
+            {
+                idItem : 1,
+                cantidad : 3
+            }
+        ]
     }
 ];

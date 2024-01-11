@@ -1,0 +1,36 @@
+<div class="modal-body">
+    <div class="pagetitle">
+        <h1>Pedidos</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active">Pedidos realizados</li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <i class="bi bi-exclamation-triangle me-1"></i>
+        Solo se pueden cancelar pedidos si aún no han sido enviados
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div class="col-12 apartado-pedidos">
+        <div class="card" style="margin-top: -20px !important;" *ngFor="let pedido of this.pedidos">
+            <div class="card-body" style="margin-bottom: -20px;">
+                <h6 class="card-title apartado-titulo-detalle">
+                    Pedido #PE-{{pedido.idPedido}}
+                    <span class="badge border-danger border-1 text-danger t-bold">Cancelar</span>
+                </h6>
+                <p style="margin-top: -5px !important;">
+                    Pedido: {{pedido.fechaPedido}}<br>
+                    Entrega estimada: {{pedido.fechaEntrega}}<br>
+                    {{pedido.direccionEntrega}}<br>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="cerrarModal()"><b>Cerrar</b></button>
+</div>

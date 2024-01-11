@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { carritoCompras, categorias, productos } from '../../../../../environments/environment';
+import { carritoCompras, categorias, pedidos, productos } from '../../../../../environments/environment';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -102,5 +102,9 @@ export class ProductosService {
 		});
 
 		return totalPorProductos;
+	}
+
+	public obtenerPedidos () : any {
+		return pedidos;
 	}
 }
