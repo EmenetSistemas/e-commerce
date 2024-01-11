@@ -10,8 +10,9 @@ import { DetalleProductoComponent } from './modules/detalle-producto/detalle-pro
 import { ModalService } from "./services/modal/modal.service";
 import { BsModalService } from "ngx-bootstrap/modal";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { VentaProductoComponent } from './modules/venta-producto/venta-producto.component';
+import { VentaProductoComponent } from './modules/venta-productos/venta-producto.component';
 import { ProductoVentaComponent } from './components/producto-venta/producto-venta.component';
+import { DetallePagoProductosComponent } from './modules/detalle-pago-productos/detalle-pago-productos.component';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { ProductoVentaComponent } from './components/producto-venta/producto-ven
     ProductoComponent,
     DetalleProductoComponent,
     VentaProductoComponent,
-    ProductoVentaComponent
+    ProductoVentaComponent,
+    DetallePagoProductosComponent
   ],
   providers: [
     ModalService,

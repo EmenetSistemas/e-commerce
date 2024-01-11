@@ -546,3 +546,13 @@ export const carritoCompras : any = {
         }
     ]
 };
+
+export const pedidos : any = [
+    {
+        idPedido : 1,
+        fechaPedido : '',
+        direccionEntrega : '',
+        fechaEntrega : '',
+        productos : []
+    }
+];

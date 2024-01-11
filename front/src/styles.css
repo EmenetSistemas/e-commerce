@@ -3,9 +3,9 @@
 }
 
 body {
-	font-family: "Open Sans", sans-serif;
-	background: #f6f9ff;
-	color: #444444;
+	font-family: "Open Sans", sans-serif !important;
+	background: #f6f9ff !important;
+	color: #444444 !important;
 }
 
 a {

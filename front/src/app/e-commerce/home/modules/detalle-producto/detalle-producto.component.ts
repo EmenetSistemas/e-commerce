@@ -4,7 +4,7 @@ import { ProductosService } from '../../services/productos/productos.service';
 import { MensajesService } from 'src/app/services/mensajes/mensajes.service';
 import FGenerico from 'src/app/shared/util/funciones-genericas';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { VentaProductoComponent } from '../venta-producto/venta-producto.component';
+import { VentaProductoComponent } from '../venta-productos/venta-producto.component';
 
 @Component({
 	selector: 'app-detalle-producto',

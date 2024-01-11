@@ -1,0 +1,90 @@
+<div class="modal-body">
+    <div class="pagetitle">
+        <h1>{{this.productosVenta > 1 ? 'Productos' : 'Producto'}}</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">Detalles</li>
+                <li class="breadcrumb-item active">Compra</li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="col-12">
+        <div class="card" style="margin-top: -15px !important;">
+            <div class="card-body">
+                <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist"
+                    style="margin-top: 5px;">
+                    <li class="nav-item flex-fill" role="presentation">
+                        <button class="nav-link w-100 active" id="home-tab" data-bs-toggle="tab"
+                            data-bs-target="#bordered-justified-home" type="button" role="tab" aria-controls="home"
+                            aria-selected="false" tabindex="-1">Productos</button>
+                    </li>
+                    <li class="nav-item flex-fill" role="presentation">
+                        <button class="nav-link w-100" id="profile-tab" data-bs-toggle="tab"
+                            data-bs-target="#bordered-justified-profile" type="button" role="tab"
+                            aria-controls="profile" aria-selected="true">Pago</button>
+                    </li>
+                    <li class="nav-item flex-fill" role="presentation">
+                        <button class="nav-link w-100" id="contact-tab" data-bs-toggle="tab"
+                            data-bs-target="#bordered-justified-contact" type="button" role="tab"
+                            aria-controls="contact" aria-selected="false" tabindex="-1">Entrega</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-content pt-2" id="borderedTabJustifiedContent">
+        <div class="tab-pane fade active show" id="bordered-justified-home" role="tabpanel" aria-labelledby="home-tab">
+            <section class="section profile formsWTitle">
+                <div class="row">
+                    <div class="col-12">
+                        <!--Productos detalle-->
+                        <div class="col-lg-9 col-12 apartado-productos">
+                            <section *ngFor="let producto of this.productosVenta" style="margin-top: -55px;">
+                                <app-producto-venta [idProducto]="producto.id" [cantidadProducto]="producto.cantidad"
+                                    (selectionChange)="cambioCantidadProducto($event)"
+                                    (eliminoProducto)="eliminarProducto($event)"></app-producto-venta>
+                            </section>
+                            <br>
+                        </div>
+
+                        <!--Costo total compra-->
+                        <div class="col-lg-3 col-12 card-precio">
+                            <div class="card">
+                                <div class="card-body">
+                                    <p style="color:gray">Subtotal
+                                        ({{this.obtenerCantidadTotal()+(this.obtenerCantidadTotal() >
+                                        1 ? ' productos' : ' producto')}}): <b>$ {{this.obtenerTotalSegunProductos() |
+                                            number:'1.2-2'}}</b></p>
+                                    <button class="btn btn-primary form-control">Proceder al pago</button>
+                                    <br>&nbsp;
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="tab-pane fade" id="bordered-justified-profile" role="tabpanel" aria-labelledby="profile-tab">
+            <app-detalle-pago-productos></app-detalle-pago-productos>
+        </div>
+        <div class="tab-pane fade" id="bordered-justified-contact" role="tabpanel" aria-labelledby="contact-tab">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body card-sp">
+                    <h5 class="t-bold" style="color:mediumseagreen;">Pedido realizado, ¡gracias!</h5>
+                    <p>
+                        Se enviará la confirmación a tu email.<br>
+                        <b>Enviando a Adrián Villa Reyes</b>, Calzada Guadalupe Victoria, San Pedro Cholula, Ocoyoacac, Mex. 52757
+                    </p>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="cerrarModal()"><b>Cerrar</b></button>
+</div>
