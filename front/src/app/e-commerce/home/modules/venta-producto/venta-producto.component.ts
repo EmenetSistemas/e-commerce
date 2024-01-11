@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalService } from '../../services/modal/modal.service';
 import { ProductosService } from '../../services/productos/productos.service';
+import { MensajesService } from 'src/app/services/mensajes/mensajes.service';
 
 @Component({
 	selector: 'app-venta-producto',
@@ -14,7 +15,8 @@ export class VentaProductoComponent implements OnInit {
 
 	constructor(
 		private modalService : ModalService,
-		private apiProductos : ProductosService
+		private apiProductos : ProductosService,
+		private msj : MensajesService
 	) {}
 
 	ngOnInit(): void {
@@ -38,6 +40,16 @@ export class VentaProductoComponent implements OnInit {
 		if (producto) {
 			producto.cantidad = data.cantidad;
 		}
+	}
+
+	protected eliminarProducto (data : any) : any {
+		this.productos.items = this.productos.items.filter(
+			(item : any) => item.idItem !== data.idProducto
+		);
+		this.productosVenta = this.productosVenta.filter(
+			(item : any) => item.id !== data.idProducto
+		);
+		this.msj.mensajeGenericoToast('Se eliminó el producto de la compra', 'success');
 	}
 
 	public cerrarModal() {

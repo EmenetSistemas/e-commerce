@@ -15,7 +15,7 @@
                 <!--Productos detalle-->
                 <div class="col-lg-9 col-12 apartado-productos">
                     <section *ngFor="let producto of this.productosVenta" style="margin-top: -45px;">
-                        <app-producto-venta [idProducto]="producto.id" [cantidadProducto]="producto.cantidad" (selectionChange)="cambioCantidadProducto($event)"></app-producto-venta>
+                        <app-producto-venta [idProducto]="producto.id" [cantidadProducto]="producto.cantidad" (selectionChange)="cambioCantidadProducto($event)" (eliminoProducto)="eliminarProducto($event)"></app-producto-venta>
                     </section>
                     <br>
                 </div>

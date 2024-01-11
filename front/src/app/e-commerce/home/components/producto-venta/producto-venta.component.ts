@@ -15,6 +15,7 @@ export class ProductoVentaComponent extends FGenerico implements OnInit{
 	@Input() cantidadProducto: any = 0;
 	@ViewChild('cantidadInput') cantidadInput!: ElementRef;
 	@Output() selectionChange: EventEmitter<any> = new EventEmitter<any>();
+	@Output() eliminoProducto: EventEmitter<any> = new EventEmitter<any>();
 
 	protected formVentaProducto!: FormGroup;
 
@@ -75,5 +76,24 @@ export class ProductoVentaComponent extends FGenerico implements OnInit{
 	private seleccionarTexto() {
 		const inputEl = this.cantidadInput.nativeElement;
 		this.renderer.selectRootElement(inputEl).select();
+	}
+
+	protected eliminarItemCompra (idProducto : number) : any {
+		this.msj.mensajeConfirmacionCustom('¿Está seguro de eliminar el producto de la compra?', 'question', 'Eliminar producto').then(
+			respuestaMensaje => {
+				if ( respuestaMensaje.isConfirmed ) {
+					this.msj.mensajeEsperarToast();
+					this.envioProductoEliminar(idProducto);
+				}
+				return;
+			}
+		);
+	}
+
+	private envioProductoEliminar(idProducto : number) : any {
+		const data = {
+			idProducto : idProducto
+		};
+		this.eliminoProducto.emit(data);
 	}
 }
