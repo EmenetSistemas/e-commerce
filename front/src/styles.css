@@ -1357,12 +1357,6 @@ button {
 	max-height: 100px;
 }
 
-@media (max-width: 575px) {
-	.content-porduct {
-		text-align: center !important;
-	}
-}
-
 .apartado-producto {
 	margin-bottom: -15px !important;
 }
@@ -1482,5 +1476,31 @@ a :hover {
 @media (max-width:575px) {
 	.modal-dialog {
 		margin-left: 5vw !important;
+	}
+
+	.content-porduct {
+		text-align: center !important;
+	}
+
+	.tablet {
+		display: none;
+		visibility: hidden;
+	}
+	
+	.celular {
+		display: block;
+		visibility: visible;
+	}
+}
+
+@media (min-width:575px) {
+	.tablet {
+		display: block;
+		visibility: visible;
+	}
+
+	.celular {
+		display: none;
+		visibility: hidden;
 	}
 }

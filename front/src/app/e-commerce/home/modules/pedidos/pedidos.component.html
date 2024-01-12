@@ -17,15 +17,25 @@
     <div class="col-12 apartado-pedidos">
         <div class="card" style="margin-top: -20px !important;" *ngFor="let pedido of this.pedidos" (click)="this.abrirModal(pedido.idPedido)">
             <div class="card-body" style="margin-bottom: -20px;">
-                <h6 class="card-title apartado-titulo-detalle">
+                <h6 class="card-title apartado-titulo-detalle" style="margin-top: -10px !important;">
                     Pedido #PE-{{pedido.idPedido}}
-                    <span class="badge border-danger border-1 text-danger t-bold">Cancelar</span>
+                    <div class="tablet">
+                        <span class="badge border-danger border-1 text-danger t-bold">Cancelar</span><br>
+                        <span class="badge border-info border-1 text-info t-bold" style="margin-top: 5px;">Seguir paquete</span>
+                    </div>
                 </h6>
-                <p style="margin-top: -5px !important;">
+                <p style="margin-top: -25px !important;">
                     Pedido: {{pedido.fechaPedido}}<br>
                     Entrega estimada: {{pedido.fechaEntrega}}<br>
-                    {{pedido.direccionEntrega}}<br>
+                    Productos: {{pedido.productos.length}}<br>
+                    <b>{{pedido.direccionEntrega}}</b><br>
                 </p>
+                <div class="celular" style="margin-top: -5px !important; margin-bottom: 15px !important;">
+                    <h5 align="center">
+                        <span class="badge border-danger border-1 text-danger t-bold">Cancelar</span>
+                        <span class="badge border-info border-1 text-info t-bold">Seguir paquete</span>
+                    </h5>
+                </div>
             </div>
         </div>
     </div>
