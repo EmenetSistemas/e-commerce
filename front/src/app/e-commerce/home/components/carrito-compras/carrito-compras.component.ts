@@ -37,12 +37,12 @@ export class CarritoComprasComponent implements OnInit {
 	protected abrirModal ( modal : string ) : any {
 		switch (modal) {
 			case 'detalleCompra':
-				const dataModal2 = {
+				const dataModal = {
 					productos : {
 						items : carritoCompras.items
 					}
 				};
-				this.modalService.abrirModalConComponente(VentaProductoComponent, dataModal2);
+				this.modalService.abrirModalConComponente(VentaProductoComponent, dataModal);
 			break;
 		}
 	}

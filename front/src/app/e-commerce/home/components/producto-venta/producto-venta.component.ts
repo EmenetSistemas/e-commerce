@@ -1,5 +1,4 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
-import { ModalService } from '../../services/modal/modal.service';
 import { ProductosService } from '../../services/productos/productos.service';
 import { MensajesService } from 'src/app/services/mensajes/mensajes.service';
 import FGenerico from 'src/app/shared/util/funciones-genericas';
@@ -13,6 +12,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class ProductoVentaComponent extends FGenerico implements OnInit{
 	@Input() idProducto: any = [];
 	@Input() cantidadProducto: any = 0;
+	@Input() static: any = false;
 	@ViewChild('cantidadInput') cantidadInput!: ElementRef;
 	@Output() selectionChange: EventEmitter<any> = new EventEmitter<any>();
 	@Output() eliminoProducto: EventEmitter<any> = new EventEmitter<any>();

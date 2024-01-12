@@ -16,8 +16,13 @@
                                 aria-roledescription="Precio">
                                 <span class="andes-money-amount__currency-symbol" aria-hidden="true">
                                     <form autocomplete="off" [formGroup]="formVentaProducto" class="form-wo-stl">
-                                        Cantidad: <input #cantidadInput type="number" formControlName="cantidad"
-                                            class="cantidad" (keypress)="soloNumeros($event)" (input)="validarStock()">
+                                        <ng-container *ngIf="!this.static; else cantidad">
+                                            Cantidad: <input #cantidadInput type="number" formControlName="cantidad"
+                                                class="cantidad" (keypress)="soloNumeros($event)" (input)="validarStock()">
+                                        </ng-container>
+                                        <ng-template #cantidad>
+                                            Cantidad: <b>{{this.cantidadProducto}}</b>
+                                        </ng-template>
                                     </form>
                                 </span><br>
                                 <span class="andes-money-amount__currency-symbol" aria-hidden="true">

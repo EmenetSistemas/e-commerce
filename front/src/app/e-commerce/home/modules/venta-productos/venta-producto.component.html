@@ -1,6 +1,12 @@
 <div class="modal-body">
     <div class="pagetitle">
-        <h1>{{this.productosVenta > 1 ? 'Productos' : 'Producto'}}</h1>
+        <ng-container *ngIf="!this.productos.static ?? true; else pedidos">
+            <h1>{{this.productosVenta > 1 ? 'Productos' : 'Producto'}}</h1>
+        </ng-container>
+        <ng-template #pedidos>
+            <h1>{{this.productosVenta > 1 ? 'Pedidos' : 'Pedido'}}</h1>
+        </ng-template>
+        
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">Detalles</li>
@@ -9,7 +15,13 @@
         </nav>
     </div>
 
-    <div class="col-12">
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <i class="bi bi-exclamation-triangle me-1"></i>
+        Solo se pueden cancelar productos si aún no han sido enviados
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div class="col-12" *ngIf="!this.productos.static ?? true">
         <div class="card" style="margin-top: -15px !important;">
             <div class="card-body">
                 <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist"
@@ -42,7 +54,7 @@
                         <!--Productos detalle-->
                         <div class="col-lg-9 col-12 apartado-productos">
                             <section *ngFor="let producto of this.productosVenta" style="margin-top: -55px;">
-                                <app-producto-venta [idProducto]="producto.id" [cantidadProducto]="producto.cantidad"
+                                <app-producto-venta [idProducto]="producto.id" [cantidadProducto]="producto.cantidad" [static]="this.productos.static"
                                     (selectionChange)="cambioCantidadProducto($event)"
                                     (eliminoProducto)="eliminarProducto($event)"></app-producto-venta>
                             </section>
@@ -53,12 +65,20 @@
                         <div class="col-lg-3 col-12 card-precio">
                             <div class="card">
                                 <div class="card-body">
-                                    <p style="color:gray">Subtotal
-                                        ({{this.obtenerCantidadTotal()+(this.obtenerCantidadTotal() >
-                                        1 ? ' productos' : ' producto')}}): <b>$ {{this.obtenerTotalSegunProductos() |
-                                            number:'1.2-2'}}</b></p>
-                                    <button class="btn btn-primary form-control">Proceder al pago</button>
-                                    <br>&nbsp;
+                                    <ng-container *ngIf="!this.productos.static ?? true; else totalpedidos">
+                                        <p style="color:gray">Subtotal
+                                            ({{this.obtenerCantidadTotal()+(this.obtenerCantidadTotal() >
+                                            1 ? ' productos' : ' producto')}}): <b>$ {{this.obtenerTotalSegunProductos() |
+                                                number:'1.2-2'}}</b></p>
+                                        <button *ngIf="!this.productos.static ?? true" class="btn btn-primary form-control">Proceder al pago</button>
+                                        <br *ngIf="!this.productos.static ?? true">&nbsp;
+                                    </ng-container>
+                                    <ng-template #totalpedidos>
+                                        <p style="color:gray">Total
+                                            ({{this.obtenerCantidadTotal()+(this.obtenerCantidadTotal() >
+                                            1 ? ' productos' : ' producto')}}): <b>$ {{this.obtenerTotalSegunProductos() |
+                                                number:'1.2-2'}}</b></p>
+                                    </ng-template>
                                 </div>
                             </div>
                         </div>
@@ -86,5 +106,10 @@
 </div>
 
 <div class="modal-footer">
-    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="cerrarModal()"><b>Cerrar</b></button>
+    <ng-container *ngIf="!this.productos.static ?? true; else abrirPedidos">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="cerrarModal()"><b>Cerrar</b></button>
+    </ng-container>
+    <ng-template #abrirPedidos>
+        <button type="button" class="btn btn-warning" data-bs-dismiss="modal" (click)="abrirModal()"><b>Volver</b></button>
+    </ng-template>
 </div>
