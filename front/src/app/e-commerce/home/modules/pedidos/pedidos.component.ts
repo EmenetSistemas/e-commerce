@@ -4,6 +4,7 @@ import { ModalService } from '../../services/modal/modal.service';
 import { carritoCompras } from 'src/environments/environment';
 import { VentaProductoComponent } from '../venta-productos/venta-producto.component';
 import { MensajesService } from 'src/app/services/mensajes/mensajes.service';
+import { productos } from '../../../../../environments/environment';
 
 @Component({
 	selector: 'app-pedidos',
@@ -12,6 +13,7 @@ import { MensajesService } from 'src/app/services/mensajes/mensajes.service';
 })
 export class PedidosComponent implements OnInit{
 	protected pedidos : any = [];
+
 	constructor (
 		private apiProductos : ProductosService,
 		private modalService : ModalService,
@@ -27,13 +29,14 @@ export class PedidosComponent implements OnInit{
 		this.pedidos = this.apiProductos.obtenerPedidos();
 	}
 
-	protected abrirModal () : void {
+	protected abrirModal (idPedido : number) : void {
+		const itemsPedido = this.pedidos.find((pedido : any) => pedido.idPedido === idPedido);
 		this.msj.mensajeEsperar();
 		this.cerrarModal();
 		setTimeout(() => {
 			const dataModal = {
 				productos : {
-					items : carritoCompras.items,
+					items : itemsPedido.productos,
 					static : true
 				}
 			};

@@ -14,8 +14,8 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 
-    <div class="col-12 apartado-pedidos" (click)="this.abrirModal()">
-        <div class="card" style="margin-top: -20px !important;" *ngFor="let pedido of this.pedidos">
+    <div class="col-12 apartado-pedidos">
+        <div class="card" style="margin-top: -20px !important;" *ngFor="let pedido of this.pedidos" (click)="this.abrirModal(pedido.idPedido)">
             <div class="card-body" style="margin-bottom: -20px;">
                 <h6 class="card-title apartado-titulo-detalle">
                     Pedido #PE-{{pedido.idPedido}}
