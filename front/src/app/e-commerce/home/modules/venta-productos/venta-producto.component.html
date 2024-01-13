@@ -26,18 +26,18 @@
             <div class="card-body">
                 <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist"
                     style="margin-top: 5px;">
-                    <li class="nav-item flex-fill" role="presentation">
-                        <button class="nav-link w-100 active" id="home-tab" data-bs-toggle="tab"
+                    <li class="nav-item flex-fill" role="presentation" style="pointer-events: none;">
+                        <button #productosBtn class="nav-link w-100 active" id="home-tab" data-bs-toggle="tab"
                             data-bs-target="#bordered-justified-home" type="button" role="tab" aria-controls="home"
                             aria-selected="false" tabindex="-1">Productos</button>
                     </li>
-                    <li class="nav-item flex-fill" role="presentation">
-                        <button class="nav-link w-100" id="profile-tab" data-bs-toggle="tab"
+                    <li class="nav-item flex-fill" role="presentation" style="pointer-events: none;">
+                        <button #procederAlPagoBtn class="nav-link w-100" id="profile-tab" data-bs-toggle="tab"
                             data-bs-target="#bordered-justified-profile" type="button" role="tab"
                             aria-controls="profile" aria-selected="true">Pago</button>
-                    </li>
-                    <li class="nav-item flex-fill" role="presentation">
-                        <button class="nav-link w-100" id="contact-tab" data-bs-toggle="tab"
+                    </li>                    
+                    <li class="nav-item flex-fill" role="presentation" style="pointer-events: none;">
+                        <button #realizarPedidoBtn class="nav-link w-100" id="contact-tab" data-bs-toggle="tab"
                             data-bs-target="#bordered-justified-contact" type="button" role="tab"
                             aria-controls="contact" aria-selected="false" tabindex="-1">Entrega</button>
                     </li>
@@ -70,7 +70,7 @@
                                             ({{this.obtenerCantidadTotal()+(this.obtenerCantidadTotal() >
                                             1 ? ' productos' : ' producto')}}): <b>$ {{this.obtenerTotalSegunProductos() |
                                                 number:'1.2-2'}}</b></p>
-                                        <button *ngIf="!this.productos.static ?? true" class="btn btn-primary form-control">Proceder al pago</button>
+                                        <button *ngIf="!this.productos.static ?? true" class="btn btn-primary form-control" (click)="procederPago()">Proceder al pago</button>
                                         <br *ngIf="!this.productos.static ?? true">&nbsp;
                                     </ng-container>
                                     <ng-template #totalpedidos>
@@ -87,20 +87,84 @@
             </section>
         </div>
         <div class="tab-pane fade" id="bordered-justified-profile" role="tabpanel" aria-labelledby="profile-tab">
-            <app-detalle-pago-productos></app-detalle-pago-productos>
+            <section class="section profile formsWTitle">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="col-lg-9 col-12 apartado-detalle-envio">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="col-12 direccion">
+                                        <h5 class="t-bold apartado-titulo-detalle">
+                                            Dirección
+                                            <span class="badge border-primary border-1 text-primary">Cambiar</span>
+                                        </h5>
+                                        <p>
+                                            {{this.usuario.direccion.calle}} {{this.usuario.direccion.noExterior}}<br>
+                                            {{this.usuario.direccion.localidad}}<br>
+                                            {{this.usuario.direccion.municipio}}, {{this.usuario.direccion.estado}}<br>
+                                            {{this.usuario.direccion.cp}}<br>
+                                        </p>
+                                    </div>
+                                    <div class="col-12 direccion">
+                                        <hr>
+                                        <h5 class="t-bold apartado-titulo-detalle">
+                                            Métdodo de pago
+                                            <span class="badge border-primary border-1 text-primary">Cambiar</span>
+                                        </h5>
+                                        <p>
+                                            Pagar con {{this.usuario.metodoPago.tipo}} <b>*{{this.usuario.metodoPago.noTarjeta.substring(this.usuario.metodoPago.noTarjeta.length - 4)}}</b><br>
+                                        </p>
+                                    </div>
+                                    <div class="col-12 direccion">
+                                        <hr>
+                                        <h5 class="t-bold apartado-titulo-detalle">
+                                            Productos
+                                            <span class="badge border-warning border-1 text-warning" (click)="verProductos()">Ver</span>
+                                        </h5>
+                                        <p>
+                                            <b>{{this.obtenerCantidadTotal()}}</b>{{(this.obtenerCantidadTotal() > 1 ? ' productos diferentes' : ' producto')}}<br>
+                                            <b>{{this.obtenerTotalArticulos()}}</b>{{(this.obtenerTotalArticulos() > 1 ? ' artículos en total' : ' artículo en total')}}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-12 card-precio">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="t-bold">Confirmación del Pedido</h5>
+                                    <p style="color:gray">
+                                        Subtotal(1 producto):<b> $ {{this.obtenerTotalSegunProductos() | number:'1.2-2'}}</b><br>
+                                        <span class="t-bold" style="color:brown">Total (IVA incluido, en caso de ser aplicable): $ {{this.obtenerTotalSegunProductos() | number:'1.2-2'}}</span><br><br>
+                                        Fecha de entrega estimada: <b>{{this.fechaEntregaEstimada() | date: 'd-M-y'}}</b>
+                                    </p>
+                                    <button class="btn btn-primary form-control" (click)="realizarPedido()">Realizar pedido y pagar</button>
+                                    <br>&nbsp;
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
         <div class="tab-pane fade" id="bordered-justified-contact" role="tabpanel" aria-labelledby="contact-tab">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body card-sp">
-                    <h5 class="t-bold" style="color:mediumseagreen;">Pedido realizado, ¡gracias!</h5>
-                    <p>
-                        Se enviará la confirmación a tu email.<br>
-                        <b>Enviando a Adrián Villa Reyes</b>, Calzada Guadalupe Victoria, San Pedro Cholula, Ocoyoacac, Mex. 52757
-                    </p>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body card-sp">
+                        <h5 class="t-bold" style="color:mediumseagreen;">Pedido realizado, ¡gracias!</h5>
+                        <p>
+                            Se enviará la confirmación a tu email.<br>
+                            <b>Enviando a Adrián Villa Reyes</b>, Calzada Guadalupe Victoria, San Pedro Cholula, Ocoyoacac, Mex. 52757
+                        </p>
+
+                        <div class="alert alert-info alert-dismissible fade show" role="alert">
+                            <i class="bi bi-info-circle me-1"></i>
+                            Para cancelación productos o pedidos se puede realizar unicamente antes de que sean enviados
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
         </div>
     </div>
 </div>

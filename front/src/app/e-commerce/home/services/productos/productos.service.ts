@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { carritoCompras, categorias, pedidos, productos } from '../../../../../environments/environment';
+import { carritoCompras, categorias, pedidos, productos, usuario } from '../../../../../environments/environment';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -8,6 +8,10 @@ import { Observable } from 'rxjs';
 export class ProductosService {
 
 	constructor() { }
+
+	public obtenerDatosUsusario () : Observable<any> {
+		return usuario;
+	}
 
 	public obtenerCategorias () : Observable<any> {
 		return categorias;
@@ -104,6 +108,11 @@ export class ProductosService {
 		return totalPorProductos;
 	}
 
+	public agregarPedido (dataPedido : any) : any {
+		dataPedido.idPedido = pedidos.items.length + 1;
+		pedidos.items.push(dataPedido);
+	}
+
 	public obtenerPedidos () : any {
 		return pedidos.items;
 	}
@@ -119,7 +128,7 @@ export class ProductosService {
   		if (pedido) {
     		pedido.productos = pedido.productos.filter((producto: any) => producto.idItem !== idProducto);
   		}
-		
+
 		return pedidos;
 	}
 }

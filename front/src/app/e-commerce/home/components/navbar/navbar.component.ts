@@ -11,6 +11,8 @@ import { ProductosService } from '../../services/productos/productos.service';
 })
 export class NavbarComponent implements OnInit{
 	protected pedidos : number = 0;
+	protected usuario : any = {};
+
 	constructor(
 		private modalService: ModalService,
 		private msj : MensajesService,
@@ -18,9 +20,14 @@ export class NavbarComponent implements OnInit{
 	) { }
 
 	ngOnInit(): void {
+		this.obtenerDatosUsuario();
 		setInterval(() => {
 			this.obtenerPedidos();
 		}, 1000);
+	}
+
+	private obtenerDatosUsuario () : void {
+		this.usuario = this.apiPrductos.obtenerDatosUsusario();
 	}
 
 	private obtenerPedidos () : any {

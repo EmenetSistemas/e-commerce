@@ -12,7 +12,6 @@ import { BsModalService } from "ngx-bootstrap/modal";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { VentaProductoComponent } from './modules/venta-productos/venta-producto.component';
 import { ProductoVentaComponent } from './components/producto-venta/producto-venta.component';
-import { DetallePagoProductosComponent } from './modules/detalle-pago-productos/detalle-pago-productos.component';
 import { PedidosComponent } from './modules/pedidos/pedidos.component';
 import { DetallePedidoComponent } from './modules/detalle-pedido/detalle-pedido.component';
 
@@ -31,7 +30,6 @@ import { DetallePedidoComponent } from './modules/detalle-pedido/detalle-pedido.
     DetalleProductoComponent,
     VentaProductoComponent,
     ProductoVentaComponent,
-    DetallePagoProductosComponent,
     PedidosComponent,
     DetallePedidoComponent
   ],

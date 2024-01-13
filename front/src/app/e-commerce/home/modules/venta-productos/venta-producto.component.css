@@ -28,4 +28,23 @@
 
 .card-margin {
     margin-bottom: -20px !important;
-}  
+}
+
+.apartado-detalle-envio {
+    margin-top: 0px !important;
+    margin-bottom: 25px !important;
+}
+
+.direccion {
+    margin-bottom: -35px !important;
+}
+
+.apartado-titulo-detalle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.apartado-detalle-envio {
+    margin-bottom: 0px !important;
+}
