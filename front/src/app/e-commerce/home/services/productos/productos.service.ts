@@ -83,6 +83,10 @@ export class ProductosService {
 		return carritoCompras;
 	}
 
+	public vaciarCarrito () : any {
+		carritoCompras.items = [];
+	}
+
 	public eliminarItemCarrito (idProducto : number) : Observable<any> {
 		carritoCompras.items = carritoCompras.items.filter(
 			(item : any) => item.idItem !== idProducto
@@ -108,9 +112,13 @@ export class ProductosService {
 		return totalPorProductos;
 	}
 
-	public agregarPedido (dataPedido : any) : any {
+	public agregarPedido (dataPedido : any, carrito : boolean = false) : any {
 		dataPedido.idPedido = pedidos.items.length + 1;
 		pedidos.items.push(dataPedido);
+
+		if (carrito) {
+			this.vaciarCarrito();
+		}
 	}
 
 	public obtenerPedidos () : any {

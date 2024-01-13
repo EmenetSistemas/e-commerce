@@ -39,12 +39,23 @@ export class CarritoComprasComponent implements OnInit {
 			case 'detalleCompra':
 				const dataModal = {
 					productos : {
-						items : carritoCompras.items
+						items : carritoCompras.items,
+						carrito : true
 					}
 				};
 				this.modalService.abrirModalConComponente(VentaProductoComponent, dataModal);
 			break;
 		}
+	}
+
+	protected vaciarCarrito () : void {
+		this.msj.mensajeConfirmacionCustom('¿Está seguro de vaciar el carrito de compras?', 'question', 'Varciar carrito de compras').then(
+			respuestaMensaje => {
+				if ( respuestaMensaje.isConfirmed ) {
+					this.apiProductos.vaciarCarrito();
+				}
+			}
+		);
 	}
 
 	protected eliminarItemCarrito (idProducto : number) : any {

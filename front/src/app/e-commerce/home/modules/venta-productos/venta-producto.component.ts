@@ -123,7 +123,7 @@ export class VentaProductoComponent extends FGenerico implements OnInit {
 						productos : this.productos.items
 					};
 			
-					this.apiProductos.agregarPedido(dataPedido);
+					this.apiProductos.agregarPedido(dataPedido, this.productos.carrito);
 			
 					setTimeout(() => {
 						this.msj.mensajeGenericoToast('Pedido realizada con éxito', 'success');
