@@ -105,6 +105,21 @@ export class ProductosService {
 	}
 
 	public obtenerPedidos () : any {
+		return pedidos.items;
+	}
+
+	public cancelarPedido(idPedido: number): Observable<any> {
+		pedidos.items = pedidos.items.filter((pedido : any) => pedido.idPedido !== idPedido);
+		return pedidos;
+	}
+
+	public cancelarProductoPedido (idPedido : number, idProducto : number) : Observable<any> {
+		const pedido = pedidos.items.find((pedido: any) => pedido.idPedido === idPedido);
+
+  		if (pedido) {
+    		pedido.productos = pedido.productos.filter((producto: any) => producto.idItem !== idProducto);
+  		}
+		
 		return pedidos;
 	}
 }

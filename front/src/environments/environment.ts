@@ -547,17 +547,38 @@ export const carritoCompras : any = {
     ]
 };
 
-export const pedidos : any = [
-    {
-        idPedido : 1,
-        fechaPedido : '11-01-2024',
-        direccionEntrega : 'Calzada Guadalupe Victoria, San Pedro Cholula, Ocoyoacac, Mex. 52757',
-        fechaEntrega : '16-01-2024',
-        productos : [
-            {
-                idItem : 1,
-                cantidad : 3
-            }
-        ]
-    }
-];
+export const pedidos : any = {
+    items : [
+        {
+            idPedido : 1,
+            fechaPedido : '11-01-2024',
+            direccionEntrega : 'Calzada Guadalupe Victoria, San Pedro Cholula, Ocoyoacac, Mex. 52757',
+            fechaEntrega : '16-01-2024',
+            productos : [
+                {
+                    idItem : 1,
+                    cantidad : 3
+                },
+                {
+                    idItem : 2,
+                    cantidad : 1
+                }
+            ]
+        }, {
+            idPedido : 2,
+            fechaPedido : '11-01-2024',
+            direccionEntrega : 'Calzada Guadalupe Victoria, San Pedro Cholula, Ocoyoacac, Mex. 52757',
+            fechaEntrega : '16-01-2024',
+            productos : [
+                {
+                    idItem : 1,
+                    cantidad : 3
+                },
+                {
+                    idItem : 2,
+                    cantidad : 1
+                }
+            ]
+        }
+    ]
+};

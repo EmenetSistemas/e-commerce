@@ -18,7 +18,9 @@ export class NavbarComponent implements OnInit{
 	) { }
 
 	ngOnInit(): void {
-		this.obtenerPedidos();
+		setInterval(() => {
+			this.obtenerPedidos();
+		}, 1000);
 	}
 
 	private obtenerPedidos () : any {

@@ -49,10 +49,30 @@ export class VentaProductoComponent implements OnInit {
 		this.productos.items = this.productos.items.filter(
 			(item : any) => item.idItem !== data.idProducto
 		);
-		this.productosVenta = this.productosVenta.filter(
-			(item : any) => item.id !== data.idProducto
-		);
-		this.msj.mensajeGenericoToast('Se eliminó el producto de la compra', 'success');
+		this.obtenerProductosVenta();
+
+		if (this.productos.static) {
+			this.apiProductos.cancelarProductoPedido(this.productos.idPedido, data.idProducto);
+			if (this.productosVenta.length > 0) {
+				this.msj.mensajeGenericoToast('Se eliminó el producto del pedido', 'success');
+			} else {
+				this.apiProductos.cancelarPedido(this.productos.idPedido);
+				this.cerrarModal();
+				if (this.apiProductos.obtenerPedidos().length > 0) {
+					this.abrirModal();
+					return;
+				}
+				this.msj.mensajeGenerico('Al parecer no hay más productos en este pedido', 'info', 'Productos pedido #PE-'+this.productos.idPedido);
+			}
+			return;
+		}
+
+		if (this.productosVenta.length > 0) {
+			this.msj.mensajeGenericoToast('Se eliminó el producto de la compra', 'success');
+		} else {
+			this.cerrarModal();
+			this.msj.mensajeGenerico('Al parecer no hay productos para realizar la compra', 'info', 'Compra productos');
+		}
 	}
 
 	protected abrirModal () : any {
