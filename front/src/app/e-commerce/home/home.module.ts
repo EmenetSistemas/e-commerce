@@ -14,11 +14,14 @@ import { VentaProductoComponent } from './modules/venta-productos/venta-producto
 import { ProductoVentaComponent } from './components/producto-venta/producto-venta.component';
 import { PedidosComponent } from './modules/pedidos/pedidos.component';
 import { DetallePedidoComponent } from './modules/detalle-pedido/detalle-pedido.component';
+import { HttpClientModule } from "@angular/common/http";
+import { LoginRegisterComponent } from './modules/login-register/login-register.component';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild(HomeRoutes),
+    HttpClientModule,
     FormsModule,
     ReactiveFormsModule
   ],
@@ -31,7 +34,8 @@ import { DetallePedidoComponent } from './modules/detalle-pedido/detalle-pedido.
     VentaProductoComponent,
     ProductoVentaComponent,
     PedidosComponent,
-    DetallePedidoComponent
+    DetallePedidoComponent,
+    LoginRegisterComponent
   ],
   providers: [
     ModalService,

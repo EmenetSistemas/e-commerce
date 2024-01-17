@@ -1,3 +1,7 @@
+export const environment = {
+    api : 'http://localhost:8000/api'
+}
+
 export const categorias : any = [
     {
         id: 1,
@@ -538,4 +542,4 @@ export const usuario : any = {
         tipo : 'VISA',
         noTarjeta : '1234 4567 2346 8456'
     }
-}
+};

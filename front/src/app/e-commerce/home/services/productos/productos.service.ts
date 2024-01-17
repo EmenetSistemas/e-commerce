@@ -1,16 +1,22 @@
 import { Injectable } from '@angular/core';
-import { carritoCompras, categorias, pedidos, productos, usuario } from '../../../../../environments/environment';
+import { carritoCompras, categorias, environment, pedidos, productos, usuario } from '../../../../../environments/environment';
 import { Observable } from 'rxjs';
+import { MensajesService } from 'src/app/services/mensajes/mensajes.service';
+import { HttpClient } from '@angular/common/http';
+import { ModalService } from '../modal/modal.service';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class ProductosService {
+	private url = environment.api;
 
-	constructor() { }
+	constructor(
+		private http : HttpClient
+	) {}
 
-	public obtenerDatosUsusario () : Observable<any> {
-		return usuario;
+	public obtenerDatosSesion (token : any) : Observable<any> {
+		return this.http.get<any>(this.url+'/usuarios/obtenerDatosSesion/'+token);
 	}
 
 	public obtenerCategorias () : Observable<any> {

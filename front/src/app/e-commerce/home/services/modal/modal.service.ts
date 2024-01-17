@@ -9,13 +9,13 @@ export class ModalService {
 
 	constructor(private modalService: BsModalService) { }
 
-	abrirModalConComponente(component: any, dataModal: any = null) {
+	abrirModalConComponente(component: any, dataModal: any = null, typeModal : string = ' custom-modal') {
 		const modalConfig = {
 			ignoreBackdropClick: true,
 			keyboard: false,
 			animated: true,
 			initialState: dataModal,
-			class: 'modal-xl modal-dialog-centered custom-modal',
+			class: 'modal-xl modal-dialog-centered'+typeModal,
 			style: {
 				'background-color': 'transparent',
 				'overflow-y': 'auto'

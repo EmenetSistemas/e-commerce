@@ -1,0 +1,5 @@
+[class*="col-"] {
+	float: left !important;
+	padding: 0px 8px!important;
+    margin: 16px 0px 0px !important;
+}

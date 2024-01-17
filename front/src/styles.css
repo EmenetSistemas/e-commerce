@@ -1255,13 +1255,10 @@ button {
 	align-content: center !important;
 	margin-top: -15px;
 	text-align: center !important;
-}
-
-.custom-modal .modal-footer {
-	flex-shrink: 0;
-	position: sticky;
-	bottom: 0;
-	background-color: #ffffff;
+	flex-shrink: 0 !important;
+	position: sticky !important;
+	bottom: 0 !important;
+	background-color: #ffffff !important;
 }
 
 .modulos-check {
@@ -1458,12 +1455,12 @@ a :hover {
     margin-top: 25px;
 }
 
-.custom-modal .modal-content {
+.modal-content {
   	overflow-y: auto !important;
   	max-height: 90vh !important;
 }
 
-.modal-dialog {
+.custom-modal {
 	width: 90vw !important;
     max-width: none !important;
 }
@@ -1503,4 +1500,15 @@ a :hover {
 		display: none;
 		visibility: hidden;
 	}
+}
+
+.required:after {
+	content: '*';
+	color: red;
+	margin-left: 5px;
+}
+
+form label {
+	font-weight: 600 !important;
+	color: rgba(1, 41, 112, 0.6) !important;
 }

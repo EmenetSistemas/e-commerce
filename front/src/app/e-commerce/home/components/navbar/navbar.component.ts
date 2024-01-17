@@ -3,6 +3,7 @@ import { ModalService } from '../../services/modal/modal.service';
 import { MensajesService } from 'src/app/services/mensajes/mensajes.service';
 import { PedidosComponent } from '../../modules/pedidos/pedidos.component';
 import { ProductosService } from '../../services/productos/productos.service';
+import { UsuariosService } from '../../services/usuarios/usuarios.service';
 
 @Component({
 	selector: 'app-navbar',
@@ -16,7 +17,8 @@ export class NavbarComponent implements OnInit{
 	constructor(
 		private modalService: ModalService,
 		private msj : MensajesService,
-		private apiPrductos : ProductosService
+		private apiProductos : ProductosService,
+		private apiUsuarios : UsuariosService
 	) { }
 
 	ngOnInit(): void {
@@ -27,14 +29,25 @@ export class NavbarComponent implements OnInit{
 	}
 
 	private obtenerDatosUsuario () : void {
-		this.usuario = this.apiPrductos.obtenerDatosUsusario();
+		const token = localStorage.getItem('token');
+		this.apiProductos.obtenerDatosSesion(token).subscribe(
+			respuesta => {
+				if (respuesta.data.length == 0) {
+					localStorage.clear();
+					return;
+				}
+			}, error => {
+				this.msj.mensajeGenerico('error', 'error');
+			}
+		);
 	}
 
 	private obtenerPedidos () : any {
-		this.pedidos = this.apiPrductos.obtenerPedidos()?.length;
+		this.pedidos = this.apiProductos.obtenerPedidos()?.length;
 	}
 
 	protected abrirModal (modal : string) {
+		if (this.apiUsuarios.validarPerfilUsuario()) return;
 		if (this.pedidos == 0) {
 			this.msj.mensajeGenerico('Al parecer aún no haz realizado ninguna compra. Te invitamos a realizar alguna compra de nuestras ofertas', 'info', 'Pedidos');
 			return;

@@ -36,7 +36,19 @@ export class VentaProductoComponent extends FGenerico implements OnInit {
 		this.msj.cerrarMensajes();
 	}
 	private obtenerDatosUsuario () : void {
-		this.usuario = this.apiProductos.obtenerDatosUsusario();
+		const token = localStorage.getItem('token');
+		this.apiProductos.obtenerDatosSesion(token).subscribe(
+			respuesta => {
+				if (respuesta.data.length == 0) {
+					localStorage.clear();
+					return;
+				}
+				
+				console.log(respuesta);
+			}, error => {
+				this.msj.mensajeGenerico('error', 'error');
+			}
+		);
 	}
 
 	protected obtenerProductosVenta () : any {
