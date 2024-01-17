@@ -4,6 +4,7 @@ import { ProductosService } from '../../services/productos/productos.service';
 import { MensajesService } from 'src/app/services/mensajes/mensajes.service';
 import { PedidosComponent } from '../pedidos/pedidos.component';
 import FGenerico from 'src/app/shared/util/funciones-genericas';
+import { UsuariosService } from '../../services/usuarios/usuarios.service';
 
 @Component({
 	selector: 'app-venta-producto',
@@ -24,27 +25,30 @@ export class VentaProductoComponent extends FGenerico implements OnInit {
 	constructor(
 		private modalService : ModalService,
 		private apiProductos : ProductosService,
+		private apiUsuarios : UsuariosService,
 		private msj : MensajesService
 	) {
 		super();
 	}
 
-	ngOnInit(): void {
+	async ngOnInit(): Promise<void> {
 		this.msj.mensajeEsperar();
-		this.obtenerDatosUsuario();
+		await Promise.all([
+			this.obtenerDatosUsuario()
+		]);
 		this.obtenerProductosVenta();
 		this.msj.cerrarMensajes();
 	}
-	private obtenerDatosUsuario () : void {
+	private obtenerDatosUsuario () : Promise<any> {
 		const token = localStorage.getItem('token');
-		this.apiProductos.obtenerDatosSesion(token).subscribe(
+		return this.apiUsuarios.obtenerDatosSesion(token).toPromise().then(
 			respuesta => {
-				if (respuesta.data.length == 0) {
+				if (respuesta.data.status == 204) {
 					localStorage.clear();
 					return;
 				}
-				
-				console.log(respuesta);
+
+				this.usuario = respuesta.data;
 			}, error => {
 				this.msj.mensajeGenerico('error', 'error');
 			}

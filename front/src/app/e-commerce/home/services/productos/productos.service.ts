@@ -15,10 +15,6 @@ export class ProductosService {
 		private http : HttpClient
 	) {}
 
-	public obtenerDatosSesion (token : any) : Observable<any> {
-		return this.http.get<any>(this.url+'/usuarios/obtenerDatosSesion/'+token);
-	}
-
 	public obtenerCategorias () : Observable<any> {
 		return categorias;
 	}

@@ -86,7 +86,7 @@
                 </div>
             </section>
         </div>
-        <div class="tab-pane fade" id="bordered-justified-profile" role="tabpanel" aria-labelledby="profile-tab">
+        <div class="tab-pane fade" id="bordered-justified-profile" role="tabpanel" aria-labelledby="profile-tab" *ngIf="this.usuario.direccion">
             <section class="section profile formsWTitle">
                 <div class="row">
                     <div class="col-12">
@@ -147,19 +147,19 @@
                 </div>
             </section>
         </div>
-        <div class="tab-pane fade" id="bordered-justified-contact" role="tabpanel" aria-labelledby="contact-tab">
+        <div class="tab-pane fade" id="bordered-justified-contact" role="tabpanel" aria-labelledby="contact-tab" *ngIf="this.usuario.direccion">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body card-sp">
                         <h5 class="t-bold" style="color:mediumseagreen;">Pedido realizado, ¡gracias!</h5>
                         <p>
                             Se enviará la confirmación a tu email.<br>
-                            <b>Enviando a Adrián Villa Reyes</b>, Calzada Guadalupe Victoria, San Pedro Cholula, Ocoyoacac, Mex. 52757
+                            <b>Enviando a {{this.usuario.nombre}} {{this.usuario.aPaterno}}</b> en {{this.usuario.direccion.calle}}, {{this.usuario.direccion.localidad}}, {{this.usuario.direccion.municipio}}, {{this.usuario.direccion.municipio}} {{this.usuario.direccion.cp}}
                         </p>
 
                         <div class="alert alert-info alert-dismissible fade show" role="alert">
                             <i class="bi bi-info-circle me-1"></i>
-                            Para cancelación productos o pedidos se puede realizar unicamente antes de que sean enviados
+                            Para cancelación de productos o pedidos se puede realizar unicamente antes de que sean enviados
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     </div>

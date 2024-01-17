@@ -30,12 +30,14 @@ export class NavbarComponent implements OnInit{
 
 	private obtenerDatosUsuario () : void {
 		const token = localStorage.getItem('token');
-		this.apiProductos.obtenerDatosSesion(token).subscribe(
+		this.apiUsuarios.obtenerDatosSesion(token).subscribe(
 			respuesta => {
-				if (respuesta.data.length == 0) {
+				if (respuesta.data.status == 204) {
 					localStorage.clear();
 					return;
 				}
+
+				this.usuario = respuesta.data;
 			}, error => {
 				this.msj.mensajeGenerico('error', 'error');
 			}

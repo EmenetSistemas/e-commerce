@@ -175,7 +175,6 @@ export class LoginRegisterComponent extends FGenerico implements OnInit{
 							}
 
 							this.cerrarModal();
-							console.log(respuesta.data.token);
 							localStorage.setItem('token', respuesta.data.token);
 							this.msj.mensajeGenerico(respuesta.mensaje, 'success');
 							return;
