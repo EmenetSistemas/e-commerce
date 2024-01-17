@@ -121,7 +121,12 @@ export class VentaProductoComponent extends FGenerico implements OnInit {
 	}
 
 	protected procederPago() {
-		this.procederAlPagoBtn.nativeElement.click();
+		if (this.usuario.metodoPago.noTarjeta != null) {
+			this.procederAlPagoBtn.nativeElement.click();
+			return;
+		}
+
+		this.msj.mensajeConfirmacionCustom('Al parecer aún no haz registrado un método de pago, ¿Deseas actualizar tu información?', 'question', 'Sin método de pago').then();
 	}
 
 	protected realizarPedido() {

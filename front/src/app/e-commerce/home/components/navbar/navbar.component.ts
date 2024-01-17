@@ -4,6 +4,7 @@ import { MensajesService } from 'src/app/services/mensajes/mensajes.service';
 import { PedidosComponent } from '../../modules/pedidos/pedidos.component';
 import { ProductosService } from '../../services/productos/productos.service';
 import { UsuariosService } from '../../services/usuarios/usuarios.service';
+import { LoginRegisterComponent } from '../../modules/login-register/login-register.component';
 
 @Component({
 	selector: 'app-navbar',
@@ -22,26 +23,28 @@ export class NavbarComponent implements OnInit{
 	) { }
 
 	ngOnInit(): void {
-		this.obtenerDatosUsuario();
 		setInterval(() => {
+			this.obtenerDatosUsuario();
 			this.obtenerPedidos();
 		}, 1000);
 	}
 
-	private obtenerDatosUsuario () : void {
+	protected obtenerDatosUsuario () : void {
 		const token = localStorage.getItem('token');
-		this.apiUsuarios.obtenerDatosSesion(token).subscribe(
-			respuesta => {
-				if (respuesta.data.status == 204) {
-					localStorage.clear();
-					return;
+		if (token != null) {
+			this.apiUsuarios.obtenerDatosSesion(token).subscribe(
+				respuesta => {
+					if (respuesta.data.status == 204) {
+						localStorage.clear();
+						return;
+					}
+	
+					this.usuario = respuesta.data;
+				}, error => {
+					this.msj.mensajeGenerico('error', 'error');
 				}
-
-				this.usuario = respuesta.data;
-			}, error => {
-				this.msj.mensajeGenerico('error', 'error');
-			}
-		);
+			);
+		}
 	}
 
 	private obtenerPedidos () : any {
@@ -59,5 +62,21 @@ export class NavbarComponent implements OnInit{
 				this.modalService.abrirModalConComponente(PedidosComponent);
 			break;
 		}
+	}
+
+	protected abrirModalLogin () {
+		this.modalService.abrirModalConComponente(LoginRegisterComponent, {}, '');
+	}
+
+	protected cerrarSesion () : void {
+		this.msj.mensajeConfirmacionCustom('¿Está seguro de cerrar sesión?', 'question', 'Cerrar sesión').then(
+			respuesta => {
+				if (respuesta.isConfirmed) {
+					this.usuario = {};
+					localStorage.clear();
+					this.msj.mensajeGenerico('Hasta la próxima...!', 'success', 'Sesión finalizada');
+				}
+			}
+		);
 	}
 }

@@ -40,7 +40,11 @@ export class UsuariosService {
 	}
 
 	public obtenerDatosSesion (token : any) : Observable<any> {
-		return this.http.post<any>(this.url+'/usuarios/obtenerDatosSesion/', {token});
+		return this.http.post<any>(this.url+'/usuarios/obtenerDatosSesion', {token});
+	}
+
+	public login (data : any) : Observable<any> {
+		return this.http.post<any>(this.url+'/usuarios/login', data);
 	}
 
 	public registrarUsuario (data : any) : Observable<any> {

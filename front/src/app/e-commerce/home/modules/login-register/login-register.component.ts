@@ -11,8 +11,14 @@ import { UsuariosService } from '../../services/usuarios/usuarios.service';
 	styleUrls: ['./login-register.component.css']
 })
 export class LoginRegisterComponent extends FGenerico implements OnInit{
-	protected op : string = 'Iniciar sesión';
+	protected op : number = 0;
 
+	protected titulos : any = [
+		'Iniciar sesión',
+		'Registro cuenta'
+	];
+
+	protected formLogin! : FormGroup;
 	protected formDatosPersonalesSocio! : FormGroup;
   	protected formDetalleDomicilioSocio! : FormGroup;
 	protected formMetodoPago! : FormGroup;
@@ -29,10 +35,18 @@ export class LoginRegisterComponent extends FGenerico implements OnInit{
 	}
 
 	ngOnInit(): void {
+		this.crearFormLogin();
 		this.crearFormDatosPersonalesSocio();
 		this.crearFormDetalleDomicilioSocio();
 		this.crearFormMetodoPago();
 		this.cambiarCampos();
+	}
+
+	private crearFormLogin () : any {
+		this.formLogin = this.fb.group({
+			correo 		: [null, [Validators.required, Validators.email, Validators.pattern('[a-zA-Zá-úÁ-Ú0-9 .,-@#$%&+{}()?¿!¡]*')]],
+			password 	: [null, [Validators.required, Validators.pattern('[a-zA-Zá-úÁ-Ú0-9 .,-@#$%&+{}()?¿!¡]*')]]
+		});
 	}
 
 	private crearFormDatosPersonalesSocio () : void {
@@ -65,6 +79,29 @@ export class LoginRegisterComponent extends FGenerico implements OnInit{
 			tipo : [],
 			emisor : []
 		});
+	}
+
+	protected iniciarSesion () : void {
+		if (this.formLogin.invalid) {
+			this.msj.mensajeGenerico('Aún hay campos vacíos o que no cumplen con la estructura correcta.', 'warning', 'Los campos requeridos están marcados con un *');
+			return;
+		}
+
+		this.msj.mensajeEsperar();
+		this.apiUsuarios.login(this.formLogin.value).subscribe(
+			respuesta => {
+				if(respuesta.status != 200){
+					this.msj.mensajeGenerico(respuesta.mensaje, 'warning');
+					return;
+				}
+				 
+				this.cerrarModal();
+				localStorage.setItem('token', respuesta.data.token);
+				this.msj.mensajeGenerico(respuesta.mensaje, 'success');
+			}, error => {
+				this.msj.mensajeGenerico('error', 'error');
+			}
+		);
 	}
 
 	protected registrarMetodoPago () : void {
@@ -103,18 +140,6 @@ export class LoginRegisterComponent extends FGenerico implements OnInit{
 			this.formMetodoPago.get('emisor')?.setValue(null);
 		}
 	}
-
-	formatoTarjeta(event: any): void {
-		const inputElement = event.target;
-		const inputValue = inputElement.value.replace(/\D/g, '');
-		
-		if (inputValue.length > 0) {
-		  const formattedValue = inputValue.match(/.{1,4}/g).join(' ');
-		  inputElement.value = formattedValue;
-		} else {
-		  inputElement.value = '';
-		}
-	  }
 
 	protected registrarNuevoUsuario () {
 		if (this.formDatosPersonalesSocio.invalid) {
@@ -188,6 +213,7 @@ export class LoginRegisterComponent extends FGenerico implements OnInit{
 	}
 
 	private limpiarFormularios() : void {
+		this.formLogin.reset();
 		this.formDatosPersonalesSocio.reset();
 		this.formDetalleDomicilioSocio.reset();
 		this.formMetodoPago.reset();

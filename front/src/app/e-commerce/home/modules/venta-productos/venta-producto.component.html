@@ -111,8 +111,8 @@
                                             Métdodo de pago
                                             <span class="badge border-primary border-1 text-primary">Cambiar</span>
                                         </h5>
-                                        <p>
-                                            Pagar con {{this.usuario.metodoPago.tipo}} <b>*{{this.usuario.metodoPago.noTarjeta.substring(this.usuario.metodoPago.noTarjeta.length - 4)}}</b><br>
+                                        <p *ngIf="this.usuario.metodoPago.emisor != null">
+                                            Pagar con {{this.usuario.metodoPago.emisor}} <b>*{{this.usuario.metodoPago.noTarjeta.substring(this.usuario.metodoPago.noTarjeta.length - 4)}}</b><br>
                                         </p>
                                     </div>
                                     <div class="col-12 direccion">
