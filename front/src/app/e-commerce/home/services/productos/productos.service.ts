@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
-import { carritoCompras, categorias, environment, pedidos, productos, usuario } from '../../../../../environments/environment';
+import { carritoCompras, categorias, environment, pedidos, productos } from '../../../../../environments/environment';
 import { Observable } from 'rxjs';
-import { MensajesService } from 'src/app/services/mensajes/mensajes.service';
 import { HttpClient } from '@angular/common/http';
-import { ModalService } from '../modal/modal.service';
 
 @Injectable({
 	providedIn: 'root'

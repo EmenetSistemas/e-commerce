@@ -51,6 +51,8 @@ export class VentaProductoComponent extends FGenerico implements OnInit {
 
 				this.usuario = respuesta.data;
 			}, error => {
+				localStorage.removeItem('token');
+				localStorage.clear();
 				this.msj.mensajeGenerico('error', 'error');
 			}
 		);

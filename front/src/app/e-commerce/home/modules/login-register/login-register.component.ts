@@ -91,14 +91,18 @@ export class LoginRegisterComponent extends FGenerico implements OnInit{
 		this.apiUsuarios.login(this.formLogin.value).subscribe(
 			respuesta => {
 				if(respuesta.status != 200){
+					localStorage.removeItem('token');
+					localStorage.clear();
 					this.msj.mensajeGenerico(respuesta.mensaje, 'warning');
 					return;
 				}
-				 
+				
 				this.cerrarModal();
 				localStorage.setItem('token', respuesta.data.token);
 				this.msj.mensajeGenerico(respuesta.mensaje, 'success');
 			}, error => {
+				localStorage.removeItem('token');
+				localStorage.clear();
 				this.msj.mensajeGenerico('error', 'error');
 			}
 		);

@@ -23,10 +23,8 @@ export class NavbarComponent implements OnInit{
 	) { }
 
 	ngOnInit(): void {
-		setInterval(() => {
-			this.obtenerDatosUsuario();
-			this.obtenerPedidos();
-		}, 1000);
+		this.obtenerDatosUsuario();
+		this.obtenerPedidos();
 	}
 
 	protected obtenerDatosUsuario () : void {
@@ -80,6 +78,7 @@ export class NavbarComponent implements OnInit{
 					this.usuario = {};
 					localStorage.removeItem('token');
 					localStorage.clear();
+					this.obtenerDatosUsuario();
 					this.msj.mensajeGenerico('Hasta la próxima...!', 'success', 'Sesión finalizada');
 				}
 			}

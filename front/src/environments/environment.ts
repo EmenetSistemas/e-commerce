@@ -522,24 +522,3 @@ export const carritoCompras : any = {
 export const pedidos : any = {
     items : []
 };
-
-export const usuario : any = {
-    nombre : 'Adrián',
-    aPaterno : 'Villa',
-    aMaterno : 'Reyes',
-    telefono : '7292271384',
-    correo : 'idgs.adrian.villa@gmail.com',
-    direccion : {
-        calle : 'Calzada Guadalupe Victoria',
-        noExterior : 'S/N',
-        localidad : 'San Pedro Cholula',
-        municipio : 'Ocoyoacac',
-        estado : 'México',
-        cp : '52757'
-    },
-    metodoPago : {
-        tarjeta : 'débito',
-        tipo : 'VISA',
-        noTarjeta : '1234 4567 2346 8456'
-    }
-};
