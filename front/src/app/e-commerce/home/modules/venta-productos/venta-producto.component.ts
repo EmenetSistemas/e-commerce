@@ -44,6 +44,7 @@ export class VentaProductoComponent extends FGenerico implements OnInit {
 		return this.apiUsuarios.obtenerDatosSesion(token).toPromise().then(
 			respuesta => {
 				if (respuesta.data.status == 204) {
+					localStorage.removeItem('token');
 					localStorage.clear();
 					return;
 				}

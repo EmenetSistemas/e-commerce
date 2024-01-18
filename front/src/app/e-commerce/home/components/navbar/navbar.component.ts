@@ -35,6 +35,7 @@ export class NavbarComponent implements OnInit{
 			this.apiUsuarios.obtenerDatosSesion(token).subscribe(
 				respuesta => {
 					if (respuesta.data.status == 204) {
+						localStorage.removeItem('token');
 						localStorage.clear();
 						return;
 					}
@@ -44,6 +45,10 @@ export class NavbarComponent implements OnInit{
 					this.msj.mensajeGenerico('error', 'error');
 				}
 			);
+		} else {
+			this.usuario = {};
+			localStorage.removeItem('token');
+			localStorage.clear();
 		}
 	}
 
@@ -73,6 +78,7 @@ export class NavbarComponent implements OnInit{
 			respuesta => {
 				if (respuesta.isConfirmed) {
 					this.usuario = {};
+					localStorage.removeItem('token');
 					localStorage.clear();
 					this.msj.mensajeGenerico('Hasta la próxima...!', 'success', 'Sesión finalizada');
 				}
