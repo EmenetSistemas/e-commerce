@@ -1,0 +1,46 @@
+<div class="modal-body">
+    <div class="pagetitle">
+        <h1>Pedidos</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active">Pedidos realizados</li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <i class="bi bi-exclamation-triangle me-1"></i>
+        Solo se pueden cancelar pedidos si aún no han sido enviados
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div class="col-12 apartado-pedidos" style="margin-top: -25px !important;">
+        <div class="card" style="margin-top: 10px !important;" *ngFor="let pedido of this.pedidos">
+            <div class="card-body" style="margin-bottom: -20px;">
+                <h6 class="card-title apartado-titulo-detalle" style="margin-top: -10px !important;">
+                    <section (click)="this.abrirModal(pedido.idPedido)">Pedido #PE-{{pedido.idPedido}}</section>
+                    <div class="tablet">
+                        <span class="badge border-danger border-1 text-danger t-bold" (click)="this.cancelarPedido(pedido.idPedido)">Cancelar</span><br>
+                        <span class="badge border-info border-1 text-info t-bold" style="margin-top: 5px;">Seguir paquete</span>
+                    </div>
+                </h6>
+                <p style="margin-top: -25px !important;" (click)="this.abrirModal(pedido.idPedido)">
+                    Pedido: {{pedido.fechaPedido | date: 'd-M-y'}}<br>
+                    Entrega estimada: {{pedido.fechaEntrega | date: 'd-M-y'}}<br>
+                    Productos: {{pedido.productos.length}}<br>
+                    <b>{{pedido.direccionEntrega}}</b><br>
+                </p>
+                <div class="celular" style="margin-top: -5px !important; margin-bottom: 15px !important;">
+                    <h5 align="center">
+                        <span class="badge border-danger border-1 text-danger t-bold" (click)="this.cancelarPedido(pedido.idPedido)">Cancelar</span>
+                        <span class="badge border-info border-1 text-info t-bold">Seguir pedido</span>
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="cerrarModal()"><b>Cerrar</b></button>
+</div>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductosService } from '../../services/productos/productos.service';
-import { VentaProductoComponent } from '../../modules/venta-producto/venta-producto.component';
+import { VentaProductoComponent } from '../../modules/venta-productos/venta-producto.component';
 import { ModalService } from '../../services/modal/modal.service';
 import { carritoCompras } from 'src/environments/environment';
 import { MensajesService } from 'src/app/services/mensajes/mensajes.service';
@@ -37,14 +37,25 @@ export class CarritoComprasComponent implements OnInit {
 	protected abrirModal ( modal : string ) : any {
 		switch (modal) {
 			case 'detalleCompra':
-				const dataModal2 = {
+				const dataModal = {
 					productos : {
-						items : carritoCompras.items
+						items : carritoCompras.items,
+						carrito : true
 					}
 				};
-				this.modalService.abrirModalConComponente(VentaProductoComponent, dataModal2);
+				this.modalService.abrirModalConComponente(VentaProductoComponent, dataModal);
 			break;
 		}
+	}
+
+	protected vaciarCarrito () : void {
+		this.msj.mensajeConfirmacionCustom('¿Está seguro de vaciar el carrito de compras?', 'question', 'Varciar carrito de compras').then(
+			respuestaMensaje => {
+				if ( respuestaMensaje.isConfirmed ) {
+					this.apiProductos.vaciarCarrito();
+				}
+			}
+		);
 	}
 
 	protected eliminarItemCarrito (idProducto : number) : any {

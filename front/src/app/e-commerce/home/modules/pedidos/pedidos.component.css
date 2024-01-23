@@ -1,0 +1,13 @@
+.apartado-titulo-detalle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.apartado-titulo-detalle > div {
+    margin-left: auto;
+}
+
+.apartado-pedidos > .card:hover{
+	background-color: #cfe2ff;
+}

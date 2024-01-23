@@ -5,8 +5,8 @@
 
 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
     <li class="dropdown-header">
-        Tienes {{this.noItemsCarrito}} {{this.noItemsCarrito == 1 ? 'artículo' : 'artículos' }} en tu carrito
-        <a *ngIf="noItemsCarrito > 3" href="javascript:void(0)" (click)="this.abrirModal('detalleCompra')"><span class="badge rounded-pill bg-primary p-2 ms-2">Ver todo</span></a>
+        Tienes {{this.noItemsCarrito}} {{this.noItemsCarrito == 1 ? 'producto' : 'productos' }} en tu carrito
+        <a *ngIf="noItemsCarrito > 3" href="javascript:void(0)" (click)="this.vaciarCarrito()"><span class="badge rounded-pill bg-warning p-2 ms-2">Vaciar</span></a>
     </li>
     <section *ngIf="this.noItemsCarrito > 0">
         <li><hr class="dropdown-divider"></li>
@@ -36,13 +36,13 @@
         <section *ngIf="this.noItemsCarrito > 3">
             <li class="message-item t-center">
                 <div>
-                    <h4 class="t-bold" align="center">...</h4>
+                    <h4 class="t-bold" align="center" (click)="this.abrirModal('detalleCompra')">Ver más...</h4>
                 </div>
             </li>
     
             <li><hr class="dropdown-divider"></li>
         </section>
     
-        <li class="dropdown-footer" (click)="this.abrirModal('detalleCompra')"><a href="javascript:void(0)">Proceder a la compra</a></li>
+        <li class="dropdown-footer t-bold" (click)="this.abrirModal('detalleCompra')"><a href="javascript:void(0)">Proceder a la compra</a></li>
     </section>
 </ul>

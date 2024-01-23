@@ -3,7 +3,8 @@ import { ModalService } from '../../services/modal/modal.service';
 import { DetalleProductoComponent } from '../../modules/detalle-producto/detalle-producto.component';
 import { ProductosService } from '../../services/productos/productos.service';
 import { MensajesService } from 'src/app/services/mensajes/mensajes.service';
-import { VentaProductoComponent } from '../../modules/venta-producto/venta-producto.component';
+import { VentaProductoComponent } from '../../modules/venta-productos/venta-producto.component';
+import { UsuariosService } from '../../services/usuarios/usuarios.service';
 
 @Component({
 	selector: 'app-producto',
@@ -16,8 +17,9 @@ export class ProductoComponent {
 	protected producto : any = {};
 
 	constructor(
-		private modalService: ModalService,
-		private apiProductos: ProductosService,
+		private modalService : ModalService,
+		private apiProductos : ProductosService,
+		private apiUsuarios : UsuariosService,
 		private msj : MensajesService
 	) { }
 
@@ -38,6 +40,7 @@ export class ProductoComponent {
 				this.modalService.abrirModalConComponente(DetalleProductoComponent, dataModal1);
 			break;
 			case 'detalleCompra':
+				if (this.apiUsuarios.validarPerfilUsuario()) return;
 				const dataModal2 = {
 					productos : {
 						items : [{
@@ -52,6 +55,8 @@ export class ProductoComponent {
 	}
 
 	protected agregarItemCarrito () : any {
+		if (this.apiUsuarios.validarPerfilUsuario()) return;
+		
 		this.msj.mensajeEsperarToast();
 		try {
 			const busquedaProd = this.apiProductos.validarProductoCarrito(this.idProducto);

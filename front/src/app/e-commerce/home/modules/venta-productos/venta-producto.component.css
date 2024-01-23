@@ -1,0 +1,50 @@
+.card {
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+}
+
+.card-precio {
+    position: -webkit-sticky;
+	position: sticky;
+	top: 35px;
+	z-index: 900;
+}
+
+.card-precio .card-body{
+    padding-top: 15px;
+    margin-bottom: -20px;
+}
+
+@media (max-width:1200px) {
+    .card-precio{
+        margin-top: 15px;
+    }
+}
+
+.card-sp {
+    margin-top: 20px;
+    margin-bottom: -10px;
+}
+
+.card-margin {
+    margin-bottom: -20px !important;
+}
+
+.apartado-detalle-envio {
+    margin-top: 0px !important;
+    margin-bottom: 25px !important;
+}
+
+.direccion {
+    margin-bottom: -35px !important;
+}
+
+.apartado-titulo-detalle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.apartado-detalle-envio {
+    margin-bottom: 0px !important;
+}

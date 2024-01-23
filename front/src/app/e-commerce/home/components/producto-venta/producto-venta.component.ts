@@ -1,5 +1,4 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
-import { ModalService } from '../../services/modal/modal.service';
 import { ProductosService } from '../../services/productos/productos.service';
 import { MensajesService } from 'src/app/services/mensajes/mensajes.service';
 import FGenerico from 'src/app/shared/util/funciones-genericas';
@@ -11,10 +10,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 	styleUrls: ['./producto-venta.component.css']
 })
 export class ProductoVentaComponent extends FGenerico implements OnInit{
+	@Input() idPedido: any = 0;
 	@Input() idProducto: any = [];
 	@Input() cantidadProducto: any = 0;
+	@Input() static: any = false;
+	
 	@ViewChild('cantidadInput') cantidadInput!: ElementRef;
 	@Output() selectionChange: EventEmitter<any> = new EventEmitter<any>();
+	@Output() eliminoProducto: EventEmitter<any> = new EventEmitter<any>();
 
 	protected formVentaProducto!: FormGroup;
 
@@ -75,5 +78,36 @@ export class ProductoVentaComponent extends FGenerico implements OnInit{
 	private seleccionarTexto() {
 		const inputEl = this.cantidadInput.nativeElement;
 		this.renderer.selectRootElement(inputEl).select();
+	}
+
+	protected eliminarItemCompra (idProducto : number) : any {
+		this.msj.mensajeConfirmacionCustom('¿Está seguro de eliminar el producto de la compra?', 'question', 'Eliminar producto').then(
+			respuestaMensaje => {
+				if ( respuestaMensaje.isConfirmed ) {
+					this.msj.mensajeEsperarToast();
+					this.envioProductoEliminar(idProducto);
+				}
+				return;
+			}
+		);
+	}
+
+	protected eliminarItemPedido (idProducto : number) : void {
+		this.msj.mensajeConfirmacionCustom('¿Está seguro de cancelar este producto del pedido?', 'question', 'Cancelar producto '+this.producto.nombre).then(
+			respuestaMensaje => {
+				if (respuestaMensaje.isConfirmed) {
+					this.msj.mensajeEsperarToast();
+					this.envioProductoEliminar(idProducto);
+				}
+				return;
+			}
+		);
+	}
+
+	private envioProductoEliminar(idProducto : number) : any {
+		const data = {
+			idProducto : idProducto
+		};
+		this.eliminoProducto.emit(data);
 	}
 }

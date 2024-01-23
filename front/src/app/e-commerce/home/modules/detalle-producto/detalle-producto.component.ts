@@ -4,7 +4,8 @@ import { ProductosService } from '../../services/productos/productos.service';
 import { MensajesService } from 'src/app/services/mensajes/mensajes.service';
 import FGenerico from 'src/app/shared/util/funciones-genericas';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { VentaProductoComponent } from '../venta-producto/venta-producto.component';
+import { VentaProductoComponent } from '../venta-productos/venta-producto.component';
+import { UsuariosService } from '../../services/usuarios/usuarios.service';
 
 @Component({
 	selector: 'app-detalle-producto',
@@ -22,11 +23,12 @@ export class DetalleProductoComponent extends FGenerico implements OnInit {
 	protected ultimaCantidad: any = 1;
 
 	constructor(
-		private modalService: ModalService,
-		private apiProductos: ProductosService,
-		private msj: MensajesService,
-		private fb: FormBuilder,
-		private renderer: Renderer2
+		private modalService : ModalService,
+		private apiProductos : ProductosService,
+		private apiUsuarios : UsuariosService,
+		private msj : MensajesService,
+		private fb : FormBuilder,
+		private renderer : Renderer2
 	) {
 		super();
 	}
@@ -47,6 +49,7 @@ export class DetalleProductoComponent extends FGenerico implements OnInit {
 	}
 
 	protected agregarItemCarrito(): any {
+		if (this.apiUsuarios.validarPerfilUsuario()) return;
 		this.msj.mensajeEsperarToast();
 		try {
 			const cantidad = this.formVentaProducto.get('cantidad')?.value;
@@ -103,6 +106,7 @@ export class DetalleProductoComponent extends FGenerico implements OnInit {
 	}
 
 	protected abrirModal ( modal : string ) : any {
+		if (this.apiUsuarios.validarPerfilUsuario()) return;
 		this.cerrarModal();
 
 		setTimeout(() => {

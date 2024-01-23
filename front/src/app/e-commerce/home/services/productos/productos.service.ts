@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
-import { carritoCompras, categorias, productos } from '../../../../../environments/environment';
+import { carritoCompras, categorias, environment, pedidos, productos } from '../../../../../environments/environment';
 import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class ProductosService {
+	private url = environment.api;
 
-	constructor() { }
+	constructor(
+		private http : HttpClient
+	) {}
 
 	public obtenerCategorias () : Observable<any> {
 		return categorias;
@@ -79,6 +83,10 @@ export class ProductosService {
 		return carritoCompras;
 	}
 
+	public vaciarCarrito () : any {
+		carritoCompras.items = [];
+	}
+
 	public eliminarItemCarrito (idProducto : number) : Observable<any> {
 		carritoCompras.items = carritoCompras.items.filter(
 			(item : any) => item.idItem !== idProducto
@@ -102,5 +110,33 @@ export class ProductosService {
 		});
 
 		return totalPorProductos;
+	}
+
+	public agregarPedido (dataPedido : any, carrito : boolean = false) : any {
+		dataPedido.idPedido = pedidos.items.length + 1;
+		pedidos.items.push(dataPedido);
+
+		if (carrito) {
+			this.vaciarCarrito();
+		}
+	}
+
+	public obtenerPedidos () : any {
+		return pedidos.items;
+	}
+
+	public cancelarPedido(idPedido: number): Observable<any> {
+		pedidos.items = pedidos.items.filter((pedido : any) => pedido.idPedido !== idPedido);
+		return pedidos;
+	}
+
+	public cancelarProductoPedido (idPedido : number, idProducto : number) : Observable<any> {
+		const pedido = pedidos.items.find((pedido: any) => pedido.idPedido === idPedido);
+
+  		if (pedido) {
+    		pedido.productos = pedido.productos.filter((producto: any) => producto.idItem !== idProducto);
+  		}
+
+		return pedidos;
 	}
 }

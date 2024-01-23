@@ -10,13 +10,18 @@ import { DetalleProductoComponent } from './modules/detalle-producto/detalle-pro
 import { ModalService } from "./services/modal/modal.service";
 import { BsModalService } from "ngx-bootstrap/modal";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { VentaProductoComponent } from './modules/venta-producto/venta-producto.component';
+import { VentaProductoComponent } from './modules/venta-productos/venta-producto.component';
 import { ProductoVentaComponent } from './components/producto-venta/producto-venta.component';
+import { PedidosComponent } from './modules/pedidos/pedidos.component';
+import { DetallePedidoComponent } from './modules/detalle-pedido/detalle-pedido.component';
+import { HttpClientModule } from "@angular/common/http";
+import { LoginRegisterComponent } from './modules/login-register/login-register.component';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild(HomeRoutes),
+    HttpClientModule,
     FormsModule,
     ReactiveFormsModule
   ],
@@ -27,7 +32,10 @@ import { ProductoVentaComponent } from './components/producto-venta/producto-ven
     ProductoComponent,
     DetalleProductoComponent,
     VentaProductoComponent,
-    ProductoVentaComponent
+    ProductoVentaComponent,
+    PedidosComponent,
+    DetallePedidoComponent,
+    LoginRegisterComponent
   ],
   providers: [
     ModalService,

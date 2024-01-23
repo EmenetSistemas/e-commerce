@@ -15,104 +15,41 @@
 	<nav class="header-nav ms-auto">
 		<ul class="d-flex align-items-center">
 
-			<!--li class="nav-item dropdown">
-
-          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-            <i class="bi bi-bell"></i>
-            <span class="badge bg-primary badge-number">4</span>
-          </a>
-
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
-            <li class="dropdown-header">
-              You have 4 new notifications
-              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-exclamation-circle text-warning"></i>
-              <div>
-                <h4>Lorem Ipsum</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>30 min. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-x-circle text-danger"></i>
-              <div>
-                <h4>Atque rerum nesciunt</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>1 hr. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-check-circle text-success"></i>
-              <div>
-                <h4>Sit rerum fuga</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>2 hrs. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-info-circle text-primary"></i>
-              <div>
-                <h4>Dicta reprehenderit</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>4 hrs. ago</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li class="dropdown-footer">
-              <a href="#">Show all notifications</a>
-            </li>
-
-          </ul>
-
-        </li-->
+			<li class="nav-item dropdown">
+				<a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown" (click)="abrirModal('pedidos')">
+					<b style="color: white; font-size: 15px;">Pedidos</b>
+					<span class="badge bg-primary badge-number t-bold">{{this.pedidos}}</span>
+				</a>
+			</li>
 
 			<li class="nav-item dropdown">
 				<app-carrito-compras></app-carrito-compras>
 			</li>
 
 			<li class="nav-item dropdown pe-3">
-				<a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+				<a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown" (click)="obtenerDatosUsuario()">
 					<img src="assets/img/carrito-de-compras.png" alt="Profile" class="rounded-circle">
-					<span class="d-none d-md-block dropdown-toggle ps-2" style="color: white;">Adrián Villa</span>
+					<span class="d-none d-md-block dropdown-toggle ps-2" style="color: white;" *ngIf="usuario.nombre">{{usuario.nombre+' '+usuario.aPaterno}}</span>
 				</a>
 
 				<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
 					<li class="dropdown-header">
-						<h6>Adrián Villa</h6>
-						<span>Cliente</span>
+						<h6 *ngIf="usuario.nombre">{{usuario.nombre+' '+usuario.aPaterno}}</h6>
+						<h6 *ngIf="!usuario.nombre">Sesión no iniciada</h6>
+						<span *ngIf="usuario.nombre">Cliente</span>
 					</li>
 					<li>
 						<hr class="dropdown-divider">
 					</li>
 
 					<li>
-						<a class="dropdown-item d-flex align-items-center">
+						<a class="dropdown-item d-flex align-items-center" *ngIf="usuario.nombre">
 							<i class="bi bi-person"></i>
 							<span>Mi perfil</span>
+						</a>
+						<a class="dropdown-item d-flex align-items-center" *ngIf="!usuario.nombre" (click)="abrirModalLogin()">
+							<i class="bi bi-person"></i>
+							<span>Iniciar Sesión</span>
 						</a>
 					</li>
 					<li>
@@ -129,7 +66,7 @@
               <hr class="dropdown-divider">
             </!--li-->
 
-					<li>
+					<li *ngIf="usuario.nombre" (click)="cerrarSesion()">
 						<a class="dropdown-item d-flex align-items-center">
 							<i class="bi bi-box-arrow-right"></i>
 							<span>Cerrar Sesión</span>

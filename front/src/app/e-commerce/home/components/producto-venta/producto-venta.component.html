@@ -16,13 +16,23 @@
                                 aria-roledescription="Precio">
                                 <span class="andes-money-amount__currency-symbol" aria-hidden="true">
                                     <form autocomplete="off" [formGroup]="formVentaProducto" class="form-wo-stl">
-                                        Cantidad: <input #cantidadInput type="number" formControlName="cantidad"
-                                            class="cantidad" (keypress)="soloNumeros($event)" (input)="validarStock()">
+                                        <ng-container *ngIf="!this.static; else cantidad">
+                                            Cantidad: <input #cantidadInput type="number" formControlName="cantidad"
+                                                class="cantidad" (keypress)="soloNumeros($event)" (input)="validarStock()">
+                                        </ng-container>
+                                        <ng-template #cantidad>
+                                            Cantidad: <b>{{this.cantidadProducto}}</b>
+                                        </ng-template>
                                     </form>
                                 </span><br>
-                                <span class="andes-money-amount__currency-symbol" aria-hidden="true">
-                                    ({{producto.stock}}) disponibles
-                                </span>
+                                <ng-container *ngIf="!this.static; else cantidadtotal">
+                                    <span class="andes-money-amount__currency-symbol" aria-hidden="true">
+                                        ({{producto.stock}}) disponibles
+                                    </span>
+                                </ng-container>
+                                <ng-template #cantidadtotal>
+                                    Total: <b>$ {{((producto.precio - (producto.precio * producto.descuento)) * this.cantidadProducto) | number:'1.2-2'}}</b>
+                                </ng-template>
                             </span>
                         </div>
                     </div>
@@ -50,6 +60,12 @@
                                 (producto.precio * producto.descuento)).toFixed(2).split('.')[1] }}</span>
                         </span>
                     </div>
+                    <ng-container *ngIf="!this.static; else eliminarProductoPedido">
+                        <h3 class="btn-eliminar-prod" (click)="this.eliminarItemCompra(producto.id)"><i class="bi bi-trash3-fill" style="color: red;"></i></h3>
+                    </ng-container>
+                    <ng-template #eliminarProductoPedido>
+                        <h3 class="btn-eliminar-prod" (click)="this.eliminarItemPedido(producto.id)"><i class="bi bi-trash3-fill" style="color: red;"></i></h3>
+                    </ng-template>
                 </div>
             </div>
             
@@ -99,6 +115,12 @@
                                 (producto.precio * producto.descuento)).toFixed(2).split('.')[1] }}</span>
                         </span>
                     </div>
+                    <ng-container *ngIf="!this.static; else eliminarProductoPedido">
+                        <h5 class="btn-eliminar-prod" (click)="this.eliminarItemCompra(producto.id)"><span class="badge border-danger border-1 text-danger">Eliminar</span></h5>
+                    </ng-container>
+                    <ng-template #eliminarProductoPedido>
+                        <h5 class="btn-eliminar-prod" (click)="this.eliminarItemPedido(producto.id)"><span class="badge border-danger border-1 text-danger">Eliminar</span></h5>
+                    </ng-template>
                 </div>
             </div>
         </div>

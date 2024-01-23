@@ -3,9 +3,9 @@
 }
 
 body {
-	font-family: "Open Sans", sans-serif;
-	background: #f6f9ff;
-	color: #444444;
+	font-family: "Open Sans", sans-serif !important;
+	background: #f6f9ff !important;
+	color: #444444 !important;
 }
 
 a {
@@ -1255,13 +1255,10 @@ button {
 	align-content: center !important;
 	margin-top: -15px;
 	text-align: center !important;
-}
-
-.custom-modal .modal-footer {
-	flex-shrink: 0;
-	position: sticky;
-	bottom: 0;
-	background-color: #ffffff;
+	flex-shrink: 0 !important;
+	position: sticky !important;
+	bottom: 0 !important;
+	background-color: #ffffff !important;
 }
 
 .modulos-check {
@@ -1355,12 +1352,6 @@ button {
 
 .producto {
 	max-height: 100px;
-}
-
-@media (max-width: 575px) {
-	.content-porduct {
-		text-align: center !important;
-	}
 }
 
 .apartado-producto {
@@ -1464,12 +1455,12 @@ a :hover {
     margin-top: 25px;
 }
 
-.custom-modal .modal-content {
+.modal-content {
   	overflow-y: auto !important;
   	max-height: 90vh !important;
 }
 
-.modal-dialog {
+.custom-modal {
 	width: 90vw !important;
     max-width: none !important;
 }
@@ -1483,4 +1474,41 @@ a :hover {
 	.modal-dialog {
 		margin-left: 5vw !important;
 	}
+
+	.content-porduct {
+		text-align: center !important;
+	}
+
+	.tablet {
+		display: none;
+		visibility: hidden;
+	}
+	
+	.celular {
+		display: block;
+		visibility: visible;
+	}
+}
+
+@media (min-width:575px) {
+	.tablet {
+		display: block;
+		visibility: visible;
+	}
+
+	.celular {
+		display: none;
+		visibility: hidden;
+	}
+}
+
+.required:after {
+	content: '*';
+	color: red;
+	margin-left: 5px;
+}
+
+form label {
+	font-weight: 600 !important;
+	color: rgba(1, 41, 112, 0.6) !important;
 }
