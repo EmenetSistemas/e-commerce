@@ -34,7 +34,7 @@
                                                     <input class="form-check-input" type="checkbox"
                                                         id="apartado{{categoria.id}}{{apartado.id}}"
                                                         [checked]="apartado.check"
-                                                        (change)="obtenerProductosPorIdCategoriaApartado($event, categoria.id, apartado.id)">
+                                                        (change)="obtenerProductosPorApartado($event, categoria.id, apartado.id)">
                                                     <label class="form-check-label"
                                                         for="apartado{{categoria.id}}{{apartado.id}}">
                                                         <b>{{apartado.nombre}}</b>
@@ -81,7 +81,7 @@
                                     <input class="form-check-input" type="checkbox"
                                         id="apartadopc{{categoria.id}}{{apartado.id}}"
                                         [checked]="apartado.check"
-                                        (change)="obtenerProductosPorIdCategoriaApartado($event, categoria.id, apartado.id)">
+                                        (change)="obtenerProductosPorApartado($event, categoria.id, apartado.id)">
                                     <label class="form-check-label"
                                         for="apartadopc{{categoria.id}}{{apartado.id}}">
                                         <b>{{apartado.nombre}}</b>

@@ -38,18 +38,27 @@ export class ProductosComponent implements OnInit {
 		);
 	}
 
-	public obtenerProductosPorIdCategoriaApartado(event: Event, idCategoria: number, idApartado: number) {
+	protected obtenerProductosPorApartado (event: Event, idCategoria: number, idApartado: number) : void {
 		const categoria = this.categorias.find((categoria : any) => categoria.id === idCategoria);
 		const apartado = categoria?.apartados.find((apartado : any) => apartado.id === idApartado);
 		const checkbox = event.target as HTMLInputElement;
 
 		if (checkbox.checked) {
-			this.productosMostrar = this.apiProductos.obtenerProductosPorCategoriaApartado(idCategoria, idApartado);
+			this.msj.mensajeEsperar();
 			if (apartado !== undefined) {
 				this.desactivarApartados();
 				apartado.check = !apartado.check;
 			}
 			this.accordionButton.nativeElement.click();
+
+			this.apiProductos.obtenerProductosPorApartado(idApartado).subscribe(
+				respuesta => {
+					this.productosMostrar = respuesta.data.productos;
+					this.msj.cerrarMensajes();
+				}, error => {
+					this.msj.mensajeGenerico('error', 'error');
+				}
+			);
 		} else {
 			this.desactivarApartados();
 			this.productosMostrar = [];

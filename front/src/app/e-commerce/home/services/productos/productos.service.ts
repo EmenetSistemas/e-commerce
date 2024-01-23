@@ -17,14 +17,8 @@ export class ProductosService {
 		return this.http.get<any>(this.url + '/dashboard/productos/obtenerCategoriasApartados');
 	}
 
-	public obtenerProductosPorCategoriaApartado(idCategoria : number, idApartado : number) : Observable<any> {
-		let productosEncontrados : any = [];
-		productos.forEach((producto : any) => {
-			if (producto.idCategoria == idCategoria && producto.idApartado == idApartado) {
-				productosEncontrados = [...productosEncontrados, producto];
-			}
-		});
-		return productosEncontrados;
+	public obtenerProductosPorApartado (idApartado : number) : Observable<any> {
+		return this.http.get<any>(this.url + '/e-commerce/productos/obtenerProductosPorApartado/'+idApartado);
 	}
 
 	public obtenerProductosDestacados () : Observable<any> {
