@@ -2,50 +2,6 @@ export const environment = {
     api : 'http://localhost:8000/api'
 }
 
-export const categorias : any = [
-    {
-        id: 1,
-        nombre: 'Accesorios',
-        apartados: [
-            {
-                id: 1,
-                nombre: 'Tapetes',
-                check: false
-            }, {
-                id: 2,
-                nombre: 'Mouse pad',
-                check: false
-            }, {
-                id: 3,
-                nombre: 'Cargadores',
-                check: false
-            }, {
-                id: 4,
-                nombre: 'HUBs USB',
-                check: false
-            }, {
-                id: 5,
-                nombre: 'Mochilas',
-                check: false
-            }, {
-                id: 6,
-                nombre: 'Webcams',
-                check: false
-            }
-        ]
-    }, {
-        id: 2,
-        nombre: 'Computadoras',
-        apartados: [
-            {
-                id: 1,
-                nombre: 'Portatiles',
-                check: false
-            }
-        ]
-    }
-];
-
 export const productos : any = [
     {
         id: 1,

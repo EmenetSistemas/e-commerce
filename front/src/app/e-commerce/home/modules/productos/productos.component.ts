@@ -1,5 +1,6 @@
 import { Component, ElementRef, HostListener, ViewChild, OnInit } from '@angular/core';
 import { ProductosService } from '../../services/productos/productos.service';
+import { MensajesService } from 'src/app/services/mensajes/mensajes.service';
 
 @Component({
 	selector: 'app-productos',
@@ -15,17 +16,26 @@ export class ProductosComponent implements OnInit {
 	protected window: any;
 
 	constructor(
-		private apiProductos : ProductosService
+		private apiProductos : ProductosService,
+		private msj : MensajesService
 	) {
 		this.window = window;
 	}
 
 	async ngOnInit(): Promise<void> {
-		this.obtenerCategorias()
+		this.msj.mensajeEsperar();
+		await this.obtenerCategorias()
+		this.msj.cerrarMensajes();
 	}
 
-	private obtenerCategorias () : any {
-		this.categorias = this.apiProductos.obtenerCategorias()
+	private obtenerCategorias () : Promise<any> {
+		return this.apiProductos.obtenerCategoriasApartados().toPromise().then(
+			respuesta => {
+				this.categorias = respuesta.data.categoriasApartados;
+			}, error => {
+				this.msj.mensajeGenerico('error', 'error');
+			}
+		);
 	}
 
 	public obtenerProductosPorIdCategoriaApartado(event: Event, idCategoria: number, idApartado: number) {

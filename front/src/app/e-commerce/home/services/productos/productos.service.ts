@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { carritoCompras, categorias, environment, pedidos, productos } from '../../../../../environments/environment';
+import { carritoCompras, environment, pedidos, productos } from '../../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
@@ -13,8 +13,8 @@ export class ProductosService {
 		private http : HttpClient
 	) {}
 
-	public obtenerCategorias () : Observable<any> {
-		return categorias;
+	public obtenerCategoriasApartados () : Observable<any> {
+		return this.http.get<any>(this.url + '/dashboard/productos/obtenerCategoriasApartados');
 	}
 
 	public obtenerProductosPorCategoriaApartado(idCategoria : number, idApartado : number) : Observable<any> {
