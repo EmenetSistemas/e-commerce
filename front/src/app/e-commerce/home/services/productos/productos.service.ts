@@ -40,6 +40,10 @@ export class ProductosService {
 		return this.http.get<any>(this.url + '/e-commerce/productos/obtenerDetalleProductoPorId/'+idProducto);
 	}
 
+	public obtenerDetalleProductosVenta (porductos : any) : Observable<any> {
+		return this.http.post<any>(this.url + '/e-commerce/productos/obtenerDetalleProductosVenta', porductos);
+	}
+
 	public obtenerNoItemsCarritoCompras () : Observable<any> {
 		return carritoCompras.items.length;
 	}
@@ -91,19 +95,6 @@ export class ProductosService {
 
 	public productosEnCarrito (idProducto : number) : Observable<any> {
 		return carritoCompras.items.find((item : any) => item.idItem === idProducto)?.cantidad ?? 0;
-	}
-
-	public obtenerTotalSegunProductos ( dataProductos : any ) : any {
-		let totalPorProductos = 0;
-		dataProductos.forEach((itSearch : any) => {
-			productos.forEach((producto : any) => {
-				if (producto.id == itSearch.idItem) {
-					totalPorProductos += ((producto.precio - (producto.precio * producto.descuento)) * itSearch.cantidad);
-				}
-			});
-		});
-
-		return totalPorProductos;
 	}
 
 	public agregarPedido (dataPedido : any, carrito : boolean = false) : any {

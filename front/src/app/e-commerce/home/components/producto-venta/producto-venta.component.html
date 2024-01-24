@@ -21,7 +21,7 @@
                                                 class="cantidad" (keypress)="soloNumeros($event)" (input)="validarStock()">
                                         </ng-container>
                                         <ng-template #cantidad>
-                                            Cantidad: <b>{{this.cantidadProducto}}</b>
+                                            Cantidad: <b>{{this.idPedido.cantidad}}</b>
                                         </ng-template>
                                     </form>
                                 </span><br>
@@ -31,7 +31,7 @@
                                     </span>
                                 </ng-container>
                                 <ng-template #cantidadtotal>
-                                    Total: <b>$ {{((producto.precio - (producto.precio * producto.descuento)) * this.cantidadProducto) | number:'1.2-2'}}</b>
+                                    Total: <b>$ {{((producto.precio - (producto.precio * producto.descuento)) * this.idPedido.cantidad) | number:'1.2-2'}}</b>
                                 </ng-template>
                             </span>
                         </div>
@@ -39,13 +39,13 @@
                 </div>
 
                 <div class="col-sm-4 col-12 sp-col f-left ui-search-price__second-line sp-text t-bold" style="text-align: right !important;">
-                    <s class="andes-money-amount ui-search-price__part ui-search-price__part--small ui-search-price__original-value andes-money-amount--previous andes-money-amount--cents-superscript andes-money-amount--compact"
+                    <s *ngIf="producto.descuento && producto.descuento  != 0" class="andes-money-amount ui-search-price__part ui-search-price__part--small ui-search-price__original-value andes-money-amount--previous andes-money-amount--cents-superscript andes-money-amount--compact"
                         style="font-size:16px" role="img" aria-label="Antes: 138 pesos" aria-roledescription="Precio">
                         <span class="andes-money-amount__currency-symbol" aria-hidden="true">$</span>
                         <span class="andes-money-amount__fraction" aria-hidden="true">{{producto.precio |
                             number:'1.2-2'}}</span>
                     </s>
-                    <span class="ui-search-price__second-line__label" *ngIf="producto.descuento  != 0">
+                    <span *ngIf="producto.descuento && producto.descuento  != 0" class="ui-search-price__second-line__label">
                         &nbsp;<span class="ui-search-price__discount">{{producto.descuento*100}}% OFF</span>
                     </span>
                     <div class="ui-search-price__second-line">

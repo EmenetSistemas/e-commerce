@@ -3,6 +3,7 @@ import { ProductosService } from '../../services/productos/productos.service';
 import { MensajesService } from 'src/app/services/mensajes/mensajes.service';
 import FGenerico from 'src/app/shared/util/funciones-genericas';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { productos } from '../../../../../environments/environment';
 
 @Component({
 	selector: 'app-producto-venta',
@@ -11,8 +12,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class ProductoVentaComponent extends FGenerico implements OnInit{
 	@Input() idPedido: any = 0;
-	@Input() idProducto: any = [];
-	@Input() cantidadProducto: any = 0;
+	@Input() producto: any = {};
 	@Input() static: any = false;
 	
 	@ViewChild('cantidadInput') cantidadInput!: ElementRef;
@@ -21,11 +21,9 @@ export class ProductoVentaComponent extends FGenerico implements OnInit{
 
 	protected formVentaProducto!: FormGroup;
 
-	protected producto: any = {};
-	protected ultimaCantidad: any = this.cantidadProducto;
+	protected ultimaCantidad: any = this.producto.cantidad;
 
 	constructor(
-		private apiProductos: ProductosService,
 		private msj: MensajesService,
 		private fb: FormBuilder,
 		private renderer: Renderer2
@@ -35,17 +33,12 @@ export class ProductoVentaComponent extends FGenerico implements OnInit{
 
 	ngOnInit(): void {
 		this.crearFormVentaProducto();
-		this.obtenerDetalleProductoPorId(this.idProducto);
 	}
 
 	private crearFormVentaProducto(): void {
 		this.formVentaProducto = this.fb.group({
-			cantidad: [this.cantidadProducto, [Validators.required, Validators.pattern('[0-9]*')]]
+			cantidad: [this.producto.cantidad, [Validators.required, Validators.pattern('[0-9]*')]]
 		});
-	}
-
-	private obtenerDetalleProductoPorId(idProducto: number): any {
-		this.producto = this.apiProductos.obtenerDetalleProductoPorId(idProducto);
 	}
 
 	protected validarStock(): any {
@@ -69,7 +62,7 @@ export class ProductoVentaComponent extends FGenerico implements OnInit{
 
 	private enviaCambioCantidadProducto(cantidad : number) : any {
 		const data = {
-			idProducto : this.idProducto,
+			idProducto : this.producto.id,
 			cantidad : cantidad
 		};
 		this.selectionChange.emit(data);

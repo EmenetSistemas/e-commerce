@@ -34,9 +34,9 @@ export class VentaProductoComponent extends FGenerico implements OnInit {
 	async ngOnInit(): Promise<void> {
 		this.msj.mensajeEsperar();
 		await Promise.all([
-			this.obtenerDatosUsuario()
+			this.obtenerDatosUsuario(),
+			this.obtenerDetalleProductosVenta()
 		]);
-		this.obtenerProductosVenta();
 		this.msj.cerrarMensajes();
 	}
 	private obtenerDatosUsuario () : Promise<any> {
@@ -58,34 +58,44 @@ export class VentaProductoComponent extends FGenerico implements OnInit {
 		);
 	}
 
-	protected obtenerProductosVenta () : any {
-		this.productosVenta = this.apiProductos.obtenerItemsCarritoCompras(this.productos);
+	protected obtenerDetalleProductosVenta () : Promise<any> {
+		return this.apiProductos.obtenerDetalleProductosVenta(this.productos).toPromise().then(
+			respuesta => {
+				this.productos = respuesta.data.detalleProductos;
+			}, error => {
+				this.msj.mensajeGenerico('error', 'error');
+			}
+		);
 	}
 
 	public obtenerCantidadTotal () : any {
-		return this.productos.items.length;
+		return this.productos.length;
 	}
 
 	public obtenerTotalArticulos () : any {
-		return this.productos.items.reduce((acumulador : any, item : any) => acumulador + item.cantidad, 0);
+		return this.productos.reduce((acumulador : any, item : any) => acumulador + item.cantidad, 0);
 	}
 
 	protected obtenerTotalSegunProductos () : any {
-		return this.apiProductos.obtenerTotalSegunProductos(this.productos.items);
+		let totalPorProductos : number = 0;
+		this.productos.forEach((producto : any) => {
+			totalPorProductos += ((producto.precio - (producto.precio * producto.descuento)) * producto.cantidad);
+		});
+		return totalPorProductos;
 	}
 
 	protected cambioCantidadProducto (data: any) : void {
-		const producto = this.productos.items.find((item : any) => item.idItem == data.idProducto);
+		const producto = this.productos.find((item : any) => item.id == data.idProducto);
 		if (producto) {
 			producto.cantidad = data.cantidad;
 		}
 	}
 
 	protected eliminarProducto (data : any) : any {
-		this.productos.items = this.productos.items.filter(
-			(item : any) => item.idItem !== data.idProducto
+		this.productos = this.productos.filter(
+			(item : any) => item.id !== data.idProducto
 		);
-		this.obtenerProductosVenta();
+		this.obtenerDetalleProductosVenta();
 
 		if (this.productos.static) {
 			this.apiProductos.cancelarProductoPedido(this.productos.idPedido, data.idProducto);
@@ -144,7 +154,7 @@ export class VentaProductoComponent extends FGenerico implements OnInit {
 						fechaPedido : fechaActual.toISOString(),
 						direccionEntrega : (this.usuario.direccion.calle+' '+this.usuario.direccion.noExterior+', '+this.usuario.direccion.localidad+', '+this.usuario.direccion.municipio+', '+this.usuario.direccion.estado+'. '+this.usuario.direccion.cp),
 						fechaEntrega : this.fechaEntregaEstimada(),
-						productos : this.productos.items
+						productos : this.productos
 					};
 			
 					this.apiProductos.agregarPedido(dataPedido, this.productos.carrito);
