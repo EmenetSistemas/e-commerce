@@ -26,21 +26,21 @@
         </div>
         <div class="row">
             <div class="col-lg-3 col-md-3 col-sm-5 col-12 t-center d-flex justify-content-center align-items-center" (click)="abrirModal('detalleProducto')">
-                <img src="{{producto.imagen}}" class="img-fluid rounded-start producto" alt="...">
+                <img src="{{productoGen.imagen}}" class="img-fluid rounded-start producto" alt="...">
             </div>
             <div class="col-lg-8 col-md-8 col-sm-6 col-12" (click)="abrirModal('detalleProducto')">
-                <h5 class="content-porduct card-title" style="margin-top: -15px;">{{producto.nombre}}</h5>
+                <h5 class="content-porduct card-title" style="margin-top: -15px;">{{productoGen.nombre ?? ''}}</h5>
 
                 <div class="ui-search-item__group__element ui-search-price__part-without-link content-porduct card-text t-justify">
                     <div class="ui-search-price ui-search-price--size-medium">
                         <s class="andes-money-amount ui-search-price__part ui-search-price__part--small ui-search-price__original-value andes-money-amount--previous andes-money-amount--cents-superscript andes-money-amount--compact"
                             style="font-size:16px" role="img" aria-label="Antes: 138 pesos"
-                            aria-roledescription="Precio">
+                            aria-roledescription="Precio" *ngIf="productoGen.descuento && productoGen.descuento != 0">
                             <span class="andes-money-amount__currency-symbol" aria-hidden="true">$</span>
-                            <span class="andes-money-amount__fraction" aria-hidden="true">{{producto.precio | number:'1.2-2'}}</span>
+                            <span class="andes-money-amount__fraction" aria-hidden="true">{{productoGen.precio ?? 0 | number:'1.2-2'}}</span>
                         </s>
-                        <span class="ui-search-price__second-line__label" *ngIf="producto.descuento  != 0">
-                            &nbsp;<span class="ui-search-price__discount">{{producto.descuento*100}}% OFF</span>
+                        <span class="ui-search-price__second-line__label" *ngIf="productoGen.descuento && productoGen.descuento != 0">
+                            &nbsp;<span class="ui-search-price__discount">{{productoGen.descuento*100}}% OFF</span>
                         </span>
                         <div class="ui-search-price__second-line">
                             <span
@@ -48,10 +48,10 @@
                                 style="font-size:24px" role="img" aria-label="124 pesos con 20 centavos"
                                 aria-roledescription="Precio">
                                 <span class="andes-money-amount__currency-symbol" aria-hidden="true">$</span>
-                                <span class="andes-money-amount__integer" aria-hidden="true">{{ ((producto.precio -
-                                    (producto.precio * producto.descuento)) | number:'1.0-0') }}</span>
-                                <span class="andes-money-amount__decimal" aria-hidden="true">.{{ (producto.precio -
-                                    (producto.precio * producto.descuento)).toFixed(2).split('.')[1] }}</span>
+                                <span class="andes-money-amount__integer" aria-hidden="true">{{ ((productoGen.precio -
+                                    (productoGen.precio * productoGen.descuento)) | number:'1.0-0') }}</span>
+                                <span class="andes-money-amount__decimal" aria-hidden="true">.{{ (productoGen.precio -
+                                    (productoGen.precio * productoGen.descuento)).toFixed(2).split('.')[1] }}</span>
                             </span>
                         </div>
                     </div>

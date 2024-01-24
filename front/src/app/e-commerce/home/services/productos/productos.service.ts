@@ -37,7 +37,7 @@ export class ProductosService {
 	}
 
 	public obtenerDetalleProductoPorId ( idProducto : number ) : Observable<any> {
-		return productos.find((producto : any) => producto.id == idProducto);
+		return this.http.get<any>(this.url + '/e-commerce/productos/obtenerDetalleProductoPorId/'+idProducto);
 	}
 
 	public obtenerNoItemsCarritoCompras () : Observable<any> {

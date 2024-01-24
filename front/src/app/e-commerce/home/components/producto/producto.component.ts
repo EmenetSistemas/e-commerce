@@ -12,7 +12,7 @@ import { UsuariosService } from '../../services/usuarios/usuarios.service';
 	styleUrls: ['./producto.component.css']
 })
 export class ProductoComponent {
-	@Input() idProducto: any = [];
+	@Input() productoGen: any = [];
 
 	protected producto : any = {};
 
@@ -23,19 +23,15 @@ export class ProductoComponent {
 		private msj : MensajesService
 	) { }
 
-	ngOnInit(): void {
-		this.obtenerDetalleProductoPorId(this.idProducto);
-	}
-
-	private obtenerDetalleProductoPorId ( idProducto : number ) : any {
-		this.producto = this.apiProductos.obtenerDetalleProductoPorId(idProducto);
+	ngOnInit() : void {
+		console.log(this.productoGen);
 	}
 
 	protected abrirModal ( modal : string ) : any {
 		switch (modal) {
 			case 'detalleProducto':
 				const dataModal1 = {
-					idProducto : this.idProducto
+					idProducto : this.productoGen.id
 				};
 				this.modalService.abrirModalConComponente(DetalleProductoComponent, dataModal1);
 			break;
@@ -44,7 +40,7 @@ export class ProductoComponent {
 				const dataModal2 = {
 					productos : {
 						items : [{
-							idItem : this.idProducto,
+							idItem : this.productoGen.id,
 							cantidad : 1
 						}]
 					}
@@ -59,15 +55,15 @@ export class ProductoComponent {
 		
 		this.msj.mensajeEsperarToast();
 		try {
-			const busquedaProd = this.apiProductos.validarProductoCarrito(this.idProducto);
+			const busquedaProd = this.apiProductos.validarProductoCarrito(this.productoGen.id);
 
 			if (busquedaProd == null) {
-				this.apiProductos.agregarItemCarrito(this.idProducto);
+				this.apiProductos.agregarItemCarrito(this.productoGen.id);
 				this.msj.mensajeGenericoToast('Se agregó al carrito', 'success');
 				return;
 			}
 
-			const productosEnCarrito : any = this.apiProductos.productosEnCarrito(this.idProducto);
+			const productosEnCarrito : any = this.apiProductos.productosEnCarrito(this.productoGen.id);
 
 			if ((Number(productosEnCarrito) + 1) > this.producto.stock) {
 				this.msj.mensajeGenerico('Actualmente cuentas con ' +productosEnCarrito+(productosEnCarrito == 1 ? ' producto' : ' productos')+' en tu carrito, e intentas agregar ' + 1 + ' más, lo cual no es posible', 'warning', this.producto.stock + ' productos en stock');
@@ -78,7 +74,7 @@ export class ProductoComponent {
 				respuestaMensaje => {
 					if ( respuestaMensaje.isConfirmed ) {
 						this.msj.mensajeGenericoToast('Se agregó al carrito', 'success');
-						this.apiProductos.agregarItemCarrito(this.idProducto);
+						this.apiProductos.agregarItemCarrito(this.productoGen.id);
 						return;
 					}
 				}
