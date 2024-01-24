@@ -44,41 +44,16 @@ export class ProductosService {
 		return this.http.post<any>(this.url + '/e-commerce/productos/obtenerDetalleProductosVenta', porductos);
 	}
 
-	public obtenerNoItemsCarritoCompras () : Observable<any> {
-		return carritoCompras.items.length;
+	public agregarItemCarrito (data : any) : Observable<any> {
+		return this.http.post<any>(this.url + '/e-commerce/productos/agregarItemCarrito', data);
 	}
 
-	public obtenerItemsCarritoCompras( data : any = carritoCompras): Observable<any> {
-		const itemsCarritoIds = data.items.map((item: any) => item.idItem);
-	
-		return productos.filter((producto: any) => {
-			if (itemsCarritoIds.includes(producto.id)) {
-				const itemEnCarrito = data.items.find((item: any) => item.idItem === producto.id);
-				producto.cantidad = itemEnCarrito.cantidad;
-				return true;
-			}
-			return false;
-		});
+	public obtenerNoItemsCarritoCompras (token : any) : Observable<any> {
+		return this.http.get<any>(this.url + '/e-commerce/productos/obtenerNoItemsCarritoCompras/'+token);
 	}
 
-	public validarProductoCarrito ( idItem : number ) : Observable<any> {
-		return carritoCompras.items.find((item : any) => item.idItem == idItem) ?? null;
-	}
-
-	public agregarItemCarrito (idItem: number, cantidad: number = 1): Observable<any> {
-		const itemExistente = carritoCompras.items.find((item : any) => item.idItem === idItem);
-	
-		if (itemExistente) {
-			itemExistente.cantidad = Number(itemExistente.cantidad) + Number(cantidad);
-		} else {
-			const nuevoItem = {
-				idItem: idItem,
-				cantidad: cantidad
-			};
-			carritoCompras.items.push(nuevoItem);
-		}
-	
-		return carritoCompras;
+	public obtenerItemsCarritoCompras (token : any) : Observable<any> {
+		return this.http.get<any>(this.url + '/e-commerce/productos/obtenerItemsCarritoCompras/'+token);
 	}
 
 	public vaciarCarrito () : any {

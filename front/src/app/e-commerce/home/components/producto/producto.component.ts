@@ -54,34 +54,25 @@ export class ProductoComponent {
 		if (this.apiUsuarios.validarPerfilUsuario()) return;
 		
 		this.msj.mensajeEsperarToast();
-		try {
-			const busquedaProd = this.apiProductos.validarProductoCarrito(this.productoGen.id);
 
-			if (busquedaProd == null) {
-				this.apiProductos.agregarItemCarrito(this.productoGen.id);
-				this.msj.mensajeGenericoToast('Se agregó al carrito', 'success');
-				return;
-			}
+		const data = {
+			idItem : this.productoGen.id,
+			cantidad : 1,
+			token : localStorage.getItem('token')
+		};
 
-			const productosEnCarrito : any = this.apiProductos.productosEnCarrito(this.productoGen.id);
-
-			if ((Number(productosEnCarrito) + 1) > this.producto.stock) {
-				this.msj.mensajeGenerico('Actualmente cuentas con ' +productosEnCarrito+(productosEnCarrito == 1 ? ' producto' : ' productos')+' en tu carrito, e intentas agregar ' + 1 + ' más, lo cual no es posible', 'warning', this.producto.stock + ' productos en stock');
-				return;
-			}
-
-			this.msj.mensajeConfirmacionCustom('Al parecer ya se agregó este artículo a tu carrito. ¿Desea agregar 1 más?', 'question', 'Artículo en carrito').then(
-				respuestaMensaje => {
-					if ( respuestaMensaje.isConfirmed ) {
-						this.msj.mensajeGenericoToast('Se agregó al carrito', 'success');
-						this.apiProductos.agregarItemCarrito(this.productoGen.id);
-						return;
-					}
+		this.apiProductos.agregarItemCarrito(data).subscribe(
+			respuesta => {
+				console.log(respuesta);
+				if (respuesta.error == 402) {
+					this.msj.mensajeGenerico(respuesta.mensaje, 'warning', respuesta.titulo);
+					return;
 				}
-			);
-		} catch (e) {
-			console.log(e);
-			this.msj.mensajeGenerico('error', 'error');
-		}
+
+				this.msj.mensajeGenericoToast(respuesta.mensaje, 'success');
+			}, error => {
+				this.msj.mensajeGenerico('error', 'error');
+			}
+		);
 	}
 }

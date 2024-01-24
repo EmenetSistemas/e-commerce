@@ -23,15 +23,27 @@ export class CarritoComprasComponent implements OnInit {
 	ngOnInit(): void {
 		setInterval(() => {
 			this.obtenerNoItemsCarritoCompras();
-		}, 1000);
+		}, 2000);
 	}
 
 	private obtenerNoItemsCarritoCompras(): any {
-		this.noItemsCarrito = this.apiProductos.obtenerNoItemsCarritoCompras();
+		const token = localStorage.getItem('token');
+		this.apiProductos.obtenerNoItemsCarritoCompras(token).subscribe(
+			respuesta => {
+				this.noItemsCarrito = respuesta.data.noItemsCarrito;
+			}
+		)
 	}
 
 	protected obtenerItemsCarritoCompras(): any {
-		this.itemsCarrito = this.apiProductos.obtenerItemsCarritoCompras();
+		const token = localStorage.getItem('token');
+		this.apiProductos.obtenerItemsCarritoCompras(token).subscribe(
+			respuesta => {
+				this.itemsCarrito = respuesta.data.carritoCompras;
+			}, error => {
+				this.msj.mensajeGenerico('error', 'error');
+			}
+		)
 	}
 
 	protected abrirModal ( modal : string ) : any {
