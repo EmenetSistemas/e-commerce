@@ -24,7 +24,7 @@ export class ProductoComponent {
 	) { }
 
 	ngOnInit() : void {
-		console.log(this.productoGen);
+		
 	}
 
 	protected abrirModal ( modal : string ) : any {

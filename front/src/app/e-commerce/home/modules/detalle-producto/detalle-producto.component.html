@@ -56,7 +56,7 @@
                                         <h5><b>Sobre el producto</b></h5>
                                         <br>
                                         <section style="margin-top: -20px;">
-                                            <div style="float: left;"><b>{{producto.calificacion}}.0&nbsp;</b></div>
+                                            <div style="float: left;"><b>{{producto.calificacion ?? 0 | number:'1.1-1'}}&nbsp;</b></div>
                                             <div style="float: left; margin-top: -4px;" class="rating">
                                                 <input type="radio" id="star5" name="rating" value="5"
                                                     [checked]="(producto.calificacion == 5)" disabled><label for="star5"
@@ -74,7 +74,7 @@
                                                     [checked]="(producto.calificacion == 1)" disabled><label for="star3"
                                                     disabled></label>
                                             </div>
-                                            <div style="float: left;"><b>&nbsp;|</b>&nbsp;{{producto.calificaciones}} calificaciones
+                                            <div style="float: left;"><b>&nbsp;|</b>&nbsp;{{producto.calificaciones ?? 0}} calificaciones
                                             </div>
                                         </section>
                                     </div>
@@ -86,7 +86,7 @@
                                     <div
                                         class="ui-search-item__group__element ui-search-price__part-without-link content-porduct card-text t-justify">
                                         <div class="ui-search-price ui-search-price--size-medium">
-                                            <s class="andes-money-amount ui-search-price__part ui-search-price__part--small ui-search-price__original-value andes-money-amount--previous andes-money-amount--cents-superscript andes-money-amount--compact"
+                                            <s *ngIf="producto.descuento && producto.descuento != 0" class="andes-money-amount ui-search-price__part ui-search-price__part--small ui-search-price__original-value andes-money-amount--previous andes-money-amount--cents-superscript andes-money-amount--compact"
                                                 style="font-size:16px" role="img" aria-label="Antes: 138 pesos"
                                                 aria-roledescription="Precio">
                                                 <span class="andes-money-amount__currency-symbol"
@@ -94,8 +94,7 @@
                                                 <span class="andes-money-amount__fraction"
                                                     aria-hidden="true">{{producto.precio | number:'1.2-2'}}</span>
                                             </s>
-                                            <span class="ui-search-price__second-line__label"
-                                                *ngIf="producto.descuento  != 0">
+                                            <span *ngIf="producto.descuento && producto.descuento != 0" class="ui-search-price__second-line__label">
                                                 &nbsp;<span
                                                     class="ui-search-price__discount">{{producto.descuento*100}}%
                                                     OFF</span>
@@ -109,7 +108,7 @@
                                                     <span class="andes-money-amount__currency-symbol"
                                                         aria-hidden="true">$</span>
                                                     <span class="andes-money-amount__integer" aria-hidden="true">{{(producto.precio - (producto.precio * producto.descuento)) | number:'1.0-0'}}</span>
-                                                    <span class="andes-money-amount__decimal" aria-hidden="true">.{{(producto.precio - (producto.precio * producto.descuento)).toFixed(2).split('.')[1]}}</span>
+                                                    <span class="andes-money-amount__decimal" aria-hidden="true">.00</span>
                                                 </span>
                                             </div>
                                         </div>

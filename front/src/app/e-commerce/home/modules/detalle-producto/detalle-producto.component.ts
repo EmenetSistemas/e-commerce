@@ -33,9 +33,11 @@ export class DetalleProductoComponent extends FGenerico implements OnInit {
 		super();
 	}
 
-	ngOnInit(): void {
+	async ngOnInit() : Promise<any> {
 		this.crearFormVentaProducto();
-		this.obtenerDetalleProductoPorId(this.idProducto);
+		this.msj.mensajeEsperar();
+		await this.obtenerDetalleProductoPorId();
+		this.msj.cerrarMensajes();
 	}
 
 	private crearFormVentaProducto(): void {
@@ -44,8 +46,14 @@ export class DetalleProductoComponent extends FGenerico implements OnInit {
 		});
 	}
 
-	private obtenerDetalleProductoPorId(idProducto: number): any {
-		this.producto = this.apiProductos.obtenerDetalleProductoPorId(idProducto);
+	private obtenerDetalleProductoPorId () : Promise<any>{
+		return this.apiProductos.obtenerDetalleProductoPorId(this.idProducto).toPromise().then(
+			respuesta => {
+				this.producto = respuesta.data.detalleProducto[0];
+			}, error => {
+				this.msj.mensajeGenerico('error', 'error');
+			}
+		);
 	}
 
 	protected agregarItemCarrito(): any {
