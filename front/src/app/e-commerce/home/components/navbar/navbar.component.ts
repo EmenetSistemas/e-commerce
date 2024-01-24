@@ -5,6 +5,7 @@ import { PedidosComponent } from '../../modules/pedidos/pedidos.component';
 import { ProductosService } from '../../services/productos/productos.service';
 import { UsuariosService } from '../../services/usuarios/usuarios.service';
 import { LoginRegisterComponent } from '../../modules/login-register/login-register.component';
+import { ModificacionUsuarioComponent } from '../../modules/modificacion-usuario/modificacion-usuario.component';
 
 @Component({
 	selector: 'app-navbar',
@@ -22,7 +23,7 @@ export class NavbarComponent implements OnInit{
 		private apiUsuarios : UsuariosService
 	) { }
 
-	ngOnInit(): void {
+	ngOnInit() : void {
 		this.obtenerDatosUsuario();
 		this.obtenerPedidos();
 	}
@@ -56,13 +57,17 @@ export class NavbarComponent implements OnInit{
 
 	protected abrirModal (modal : string) {
 		if (this.apiUsuarios.validarPerfilUsuario()) return;
-		if (this.pedidos == 0) {
-			this.msj.mensajeGenerico('Al parecer aún no haz realizado ninguna compra. Te invitamos a realizar alguna compra de nuestras ofertas', 'info', 'Pedidos');
-			return;
-		}
+		
 		switch (modal) {
 			case 'pedidos':
+				if (this.pedidos == 0) {
+					this.msj.mensajeGenerico('Al parecer aún no haz realizado ninguna compra. Te invitamos a realizar alguna compra de nuestras ofertas', 'info', 'Pedidos');
+					return;
+				}
 				this.modalService.abrirModalConComponente(PedidosComponent);
+			break;
+			case 'modificarPerfil':
+				this.modalService.abrirModalConComponente(ModificacionUsuarioComponent, {}, '');
 			break;
 		}
 	}

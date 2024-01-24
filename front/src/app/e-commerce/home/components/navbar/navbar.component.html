@@ -43,7 +43,7 @@
 					</li>
 
 					<li>
-						<a class="dropdown-item d-flex align-items-center" *ngIf="usuario.nombre">
+						<a class="dropdown-item d-flex align-items-center" *ngIf="usuario.nombre" (click)="abrirModal('modificarPerfil')">
 							<i class="bi bi-person"></i>
 							<span>Mi perfil</span>
 						</a>

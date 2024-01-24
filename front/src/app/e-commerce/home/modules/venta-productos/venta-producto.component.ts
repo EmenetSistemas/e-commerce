@@ -5,6 +5,7 @@ import { MensajesService } from 'src/app/services/mensajes/mensajes.service';
 import { PedidosComponent } from '../pedidos/pedidos.component';
 import FGenerico from 'src/app/shared/util/funciones-genericas';
 import { UsuariosService } from '../../services/usuarios/usuarios.service';
+import { ModificacionUsuarioComponent } from '../modificacion-usuario/modificacion-usuario.component';
 
 @Component({
 	selector: 'app-venta-producto',
@@ -139,7 +140,16 @@ export class VentaProductoComponent extends FGenerico implements OnInit {
 			return;
 		}
 
-		this.msj.mensajeConfirmacionCustom('Al parecer aún no haz registrado un método de pago, ¿Deseas actualizar tu información?', 'question', 'Sin método de pago').then();
+		this.msj.mensajeConfirmacionCustom('Al parecer aún no haz registrado un método de pago, ¿Deseas actualizar tu información?', 'question', 'Sin método de pago').then(
+			respuesta => {
+				if (respuesta.isConfirmed) {
+					this.cerrarModal();
+					setTimeout(() => {
+						this.modalService.abrirModalConComponente(ModificacionUsuarioComponent, {}, '');
+					}, 150);
+				}
+			}
+		);
 	}
 
 	protected realizarPedido() {

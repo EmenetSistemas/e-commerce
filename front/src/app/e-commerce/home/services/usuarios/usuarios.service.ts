@@ -50,4 +50,8 @@ export class UsuariosService {
 	public registrarUsuario (data : any) : Observable<any> {
 		return this.http.post<any>(this.url+'/usuarios/registro', data);
 	}
+
+	public actualizarUsuario (data : any) : Observable<any> {
+		return this.http.post<any>(this.url+'/usuarios/modificacion', data);
+	}
 }

@@ -56,8 +56,7 @@
                             <span class="andes-money-amount__currency-symbol" aria-hidden="true">$</span>
                             <span class="andes-money-amount__integer" aria-hidden="true">{{ ((producto.precio -
                                 (producto.precio * producto.descuento)) | number:'1.0-0') }}</span>
-                            <span class="andes-money-amount__decimal" aria-hidden="true">.{{ (producto.precio -
-                                (producto.precio * producto.descuento)).toFixed(2).split('.')[1] }}</span>
+                            <span class="andes-money-amount__decimal" aria-hidden="true">.00</span>
                         </span>
                     </div>
                     <ng-container *ngIf="!this.static; else eliminarProductoPedido">
@@ -111,8 +110,7 @@
                             <span class="andes-money-amount__currency-symbol" aria-hidden="true">$</span>
                             <span class="andes-money-amount__integer" aria-hidden="true">{{ ((producto.precio -
                                 (producto.precio * producto.descuento)) | number:'1.0-0') }}</span>
-                            <span class="andes-money-amount__decimal" aria-hidden="true">.{{ (producto.precio -
-                                (producto.precio * producto.descuento)).toFixed(2).split('.')[1] }}</span>
+                            <span class="andes-money-amount__decimal" aria-hidden="true">.00</span>
                         </span>
                     </div>
                     <ng-container *ngIf="!this.static; else eliminarProductoPedido">

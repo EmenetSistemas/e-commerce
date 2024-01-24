@@ -16,6 +16,7 @@ import { PedidosComponent } from './modules/pedidos/pedidos.component';
 import { DetallePedidoComponent } from './modules/detalle-pedido/detalle-pedido.component';
 import { HttpClientModule } from "@angular/common/http";
 import { LoginRegisterComponent } from './modules/login-register/login-register.component';
+import { ModificacionUsuarioComponent } from './modules/modificacion-usuario/modificacion-usuario.component';
 
 @NgModule({
   imports: [
@@ -35,7 +36,8 @@ import { LoginRegisterComponent } from './modules/login-register/login-register.
     ProductoVentaComponent,
     PedidosComponent,
     DetallePedidoComponent,
-    LoginRegisterComponent
+    LoginRegisterComponent,
+    ModificacionUsuarioComponent
   ],
   providers: [
     ModalService,
