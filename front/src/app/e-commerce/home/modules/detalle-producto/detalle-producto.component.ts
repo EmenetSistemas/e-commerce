@@ -111,12 +111,14 @@ export class DetalleProductoComponent extends FGenerico implements OnInit {
 			switch (modal) {
 				case 'detalleCompra':
 					const dataModal2 = {
-						productos : [
-							{
-								id : this.idProducto,
-								cantidad : this.formVentaProducto.get('cantidad')?.value
-							}
-						]
+						productos : {
+							items : [
+								{
+									idItem : this.idProducto,
+									cantidad : this.formVentaProducto.get('cantidad')?.value
+								}
+							]
+						}
 					};
 					this.modalService.abrirModalConComponente(VentaProductoComponent, dataModal2);
 				break;

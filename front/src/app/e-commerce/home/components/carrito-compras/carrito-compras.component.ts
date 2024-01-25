@@ -51,7 +51,7 @@ export class CarritoComprasComponent implements OnInit {
 			case 'detalleCompra':
 				const dataModal = {
 					productos : {
-						items : carritoCompras.items,
+						items : this.itemsCarrito,
 						carrito : true
 					}
 				};

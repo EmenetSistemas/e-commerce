@@ -1,7 +1,7 @@
 <div class="modal-body">
     <div class="pagetitle">
         <ng-container *ngIf="!this.productos.static ?? true; else pedidos">
-            <h1>{{this.productos.length > 1 ? 'Productos' : 'Producto'}}</h1>
+            <h1>{{this.productos.items.length > 1 ? 'Productos' : 'Producto'}}</h1>
         </ng-container>
         <ng-template #pedidos>
             <h1>Pedido #PE-{{this.productos.idPedido}}</h1>
@@ -53,7 +53,7 @@
                     <div class="col-12">
                         <!--Productos detalle-->
                         <div class="col-lg-9 col-12 apartado-productos">
-                            <section *ngFor="let producto of this.productos" style="margin-top: -55px;">
+                            <section *ngFor="let producto of this.productos.items" style="margin-top: -55px;">
                                 <app-producto-venta [producto]="producto" [static]="this.productos.static"
                                     (selectionChange)="cambioCantidadProducto($event)"
                                     (eliminoProducto)="eliminarProducto($event)"></app-producto-venta>

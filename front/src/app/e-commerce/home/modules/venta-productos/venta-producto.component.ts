@@ -13,7 +13,7 @@ import { ModificacionUsuarioComponent } from '../modificacion-usuario/modificaci
 	styleUrls: ['./venta-producto.component.css']
 })
 export class VentaProductoComponent extends FGenerico implements OnInit {
-	@Input() productos: any = [];
+	@Input() productos: any = {};
 
 	@ViewChild('productosBtn') productosBtn!: ElementRef;
 	@ViewChild('procederAlPagoBtn') procederAlPagoBtn!: ElementRef;
@@ -60,9 +60,9 @@ export class VentaProductoComponent extends FGenerico implements OnInit {
 	}
 
 	protected obtenerDetalleProductosVenta () : Promise<any> {
-		return this.apiProductos.obtenerDetalleProductosVenta(this.productos).toPromise().then(
+		return this.apiProductos.obtenerDetalleProductosVenta(this.productos.items).toPromise().then(
 			respuesta => {
-				this.productos = respuesta.data.detalleProductos;
+				this.productos.items = respuesta.data.detalleProductos;
 			}, error => {
 				this.msj.mensajeGenerico('error', 'error');
 			}
@@ -70,30 +70,30 @@ export class VentaProductoComponent extends FGenerico implements OnInit {
 	}
 
 	public obtenerCantidadTotal () : any {
-		return this.productos.length;
+		return this.productos.items.length;
 	}
 
 	public obtenerTotalArticulos () : any {
-		return this.productos.reduce((acumulador : any, item : any) => acumulador + item.cantidad, 0);
+		return this.productos.items.reduce((acumulador : any, item : any) => acumulador + item.cantidad, 0);
 	}
 
 	protected obtenerTotalSegunProductos () : any {
 		let totalPorProductos : number = 0;
-		this.productos.forEach((producto : any) => {
+		this.productos.items.forEach((producto : any) => {
 			totalPorProductos += ((producto.precio - (producto.precio * producto.descuento)) * producto.cantidad);
 		});
 		return totalPorProductos;
 	}
 
 	protected cambioCantidadProducto (data: any) : void {
-		const producto = this.productos.find((item : any) => item.id == data.idProducto);
+		const producto = this.productos.items.find((item : any) => item.id == data.idProducto);
 		if (producto) {
 			producto.cantidad = data.cantidad;
 		}
 	}
 
 	protected eliminarProducto (data : any) : any {
-		this.productos = this.productos.filter(
+		this.productos.items = this.productos.items.filter(
 			(item : any) => item.id !== data.idProducto
 		);
 		this.obtenerDetalleProductosVenta();
@@ -164,7 +164,7 @@ export class VentaProductoComponent extends FGenerico implements OnInit {
 						fechaPedido : fechaActual.toISOString(),
 						direccionEntrega : (this.usuario.direccion.calle+' '+this.usuario.direccion.noExterior+', '+this.usuario.direccion.localidad+', '+this.usuario.direccion.municipio+', '+this.usuario.direccion.estado+'. '+this.usuario.direccion.cp),
 						fechaEntrega : this.fechaEntregaEstimada(),
-						productos : this.productos
+						productos : this.productos.items
 					};
 			
 					this.apiProductos.agregarPedido(dataPedido, this.productos.carrito);
