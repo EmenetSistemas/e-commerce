@@ -12,6 +12,7 @@ export class ProductoVentaComponent extends FGenerico implements OnInit{
 	@Input() idPedido: any = 0;
 	@Input() producto: any = {};
 	@Input() static: any = false;
+	@Input() fkStatus: any = 1;
 	
 	@ViewChild('cantidadInput') cantidadInput!: ElementRef;
 	@Output() selectionChange: EventEmitter<any> = new EventEmitter<any>();

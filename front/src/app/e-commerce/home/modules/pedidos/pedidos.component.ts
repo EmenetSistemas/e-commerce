@@ -34,7 +34,7 @@ export class PedidosComponent implements OnInit{
 		);
 	}
 
-	protected abrirModal (idPedido : number) : void {
+	protected abrirModal (idPedido : number, fkStatus : number) : void {
 		const itemsPedido = this.pedidos.find((pedido : any) => pedido.idPedido === idPedido);
 		this.msj.mensajeEsperar();
 		this.cerrarModal();
@@ -43,7 +43,8 @@ export class PedidosComponent implements OnInit{
 				productos : {
 					items : itemsPedido.productos,
 					static : true,
-					idPedido : idPedido
+					idPedido : idPedido,
+					fkStatus : fkStatus,
 				}
 			};
 			this.modalService.abrirModalConComponente(VentaProductoComponent, dataModal);

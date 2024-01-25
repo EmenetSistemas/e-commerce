@@ -29,7 +29,7 @@ export class NavbarComponent implements OnInit{
 
 		setInterval(() => {
 			this.obtenerPedidos();
-		}, 5000);
+		}, 6000);
 	}
 
 	protected obtenerDatosUsuario () : void {

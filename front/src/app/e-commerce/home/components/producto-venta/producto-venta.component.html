@@ -63,7 +63,7 @@
                         <h3 class="btn-eliminar-prod" (click)="this.eliminarItemCompra(producto.id)"><i class="bi bi-trash3-fill" style="color: red;"></i></h3>
                     </ng-container>
                     <ng-template #eliminarProductoPedido>
-                        <h3 class="btn-eliminar-prod" (click)="this.eliminarItemPedido(producto.id)"><i class="bi bi-trash3-fill" style="color: red;"></i></h3>
+                        <h3 *ngIf="this.fkStatus == 1" class="btn-eliminar-prod" (click)="this.eliminarItemPedido(producto.id)"><i class="bi bi-trash3-fill" style="color: red;"></i></h3>
                     </ng-template>
                 </div>
             </div>
@@ -116,7 +116,7 @@
                     <ng-container *ngIf="!this.static; else eliminarProductoPedido">
                         <h5 class="btn-eliminar-prod" (click)="this.eliminarItemCompra(producto.id)"><span class="badge border-danger border-1 text-danger">Eliminar</span></h5>
                     </ng-container>
-                    <ng-template #eliminarProductoPedido>
+                    <ng-template *ngIf="this.fkStatus == 1" #eliminarProductoPedido>
                         <h5 class="btn-eliminar-prod" (click)="this.eliminarItemPedido(producto.id)"><span class="badge border-danger border-1 text-danger">Eliminar</span></h5>
                     </ng-template>
                 </div>
