@@ -21,7 +21,7 @@
                                                 class="cantidad" (keypress)="soloNumeros($event)" (input)="validarStock()">
                                         </ng-container>
                                         <ng-template #cantidad>
-                                            Cantidad: <b>{{this.idPedido.cantidad}}</b>
+                                            Cantidad: <b>{{producto.cantidad}}</b>
                                         </ng-template>
                                     </form>
                                 </span><br>
@@ -31,7 +31,7 @@
                                     </span>
                                 </ng-container>
                                 <ng-template #cantidadtotal>
-                                    Total: <b>$ {{((producto.precio - (producto.precio * producto.descuento)) * this.idPedido.cantidad) | number:'1.2-2'}}</b>
+                                    Total: <b>$ {{((producto.precio - (producto.precio * producto.descuento)) * producto.cantidad) | number:'1.2-2'}}</b>
                                 </ng-template>
                             </span>
                         </div>

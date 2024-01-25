@@ -26,6 +26,10 @@ export class NavbarComponent implements OnInit{
 	ngOnInit() : void {
 		this.obtenerDatosUsuario();
 		this.obtenerPedidos();
+
+		setInterval(() => {
+			this.obtenerPedidos();
+		}, 10000);
 	}
 
 	protected obtenerDatosUsuario () : void {
@@ -52,7 +56,14 @@ export class NavbarComponent implements OnInit{
 	}
 
 	private obtenerPedidos () : any {
-		this.pedidos = this.apiProductos.obtenerPedidos()?.length;
+		const token = localStorage.getItem('token');
+		if (token != null) {
+			this.apiProductos.obtenerNoPedidos(token).subscribe(
+				respuesta => {
+					this.pedidos = respuesta.data.noPedidos;
+				}
+			);
+		}
 	}
 
 	protected abrirModal (modal : string) {
@@ -64,6 +75,7 @@ export class NavbarComponent implements OnInit{
 					this.msj.mensajeGenerico('Al parecer aún no haz realizado ninguna compra. Te invitamos a realizar alguna compra de nuestras ofertas', 'info', 'Pedidos');
 					return;
 				}
+				this.msj.mensajeEsperar();
 				this.modalService.abrirModalConComponente(PedidosComponent);
 			break;
 			case 'modificarPerfil':

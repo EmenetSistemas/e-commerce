@@ -19,7 +19,6 @@ export class VentaProductoComponent extends FGenerico implements OnInit {
 	@ViewChild('procederAlPagoBtn') procederAlPagoBtn!: ElementRef;
 	@ViewChild('realizarPedidoBtn') realizarPedidoBtn!: ElementRef;
 
-	protected productosVenta: any = [];
 	protected usuario : any = {};
 	protected totalCompra : number = 0;
 
@@ -100,21 +99,21 @@ export class VentaProductoComponent extends FGenerico implements OnInit {
 
 		if (this.productos.static) {
 			this.apiProductos.cancelarProductoPedido(this.productos.idPedido, data.idProducto);
-			if (this.productosVenta.length > 0) {
+			if (this.productos.length > 0) {
 				this.msj.mensajeGenericoToast('Se eliminó el producto del pedido', 'success');
 			} else {
 				this.apiProductos.cancelarPedido(this.productos.idPedido);
 				this.cerrarModal();
-				if (this.apiProductos.obtenerPedidos().length > 0) {
+				/*if (this.apiProductos.obtenerPedidos().length > 0) {
 					this.abrirModal();
 					return;
-				}
+				}*/
 				this.msj.mensajeGenerico('Al parecer no hay más productos en este pedido', 'info', 'Productos pedido #PE-'+this.productos.idPedido);
 			}
 			return;
 		}
 
-		if (this.productosVenta.length > 0) {
+		if (this.productos.length > 0) {
 			this.msj.mensajeGenericoToast('Se eliminó el producto de la compra', 'success');
 		} else {
 			this.cerrarModal();

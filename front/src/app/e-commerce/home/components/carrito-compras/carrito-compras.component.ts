@@ -28,11 +28,13 @@ export class CarritoComprasComponent implements OnInit {
 
 	private obtenerNoItemsCarritoCompras(): any {
 		const token = localStorage.getItem('token');
-		this.apiProductos.obtenerNoItemsCarritoCompras(token).subscribe(
-			respuesta => {
-				this.noItemsCarrito = respuesta.data.noItemsCarrito;
-			}
-		)
+		if (token != null) {
+			this.apiProductos.obtenerNoItemsCarritoCompras(token).subscribe(
+				respuesta => {
+					this.noItemsCarrito = respuesta.data.noItemsCarrito;
+				}
+			)
+		}
 	}
 
 	protected async obtenerItemsCarritoCompras(): Promise<any> {

@@ -20,11 +20,18 @@ export class PedidosComponent implements OnInit{
 
 	ngOnInit(): void {
 		this.obtenerPedidos();
-		this.msj.cerrarMensajes();
 	}
 
 	private obtenerPedidos () : void {
-		this.pedidos = this.apiProductos.obtenerPedidos();
+		const token = localStorage.getItem('token');
+		this.apiProductos.obtenerPedidos(token).subscribe(
+			respuesta => {
+				this.pedidos = respuesta.data.pedidos;
+				this.msj.cerrarMensajes();
+			}, error => {
+				this.msj.mensajeGenerico('error', 'error');
+			}
+		);
 	}
 
 	protected abrirModal (idPedido : number) : void {
