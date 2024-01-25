@@ -35,9 +35,9 @@ export class CarritoComprasComponent implements OnInit {
 		)
 	}
 
-	protected obtenerItemsCarritoCompras(): any {
+	protected async obtenerItemsCarritoCompras(): Promise<any> {
 		const token = localStorage.getItem('token');
-		this.apiProductos.obtenerItemsCarritoCompras(token).subscribe(
+		return this.apiProductos.obtenerItemsCarritoCompras(token).toPromise().then(
 			respuesta => {
 				this.itemsCarrito = respuesta.data.carritoCompras;
 			}, error => {
@@ -60,24 +60,40 @@ export class CarritoComprasComponent implements OnInit {
 		}
 	}
 
-	protected vaciarCarrito () : void {
-		this.msj.mensajeConfirmacionCustom('¿Está seguro de vaciar el carrito de compras?', 'question', 'Varciar carrito de compras').then(
+	protected eliminarItemCarrito (idItemCarrito : number) : any {
+		this.msj.mensajeConfirmacionCustom('¿Está seguro de eliminar el producto del carrito de compras?', 'question', 'Eliminar del carrito').then(
 			respuestaMensaje => {
 				if ( respuestaMensaje.isConfirmed ) {
-					this.apiProductos.vaciarCarrito();
+					this.msj.mensajeEsperarToast();
+					this.apiProductos.eliminarItemCarrito(idItemCarrito).subscribe(
+						respuesta => {
+							this.obtenerItemsCarritoCompras().then(() => {
+								this.msj.mensajeGenericoToast(respuesta.mensaje, 'warning');
+								return;
+							});
+						}, error => {
+							this.msj.mensajeGenerico('error', 'error');
+						}
+					);
 				}
+				return;
 			}
 		);
 	}
 
-	protected eliminarItemCarrito (idProducto : number) : any {
-		this.msj.mensajeConfirmacionCustom('¿Está seguro de eliminar el producto del carrito de compras?', 'question', 'Eliminar del carrito').then(
+	protected vaciarCarrito () : void {
+		this.msj.mensajeConfirmacionCustom('¿Está seguro de vaciar el carrito de compras?', 'question', 'Varciar carrito de compras').then(
 			respuestaMensaje => {
 				if ( respuestaMensaje.isConfirmed ) {
-					this.apiProductos.eliminarItemCarrito(idProducto);
-					this.obtenerNoItemsCarritoCompras();
+					const token = localStorage.getItem('token');
+					this.apiProductos.vaciarCarrito(token).subscribe(
+						respuesta => {
+							this.msj.mensajeGenericoToast(respuesta.mensaje, 'warning');
+						}, error => {
+							this.msj.mensajeGenerico('error', 'error');
+						}
+					);
 				}
-				return;
 			}
 		);
 	}

@@ -56,20 +56,12 @@ export class ProductosService {
 		return this.http.get<any>(this.url + '/e-commerce/productos/obtenerItemsCarritoCompras/'+token);
 	}
 
-	public vaciarCarrito () : any {
-		carritoCompras.items = [];
+	public eliminarItemCarrito (eliminarItemCarrito : number) : Observable<any> {
+		return this.http.get<any>(this.url + '/e-commerce/productos/eliminarItemCarrito/'+eliminarItemCarrito);
 	}
 
-	public eliminarItemCarrito (idProducto : number) : Observable<any> {
-		carritoCompras.items = carritoCompras.items.filter(
-			(item : any) => item.idItem !== idProducto
-		);
-
-		return carritoCompras;
-	}
-
-	public productosEnCarrito (idProducto : number) : Observable<any> {
-		return carritoCompras.items.find((item : any) => item.idItem === idProducto)?.cantidad ?? 0;
+	public vaciarCarrito (token : any) : Observable<any> {
+		return this.http.get<any>(this.url + '/e-commerce/productos/vaciarCarrito/'+token);
 	}
 
 	public agregarPedido (dataPedido : any, carrito : boolean = false) : any {
@@ -77,7 +69,7 @@ export class ProductosService {
 		pedidos.items.push(dataPedido);
 
 		if (carrito) {
-			this.vaciarCarrito();
+			//this.vaciarCarrito();
 		}
 	}
 
