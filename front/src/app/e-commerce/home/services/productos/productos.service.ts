@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { carritoCompras, environment, pedidos, productos } from '../../../../../environments/environment';
+import { environment } from '../../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
@@ -21,8 +21,8 @@ export class ProductosService {
 		return this.http.get<any>(this.url + '/e-commerce/productos/obtenerProductosPorApartado/'+idApartado);
 	}
 
-	public obtenerProductosDestacados () : Observable<any> {
-		const calificaciones = productos.map((producto : any) => producto.calificacion);
+	public obtenerProductosDestacados () : any {
+		/*const calificaciones = productos.map((producto : any) => producto.calificacion);
 		const sumaCalificaciones = calificaciones.reduce((total : any, calificacion : any) => total + calificacion, 0);
 		const mediaCalificaciones = sumaCalificaciones / calificaciones.length;
 
@@ -33,7 +33,7 @@ export class ProductosService {
 			}
 		});
 
-		return productosDestacados;
+		return productosDestacados;*/
 	}
 
 	public obtenerDetalleProductoPorId ( idProducto : number ) : Observable<any> {
@@ -76,18 +76,11 @@ export class ProductosService {
 		return this.http.get<any>(this.url + '/e-commerce/pedidos/obtenerPedidos/'+ token);
 	}
 
-	public cancelarPedido(idPedido: number): Observable<any> {
-		pedidos.items = pedidos.items.filter((pedido : any) => pedido.idPedido !== idPedido);
-		return pedidos;
+	public cancelarPedido (idPedido :  any) : Observable<any> {
+		return this.http.get<any>(this.url + '/e-commerce/pedidos/cancelarPedido/'+ idPedido);
 	}
 
 	public cancelarProductoPedido (idPedido : number, idProducto : number) : Observable<any> {
-		const pedido = pedidos.items.find((pedido: any) => pedido.idPedido === idPedido);
-
-  		if (pedido) {
-    		pedido.productos = pedido.productos.filter((producto: any) => producto.idItem !== idProducto);
-  		}
-
-		return pedidos;
+		return this.http.get<any>(this.url + '/e-commerce/pedidos/cancelarProductoPedido/'+ idPedido+'/'+idProducto);
 	}
 }

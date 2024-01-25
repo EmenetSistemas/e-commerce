@@ -63,7 +63,6 @@ export class ProductoComponent {
 
 		this.apiProductos.agregarItemCarrito(data).subscribe(
 			respuesta => {
-				console.log(respuesta);
 				if (respuesta.error == 402) {
 					this.msj.mensajeGenerico(respuesta.mensaje, 'warning', respuesta.titulo);
 					return;

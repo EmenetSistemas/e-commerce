@@ -18,16 +18,16 @@ export class PedidosComponent implements OnInit{
 		private msj : MensajesService
 	) {}
 
-	ngOnInit(): void {
-		this.obtenerPedidos();
+	async ngOnInit(): Promise<any> {
+		await this.obtenerPedidos();
+		this.msj.cerrarMensajes();
 	}
 
-	private obtenerPedidos () : void {
+	private async obtenerPedidos () : Promise<any> {
 		const token = localStorage.getItem('token');
-		this.apiProductos.obtenerPedidos(token).subscribe(
+		return this.apiProductos.obtenerPedidos(token).toPromise().then(
 			respuesta => {
 				this.pedidos = respuesta.data.pedidos;
-				this.msj.cerrarMensajes();
 			}, error => {
 				this.msj.mensajeGenerico('error', 'error');
 			}
@@ -54,8 +54,16 @@ export class PedidosComponent implements OnInit{
 		this.msj.mensajeConfirmacionCustom('¿Está seguro de cancelar el pedido?', 'question', 'Cancelar pedido #PE-'+idPedido).then(
 			respuestaMensaje => {
 				if (respuestaMensaje.isConfirmed) {
-					this.apiProductos.cancelarPedido(idPedido);
-					this.validarMostrarPedidos();
+					this.msj.mensajeEsperar();
+					this.apiProductos.cancelarPedido(idPedido).subscribe(
+						respuesta => {
+							this.obtenerPedidos().then(() => {
+								this.validarMostrarPedidos();
+							});
+						}, error => {
+							this.msj.mensajeGenerico('error', 'error');
+						}
+					);
 				}
 				return;
 			}

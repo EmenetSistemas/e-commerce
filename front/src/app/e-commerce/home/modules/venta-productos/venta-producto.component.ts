@@ -58,7 +58,7 @@ export class VentaProductoComponent extends FGenerico implements OnInit {
 		);
 	}
 
-	protected obtenerDetalleProductosVenta () : Promise<any> {
+	protected async obtenerDetalleProductosVenta () : Promise<any> {
 		return this.apiProductos.obtenerDetalleProductosVenta(this.productos.items).toPromise().then(
 			respuesta => {
 				this.productos.items = respuesta.data.detalleProductos;
@@ -91,29 +91,40 @@ export class VentaProductoComponent extends FGenerico implements OnInit {
 		}
 	}
 
-	protected eliminarProducto (data : any) : any {
+	protected async eliminarProducto (data : any) : Promise<any> {
+		this.msj.mensajeEsperar();
+
 		this.productos.items = this.productos.items.filter(
 			(item : any) => item.id !== data.idProducto
 		);
-		this.obtenerDetalleProductosVenta();
 
 		if (this.productos.static) {
-			this.apiProductos.cancelarProductoPedido(this.productos.idPedido, data.idProducto);
-			if (this.productos.length > 0) {
-				this.msj.mensajeGenericoToast('Se eliminó el producto del pedido', 'success');
-			} else {
-				this.apiProductos.cancelarPedido(this.productos.idPedido);
-				this.cerrarModal();
-				/*if (this.apiProductos.obtenerPedidos().length > 0) {
-					this.abrirModal();
+			this.apiProductos.cancelarProductoPedido(this.productos.idPedido, data.idProducto).subscribe(
+				respuesta => {
+					if (this.productos.items.length > 0) {
+						this.msj.mensajeGenericoToast('Se eliminó el producto del pedido', 'success');
+						return;
+					} else {
+						this.cerrarModal();
+						this.apiProductos.cancelarPedido(this.productos.idPedido).subscribe(
+							respuesta => {
+								this.msj.mensajeGenerico('Al parecer no hay más productos en este pedido', 'info', 'Productos pedido #PE-'+this.productos.idPedido);
+								return;
+							}, error => {
+								this.msj.mensajeGenerico('error', 'error');
+							}
+						);
+						return;
+					}
 					return;
-				}*/
-				this.msj.mensajeGenerico('Al parecer no hay más productos en este pedido', 'info', 'Productos pedido #PE-'+this.productos.idPedido);
-			}
+				}, error => {
+					this.msj.mensajeGenerico('error', 'error');
+				}
+			);
 			return;
 		}
 
-		if (this.productos.length > 0) {
+		if (this.productos.items.length > 0) {
 			this.msj.mensajeGenericoToast('Se eliminó el producto de la compra', 'success');
 		} else {
 			this.cerrarModal();
