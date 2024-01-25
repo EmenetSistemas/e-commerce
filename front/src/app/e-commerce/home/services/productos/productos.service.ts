@@ -45,32 +45,27 @@ export class ProductosService {
 	}
 
 	public agregarItemCarrito (data : any) : Observable<any> {
-		return this.http.post<any>(this.url + '/e-commerce/productos/agregarItemCarrito', data);
+		return this.http.post<any>(this.url + '/e-commerce/carritoCompras/agregarItemCarrito', data);
 	}
 
 	public obtenerNoItemsCarritoCompras (token : any) : Observable<any> {
-		return this.http.get<any>(this.url + '/e-commerce/productos/obtenerNoItemsCarritoCompras/'+token);
+		return this.http.get<any>(this.url + '/e-commerce/carritoCompras/obtenerNoItemsCarritoCompras/'+token);
 	}
 
 	public obtenerItemsCarritoCompras (token : any) : Observable<any> {
-		return this.http.get<any>(this.url + '/e-commerce/productos/obtenerItemsCarritoCompras/'+token);
+		return this.http.get<any>(this.url + '/e-commerce/carritoCompras/obtenerItemsCarritoCompras/'+token);
 	}
 
 	public eliminarItemCarrito (eliminarItemCarrito : number) : Observable<any> {
-		return this.http.get<any>(this.url + '/e-commerce/productos/eliminarItemCarrito/'+eliminarItemCarrito);
+		return this.http.get<any>(this.url + '/e-commerce/carritoCompras/eliminarItemCarrito/'+eliminarItemCarrito);
 	}
 
 	public vaciarCarrito (token : any) : Observable<any> {
-		return this.http.get<any>(this.url + '/e-commerce/productos/vaciarCarrito/'+token);
+		return this.http.get<any>(this.url + '/e-commerce/carritoCompras/vaciarCarrito/'+token);
 	}
-
-	public agregarPedido (dataPedido : any, carrito : boolean = false) : any {
-		dataPedido.idPedido = pedidos.items.length + 1;
-		pedidos.items.push(dataPedido);
-
-		if (carrito) {
-			//this.vaciarCarrito();
-		}
+	
+	public agregarPedido (pedido : any) : Observable<any> {
+		return this.http.post<any>(this.url + '/e-commerce/pedidos/agregarPedido', pedido);
 	}
 
 	public obtenerPedidos () : any {

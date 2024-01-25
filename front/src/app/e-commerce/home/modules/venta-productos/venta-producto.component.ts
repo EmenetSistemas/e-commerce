@@ -161,20 +161,38 @@ export class VentaProductoComponent extends FGenerico implements OnInit {
 					const fechaActual = new Date();
 			
 					const dataPedido = {
+						token : localStorage.getItem('token'),
+						pkDireccion : this.usuario.direccion.pkTblDireccion,
 						fechaPedido : fechaActual.toISOString(),
-						direccionEntrega : (this.usuario.direccion.calle+' '+this.usuario.direccion.noExterior+', '+this.usuario.direccion.localidad+', '+this.usuario.direccion.municipio+', '+this.usuario.direccion.estado+'. '+this.usuario.direccion.cp),
 						fechaEntrega : this.fechaEntregaEstimada(),
 						productos : this.productos.items
 					};
 			
-					this.apiProductos.agregarPedido(dataPedido, this.productos.carrito);
-			
-					setTimeout(() => {
-						this.msj.mensajeGenericoToast('Pedido realizada con éxito', 'success');
-						this.realizarPedidoBtn.nativeElement.click();
-					}, 1000);
+					this.apiProductos.agregarPedido(dataPedido).subscribe(
+						respuesta => {
+							if (this.productos.carrito) {
+								this.vaciarCarrito();
+							}
+
+							this.realizarPedidoBtn.nativeElement.click();
+							this.msj.mensajeGenericoToast(respuesta.mensaje, 'success');
+						}, error => {
+							this.msj.mensajeGenerico('error', 'error');
+						}
+					);
 				}
 				return;
+			}
+		);
+	}
+
+	private async vaciarCarrito () : Promise<any> {
+		const token = localStorage.getItem('token');
+		return this.apiProductos.vaciarCarrito(token).toPromise().then(
+			respuesta => {
+				// se realizó con exito
+			}, error => {
+				this.msj.mensajeGenerico('error', 'error');
 			}
 		);
 	}
