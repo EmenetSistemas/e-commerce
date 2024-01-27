@@ -137,7 +137,7 @@
                                     <p style="color:gray">
                                         Subtotal(1 producto):<b> $ {{this.obtenerTotalSegunProductos() | number:'1.2-2'}}</b><br>
                                         <span class="t-bold" style="color:brown">Total (IVA incluido, en caso de ser aplicable): $ {{this.obtenerTotalSegunProductos() | number:'1.2-2'}}</span><br><br>
-                                        Fecha de entrega estimada: <b>{{this.fechaEntregaEstimada() | date: 'd-M-y'}}</b>
+                                        Fecha de entrega estimada: <b>{{this.fechaEntregaEstimada}}</b>
                                     </p>
                                     <button class="btn btn-primary form-control" (click)="realizarPedido()">Realizar pedido y pagar</button>
                                     <br>&nbsp;

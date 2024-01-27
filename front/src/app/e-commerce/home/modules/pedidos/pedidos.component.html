@@ -25,8 +25,8 @@
                     </div>
                 </h6>
                 <p style="margin-top: -25px !important;" (click)="this.abrirModal(pedido.idPedido, pedido.fkStatus)">
-                    Pedido: {{pedido.fechaPedido | date: 'd-M-y'}}<br>
-                    Entrega estimada: {{pedido.fechaEntrega | date: 'd-M-y'}}<br>
+                    Pedido: {{pedido.fechaPedido}}<br>
+                    Entrega estimada: {{pedido.fechaEntregaEstimada}}<br>
                     Productos: {{pedido.productos.length}}<br>
                     <b>{{pedido.direccionEntrega}}</b><br>
                 </p>

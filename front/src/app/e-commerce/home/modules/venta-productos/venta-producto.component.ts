@@ -20,6 +20,7 @@ export class VentaProductoComponent extends FGenerico implements OnInit {
 	@ViewChild('realizarPedidoBtn') realizarPedidoBtn!: ElementRef;
 
 	protected usuario : any = {};
+	protected fechaEntregaEstimada : any = {};
 	protected totalCompra : number = 0;
 
 	constructor(
@@ -62,6 +63,7 @@ export class VentaProductoComponent extends FGenerico implements OnInit {
 		return this.apiProductos.obtenerDetalleProductosVenta(this.productos.items).toPromise().then(
 			respuesta => {
 				this.productos.items = respuesta.data.detalleProductos;
+				this.fechaEntregaEstimada = respuesta.data.fechaEntregaEstimada;
 			}, error => {
 				this.msj.mensajeGenerico('error', 'error');
 			}
@@ -167,15 +169,12 @@ export class VentaProductoComponent extends FGenerico implements OnInit {
 			confirmacion => {
 				if (confirmacion.isConfirmed) {
 					this.msj.mensajeEsperar();
-
-					const fechaActual = new Date();
 			
 					const dataPedido = {
-						token : localStorage.getItem('token'),
-						pkDireccion : this.usuario.direccion.pkTblDireccion,
-						fechaPedido : fechaActual.toISOString(),
-						fechaEntrega : this.fechaEntregaEstimada(),
-						productos : this.productos.items
+						token 				 : localStorage.getItem('token'),
+						pkDireccion 		 : this.usuario.direccion.pkTblDireccion,
+						fechaEntregaEstimada : this.fechaEntregaEstimada,
+						productos 			 : this.productos.items
 					};
 			
 					this.apiProductos.agregarPedido(dataPedido).subscribe(
@@ -205,14 +204,6 @@ export class VentaProductoComponent extends FGenerico implements OnInit {
 				this.msj.mensajeGenerico('error', 'error');
 			}
 		);
-	}
-
-	public fechaEntregaEstimada () : any {
-		let fechaMasDosDias = new Date();
-		fechaMasDosDias.setDate(fechaMasDosDias.getDate() + 2);
-		fechaMasDosDias.setHours(0, 0, 0, 0);
-
-		return fechaMasDosDias.toISOString();
 	}
 
 	public cerrarModal() {
