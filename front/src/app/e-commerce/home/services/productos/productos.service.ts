@@ -79,8 +79,12 @@ export class ProductosService {
 	public cancelarPedido (idPedido :  any) : Observable<any> {
 		return this.http.get<any>(this.url + '/e-commerce/pedidos/cancelarPedido/'+ idPedido);
 	}
-
+	
 	public cancelarProductoPedido (idPedido : number, idProducto : number) : Observable<any> {
 		return this.http.get<any>(this.url + '/e-commerce/pedidos/cancelarProductoPedido/'+ idPedido+'/'+idProducto);
+	}
+
+	public obtenerActualizacionesPedido (idPedido :  any) : Observable<any> {
+		return this.http.get<any>(this.url + '/e-commerce/pedidos/obtenerActualizacionesPedido/'+ idPedido);
 	}
 }

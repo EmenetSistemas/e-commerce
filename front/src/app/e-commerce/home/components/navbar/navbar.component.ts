@@ -76,7 +76,7 @@ export class NavbarComponent implements OnInit{
 					return;
 				}
 				this.msj.mensajeEsperar();
-				this.modalService.abrirModalConComponente(PedidosComponent);
+				this.modalService.abrirModalConComponente(PedidosComponent, {}, '');
 			break;
 			case 'modificarPerfil':
 				this.modalService.abrirModalConComponente(ModificacionUsuarioComponent, {}, '');

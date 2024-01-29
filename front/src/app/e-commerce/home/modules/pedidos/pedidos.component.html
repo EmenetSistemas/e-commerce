@@ -18,13 +18,13 @@
         <div class="card" style="margin-top: 10px !important;" *ngFor="let pedido of this.pedidos">
             <div class="card-body" style="margin-bottom: -20px;">
                 <h6 class="card-title apartado-titulo-detalle" style="margin-top: -10px !important;">
-                    <section (click)="this.abrirModal(pedido.idPedido, pedido.fkStatus)">Pedido #PE-{{pedido.idPedido}}</section>
+                    <section (click)="this.abrirModal('detallePedido', pedido.idPedido, pedido.fkStatus)">Pedido #PE-{{pedido.idPedido}}</section>
                     <div class="tablet">
                         <span *ngIf="pedido.fkStatus == 1" class="badge border-danger border-1 text-danger t-bold" (click)="this.cancelarPedido(pedido.idPedido)">Cancelar</span><br>
-                        <span class="badge border-info border-1 text-info t-bold" style="margin-top: 5px;">Seguir pedido</span>
+                        <span class="badge border-info border-1 text-info t-bold" (click)="abrirModal('seguimientoPedido', pedido.idPedido, pedido.fkStatus)" style="margin-top: 5px;">Seguir pedido</span>
                     </div>
                 </h6>
-                <p style="margin-top: -25px !important;" (click)="this.abrirModal(pedido.idPedido, pedido.fkStatus)">
+                <p style="margin-top: -25px !important;" (click)="this.abrirModal('detallePedido', pedido.idPedido, pedido.fkStatus)">
                     Pedido: {{pedido.fechaPedido}}<br>
                     Entrega estimada: {{pedido.fechaEntregaEstimada}}<br>
                     Productos: {{pedido.productos.length}}<br>
@@ -33,7 +33,7 @@
                 <div class="celular" style="margin-top: -5px !important; margin-bottom: 15px !important;">
                     <h5 align="center">
                         <span *ngIf="pedido.fkStatus == 1" class="badge border-danger border-1 text-danger t-bold" (click)="this.cancelarPedido(pedido.idPedido)">Cancelar</span>
-                        <span class="badge border-info border-1 text-info t-bold">Seguir pedido</span>
+                        <span class="badge border-info border-1 text-info t-bold" (click)="abrirModal('seguimientoPedido', pedido.idPedido, pedido.fkStatus)">Seguir pedido</span>
                     </h5>
                 </div>
             </div>

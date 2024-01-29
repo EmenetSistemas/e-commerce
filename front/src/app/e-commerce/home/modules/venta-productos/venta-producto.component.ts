@@ -138,7 +138,7 @@ export class VentaProductoComponent extends FGenerico implements OnInit {
 		this.msj.mensajeEsperar();
 		this.cerrarModal();
 		setTimeout(() => {
-			this.modalService.abrirModalConComponente(PedidosComponent);
+			this.modalService.abrirModalConComponente(PedidosComponent, {}, '');
 		}, 150);
 	}
 

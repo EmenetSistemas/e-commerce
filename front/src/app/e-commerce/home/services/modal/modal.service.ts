@@ -21,6 +21,11 @@ export class ModalService {
 				'overflow-y': 'auto'
 			}
 		};
+
+		if (typeModal == 'sm-modal') {
+			modalConfig.class = 'modal-md modal-dialog-centered'
+		}
+
 		this.modalRef = this.modalService.show(component, modalConfig);
 	}
 

@@ -3,6 +3,7 @@ import { ProductosService } from '../../services/productos/productos.service';
 import { ModalService } from '../../services/modal/modal.service';
 import { VentaProductoComponent } from '../venta-productos/venta-producto.component';
 import { MensajesService } from 'src/app/services/mensajes/mensajes.service';
+import { SeguimientoPedidoComponent } from '../seguimiento-pedido/seguimiento-pedido.component';
 
 @Component({
 	selector: 'app-pedidos',
@@ -34,20 +35,31 @@ export class PedidosComponent implements OnInit{
 		);
 	}
 
-	protected abrirModal (idPedido : number, fkStatus : number) : void {
+	protected abrirModal (idModal : string, idPedido : number, fkStatus : number) : void {
 		const itemsPedido = this.pedidos.find((pedido : any) => pedido.idPedido === idPedido);
-		this.msj.mensajeEsperar();
+
 		this.cerrarModal();
+
 		setTimeout(() => {
-			const dataModal = {
-				productos : {
-					items : itemsPedido.productos,
-					static : true,
-					idPedido : idPedido,
-					fkStatus : fkStatus,
-				}
-			};
-			this.modalService.abrirModalConComponente(VentaProductoComponent, dataModal);
+			switch (idModal) {
+				case 'detallePedido':
+					const dataModal = {
+						productos : {
+							items : itemsPedido.productos,
+							static : true,
+							idPedido : idPedido,
+							fkStatus : fkStatus,
+						}
+					};
+					this.modalService.abrirModalConComponente(VentaProductoComponent, dataModal);
+				break;
+				case 'seguimientoPedido':
+					const dataModal1 = {
+						idDetalle : idPedido
+					};
+					this.modalService.abrirModalConComponente(SeguimientoPedidoComponent, dataModal1, 'sm-modal');
+				break;
+			}
 		}, 150);
 	}
 
