@@ -59,7 +59,7 @@ export class DetalleProductoComponent extends FGenerico implements OnInit {
 	protected agregarItemCarrito(): any {
 		if (this.apiUsuarios.validarPerfilUsuario()) return;
 		
-		this.msj.mensajeEsperarToast();
+		this.msj.mensajeEsperar();
 
 		const data = {
 			idItem : this.idProducto,

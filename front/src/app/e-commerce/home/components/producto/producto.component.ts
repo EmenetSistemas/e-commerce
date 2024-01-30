@@ -53,7 +53,7 @@ export class ProductoComponent {
 	protected agregarItemCarrito () : any {
 		if (this.apiUsuarios.validarPerfilUsuario()) return;
 		
-		this.msj.mensajeEsperarToast();
+		this.msj.mensajeEsperar();
 
 		const data = {
 			idItem : this.productoGen.id,
