@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, NgZone, OnInit, ViewChild } from '@angular/core';
 import { ModalService } from '../../services/modal/modal.service';
 import { ProductosService } from '../../services/productos/productos.service';
 import { MensajesService } from 'src/app/services/mensajes/mensajes.service';
@@ -7,17 +7,27 @@ import FGenerico from 'src/app/shared/util/funciones-genericas';
 import { UsuariosService } from '../../services/usuarios/usuarios.service';
 import { ModificacionUsuarioComponent } from '../modificacion-usuario/modificacion-usuario.component';
 
+declare var Stripe: any;
+
 @Component({
 	selector: 'app-venta-producto',
 	templateUrl: './venta-producto.component.html',
 	styleUrls: ['./venta-producto.component.css']
 })
-export class VentaProductoComponent extends FGenerico implements OnInit {
+export class VentaProductoComponent extends FGenerico implements OnInit, AfterViewInit {
 	@Input() productos: any = {};
 
 	@ViewChild('productosBtn') productosBtn!: ElementRef;
 	@ViewChild('procederAlPagoBtn') procederAlPagoBtn!: ElementRef;
 	@ViewChild('realizarPedidoBtn') realizarPedidoBtn!: ElementRef;
+
+	@ViewChild('cardInfo') cardInfo!: ElementRef;
+	
+	public stripe: any;
+	public elements: any;
+
+	cardError : string = '';
+	card : any;
 
 	protected usuario : any = {};
 	protected fechaEntregaEstimada : any = {};
@@ -27,9 +37,12 @@ export class VentaProductoComponent extends FGenerico implements OnInit {
 		private modalService : ModalService,
 		private apiProductos : ProductosService,
 		private apiUsuarios : UsuariosService,
-		private msj : MensajesService
+		private msj : MensajesService,
+		private ngZone : NgZone
 	) {
 		super();
+		this.stripe = Stripe('pk_test_51OeKREDLR98WDNfLWiTaYu74NuuVmwBxL6oeDRWJ1G9JgohIVGmc1HjdZ2sPqtl9lcRnD6I0xG4cwthdEljzIld500uqISoEwn');
+    	this.elements = this.stripe.elements();
 	}
 
 	async ngOnInit(): Promise<void> {
@@ -40,6 +53,21 @@ export class VentaProductoComponent extends FGenerico implements OnInit {
 		]);
 		this.msj.cerrarMensajes();
 	}
+
+	ngAfterViewInit(): void {
+		this.card = this.elements.create('card');
+		this.card.mount(this.cardInfo.nativeElement)
+		this.card.addEventListener('change', this.onChange.bind(this));
+	}
+
+	onChange ({ error }  : any) : void {
+		if (error) {
+			this.ngZone.run(() => this.cardError = error.message);
+		} else {
+			this.ngZone.run(() => this.cardError = '');
+		}
+	}
+
 	private obtenerDatosUsuario () : Promise<any> {
 		const token = localStorage.getItem('token');
 		return this.apiUsuarios.obtenerDatosSesion(token).toPromise().then(
@@ -164,21 +192,37 @@ export class VentaProductoComponent extends FGenerico implements OnInit {
 		);
 	}
 
-	protected realizarPedido() {
+	protected async realizarPedido() {
+		this.msj.mensajeEsperar();
+		
+		const {token, error} : any = await this.stripe.createToken(this.card);
+		
+		if (!token) {
+			this.ngZone.run(() => this.cardError = error.message);
+			this.msj.mensajeGenerico(error.message, 'error');
+			return;
+		}
+
 		this.msj.mensajeConfirmacionCustom('Favor de validar la información antes de realizar el pedido', 'question', 'Realizar pedido').then(
 			confirmacion => {
 				if (confirmacion.isConfirmed) {
 					this.msj.mensajeEsperar();
-			
+					console.log(token);
 					const dataPedido = {
 						token 				 : localStorage.getItem('token'),
 						pkDireccion 		 : this.usuario.direccion.pkTblDireccion,
 						fechaEntregaEstimada : this.fechaEntregaEstimada,
-						productos 			 : this.productos.items
+						productos 			 : this.productos.items,
+						token_id			 : token.id,
+						total_pagar			 : this.obtenerTotalSegunProductos()
 					};
 			
 					this.apiProductos.agregarPedido(dataPedido).subscribe(
 						respuesta => {
+							if (respuesta.error == 402) {
+								this.msj.mensajeGenerico(respuesta.mensaje, 'error');
+								return;
+							}
 							if (this.productos.carrito) {
 								this.vaciarCarrito();
 							}

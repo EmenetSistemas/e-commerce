@@ -1512,3 +1512,7 @@ form label {
 	font-weight: 600 !important;
 	color: rgba(1, 41, 112, 0.6) !important;
 }
+
+.card-w-title {
+	margin-top: 20px !important;
+}

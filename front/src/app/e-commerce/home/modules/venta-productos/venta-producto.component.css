@@ -48,3 +48,19 @@
 .apartado-detalle-envio {
     margin-bottom: 0px !important;
 }
+
+.credit-card {
+    height: 50px;
+    border: 1px solid black;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.error {
+    margin-top: 5px !important;
+    font-weight: bold !important;
+    width: 100% !important;
+    text-align: center;
+}

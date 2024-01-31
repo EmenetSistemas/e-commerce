@@ -87,7 +87,7 @@
                 </div>
             </section>
         </div>
-        <div class="tab-pane fade" id="bordered-justified-profile" role="tabpanel" aria-labelledby="profile-tab" *ngIf="this.usuario.direccion">
+        <div class="tab-pane fade" id="bordered-justified-profile" role="tabpanel" aria-labelledby="profile-tab">
             <section class="section profile formsWTitle">
                 <div class="row">
                     <div class="col-12">
@@ -99,7 +99,7 @@
                                             Dirección
                                             <span class="badge border-primary border-1 text-primary">Cambiar</span>
                                         </h5>
-                                        <p>
+                                        <p *ngIf="this.usuario.direccion">
                                             {{this.usuario.direccion.calle}} {{this.usuario.direccion.noExterior}}<br>
                                             {{this.usuario.direccion.localidad}}<br>
                                             {{this.usuario.direccion.municipio}}, {{this.usuario.direccion.estado}}<br>
@@ -112,9 +112,14 @@
                                             Métdodo de pago
                                             <span class="badge border-primary border-1 text-primary">Cambiar</span>
                                         </h5>
-                                        <p *ngIf="this.usuario.metodoPago.emisor != null">
-                                            Pagar con {{this.usuario.metodoPago.emisor}} <b>*{{this.usuario.metodoPago.noTarjeta.substring(this.usuario.metodoPago.noTarjeta.length - 4)}}</b><br>
-                                        </p>
+                                        <div class="card" style="margin-top: 15px !important;">
+                                            <div class="card-body card-w-title">
+                                                <div #cardInfo></div>
+                                                <div class="error" *ngIf="cardError" style="margin-top: 15px !important;">
+                                                    {{cardError}}
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="col-12 direccion">
                                         <hr>
