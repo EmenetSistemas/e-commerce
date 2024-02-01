@@ -8,11 +8,11 @@
         </nav>
     </div>
 
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <!--div class="alert alert-warning alert-dismissible fade show" role="alert">
         <i class="bi bi-exclamation-triangle me-1"></i>
         Solo se pueden cancelar pedidos si aún no han sido enviados
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
+    </!--div-->
 
     <div class="col-12 apartado-pedidos" style="margin-top: -25px !important;">
         <div class="card" style="margin-top: 10px !important;" *ngFor="let pedido of this.pedidos">
@@ -20,7 +20,7 @@
                 <h6 class="card-title apartado-titulo-detalle" style="margin-top: -10px !important;">
                     <section (click)="this.abrirModal('detallePedido', pedido.idPedido, pedido.fkStatus)">Pedido #PE-{{pedido.idPedido}}</section>
                     <div class="tablet">
-                        <span *ngIf="pedido.fkStatus == 1" class="badge border-danger border-1 text-danger t-bold" (click)="this.cancelarPedido(pedido.idPedido)">Cancelar</span><br>
+                        <!--span *ngIf="pedido.fkStatus == 1" class="badge border-danger border-1 text-danger t-bold" (click)="this.cancelarPedido(pedido.idPedido)">Cancelar</!--span><br-->
                         <span class="badge border-info border-1 text-info t-bold" (click)="abrirModal('seguimientoPedido', pedido.idPedido, pedido.fkStatus)" style="margin-top: 5px;">Seguir pedido</span>
                     </div>
                 </h6>
@@ -32,7 +32,7 @@
                 </p>
                 <div class="celular" style="margin-top: -5px !important; margin-bottom: 15px !important;">
                     <h5 align="center">
-                        <span *ngIf="pedido.fkStatus == 1" class="badge border-danger border-1 text-danger t-bold" (click)="this.cancelarPedido(pedido.idPedido)">Cancelar</span>
+                        <!--span *ngIf="pedido.fkStatus == 1" class="badge border-danger border-1 text-danger t-bold" (click)="this.cancelarPedido(pedido.idPedido)">Cancelar</!--span-->
                         <span class="badge border-info border-1 text-info t-bold" (click)="abrirModal('seguimientoPedido', pedido.idPedido, pedido.fkStatus)">Seguir pedido</span>
                     </h5>
                 </div>
