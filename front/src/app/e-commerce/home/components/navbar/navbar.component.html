@@ -29,25 +29,25 @@
 			<li class="nav-item dropdown pe-3">
 				<a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown" (click)="obtenerDatosUsuario()">
 					<img src="assets/img/carrito-de-compras.png" alt="Profile" class="rounded-circle">
-					<span class="d-none d-md-block dropdown-toggle ps-2" style="color: white;" *ngIf="usuario.nombre">{{usuario.nombre+' '+usuario.aPaterno}}</span>
+					<span class="d-none d-md-block dropdown-toggle ps-2" style="color: white;" *ngIf="this.token">{{usuario.nombre+' '+usuario.aPaterno}}</span>
 				</a>
 
 				<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
 					<li class="dropdown-header">
-						<h6 *ngIf="usuario.nombre">{{usuario.nombre+' '+usuario.aPaterno}}</h6>
-						<h6 *ngIf="!usuario.nombre">Sesión no iniciada</h6>
-						<span *ngIf="usuario.nombre">Cliente</span>
+						<h6 *ngIf="this.token">{{usuario.nombre??''+' '+usuario.aPaterno??''}}</h6>
+						<h6 *ngIf="!this.token">Sesión no iniciada</h6>
+						<span *ngIf="this.token">Cliente</span>
 					</li>
 					<li>
 						<hr class="dropdown-divider">
 					</li>
 
 					<li>
-						<a class="dropdown-item d-flex align-items-center" *ngIf="usuario.nombre" (click)="abrirModal('modificarPerfil')">
+						<a class="dropdown-item d-flex align-items-center" *ngIf="this.token" (click)="abrirModal('modificarPerfil')">
 							<i class="bi bi-person"></i>
 							<span>Mi perfil</span>
 						</a>
-						<a class="dropdown-item d-flex align-items-center" *ngIf="!usuario.nombre" (click)="abrirModalLogin()">
+						<a class="dropdown-item d-flex align-items-center" *ngIf="!this.token" (click)="abrirModalLogin()">
 							<i class="bi bi-person"></i>
 							<span>Iniciar Sesión</span>
 						</a>
@@ -66,7 +66,7 @@
               <hr class="dropdown-divider">
             </!--li-->
 
-					<li *ngIf="usuario.nombre" (click)="cerrarSesion()">
+					<li *ngIf="this.token" (click)="cerrarSesion()">
 						<a class="dropdown-item d-flex align-items-center">
 							<i class="bi bi-box-arrow-right"></i>
 							<span>Cerrar Sesión</span>

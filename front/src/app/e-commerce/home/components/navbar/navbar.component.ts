@@ -15,6 +15,7 @@ import { ModificacionUsuarioComponent } from '../../modules/modificacion-usuario
 export class NavbarComponent implements OnInit{
 	protected pedidos : number = 0;
 	protected usuario : any = {};
+	protected token : any = null;
 
 	constructor(
 		private modalService: ModalService,
@@ -33,9 +34,9 @@ export class NavbarComponent implements OnInit{
 	}
 
 	protected obtenerDatosUsuario () : void {
-		const token = localStorage.getItem('token');
-		if (token != null) {
-			this.apiUsuarios.obtenerDatosSesion(token).subscribe(
+		this.token = localStorage.getItem('token') ?? null;
+		if (this.token != null) {
+			this.apiUsuarios.obtenerDatosSesion(this.token).subscribe(
 				respuesta => {
 					if (respuesta.data.status == 204) {
 						localStorage.removeItem('token');
@@ -56,13 +57,15 @@ export class NavbarComponent implements OnInit{
 	}
 
 	private obtenerPedidos () : any {
-		const token = localStorage.getItem('token');
-		if (token != null) {
-			this.apiProductos.obtenerNoPedidos(token).subscribe(
+		this.token = localStorage.getItem('token') ?? null;
+		if (this.token != null) {
+			this.apiProductos.obtenerNoPedidos(this.token).subscribe(
 				respuesta => {
 					this.pedidos = respuesta.data.noPedidos;
 				}
 			);
+		} else {
+			this.pedidos = 0;
 		}
 	}
 
@@ -93,9 +96,9 @@ export class NavbarComponent implements OnInit{
 			respuesta => {
 				if (respuesta.isConfirmed) {
 					this.usuario = {};
+					this.pedidos = 0;
 					localStorage.removeItem('token');
 					localStorage.clear();
-					this.obtenerDatosUsuario();
 					this.msj.mensajeGenerico('Hasta la próxima...!', 'success', 'Sesión finalizada');
 				}
 			}

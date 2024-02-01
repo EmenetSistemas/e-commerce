@@ -49,11 +49,11 @@ export class ProductosService {
 	}
 
 	public obtenerNoItemsCarritoCompras (token : any) : Observable<any> {
-		return this.http.get<any>(this.url + '/e-commerce/carritoCompras/obtenerNoItemsCarritoCompras/'+token);
+		return this.http.post<any>(this.url + '/e-commerce/carritoCompras/obtenerNoItemsCarritoCompras',{token});
 	}
 
 	public obtenerItemsCarritoCompras (token : any) : Observable<any> {
-		return this.http.get<any>(this.url + '/e-commerce/carritoCompras/obtenerItemsCarritoCompras/'+token);
+		return this.http.post<any>(this.url + '/e-commerce/carritoCompras/obtenerItemsCarritoCompras',{token});
 	}
 
 	public eliminarItemCarrito (eliminarItemCarrito : number) : Observable<any> {
@@ -61,7 +61,7 @@ export class ProductosService {
 	}
 
 	public vaciarCarrito (token : any) : Observable<any> {
-		return this.http.get<any>(this.url + '/e-commerce/carritoCompras/vaciarCarrito/'+token);
+		return this.http.post<any>(this.url + '/e-commerce/carritoCompras/vaciarCarrito',{token});
 	}
 	
 	public agregarPedido (pedido : any) : Observable<any> {
@@ -69,11 +69,11 @@ export class ProductosService {
 	}
 
 	public obtenerNoPedidos (token :  any) : Observable<any> {
-		return this.http.get<any>(this.url + '/e-commerce/pedidos/obtenerNoPedidos/'+ token);
+		return this.http.post<any>(this.url + '/e-commerce/pedidos/obtenerNoPedidos', {token});
 	}
 
 	public obtenerPedidos (token :  any) : Observable<any> {
-		return this.http.get<any>(this.url + '/e-commerce/pedidos/obtenerPedidos/'+ token);
+		return this.http.post<any>(this.url + '/e-commerce/pedidos/obtenerPedidos', {token});
 	}
 
 	public cancelarPedido (idPedido :  any) : Observable<any> {

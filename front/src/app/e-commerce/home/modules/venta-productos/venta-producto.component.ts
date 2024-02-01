@@ -175,12 +175,12 @@ export class VentaProductoComponent extends FGenerico implements OnInit, AfterVi
 	}
 
 	protected procederPago() {
-		if (this.usuario.metodoPago.noTarjeta != null) {
+		//if (this.usuario.metodoPago.noTarjeta != null) {
 			this.procederAlPagoBtn.nativeElement.click();
 			return;
-		}
+		//}
 
-		this.msj.mensajeConfirmacionCustom('Al parecer aún no haz registrado un método de pago, ¿Deseas actualizar tu información?', 'question', 'Sin método de pago').then(
+		/*this.msj.mensajeConfirmacionCustom('Al parecer aún no haz registrado un método de pago, ¿Deseas actualizar tu información?', 'question', 'Sin método de pago').then(
 			respuesta => {
 				if (respuesta.isConfirmed) {
 					this.cerrarModal();
@@ -189,7 +189,7 @@ export class VentaProductoComponent extends FGenerico implements OnInit, AfterVi
 					}, 150);
 				}
 			}
-		);
+		);*/
 	}
 
 	protected async realizarPedido() {
@@ -207,7 +207,7 @@ export class VentaProductoComponent extends FGenerico implements OnInit, AfterVi
 			confirmacion => {
 				if (confirmacion.isConfirmed) {
 					this.msj.mensajeEsperar();
-					console.log(token);
+					
 					const dataPedido = {
 						token 				 : localStorage.getItem('token'),
 						pkDireccion 		 : this.usuario.direccion.pkTblDireccion,
@@ -219,10 +219,11 @@ export class VentaProductoComponent extends FGenerico implements OnInit, AfterVi
 			
 					this.apiProductos.agregarPedido(dataPedido).subscribe(
 						respuesta => {
-							if (respuesta.error == 402) {
+							if (respuesta.error == 402 || respuesta.error == 204) {
 								this.msj.mensajeGenerico(respuesta.mensaje, 'error');
 								return;
 							}
+							
 							if (this.productos.carrito) {
 								this.vaciarCarrito();
 							}
