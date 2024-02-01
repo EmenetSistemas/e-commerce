@@ -13,11 +13,18 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title" *ngIf="this.seguimientoPedido.fkStatus == 1">Etrega <span>| {{this.seguimientoPedido.fechaEntregaEstimada}}</span></h5>
+                        <h5 class="card-title" *ngIf="this.seguimientoPedido.fkStatus == 1">Etrega <span>| {{this.seguimientoPedido.fechaEntregaEstimada ?? this.seguimientoPedido.fechaRetrazo}}</span></h5>
                         <h5 class="card-title" *ngIf="this.seguimientoPedido.fkStatus == 2">Enviado <span>| {{this.seguimientoPedido.fechaEnvio}}</span></h5>
                         <h5 class="card-title" *ngIf="this.seguimientoPedido.fkStatus == 3">Entregado <span>| {{this.seguimientoPedido.fechaEntrega}}</span></h5>
 
                         <div class="activity">
+                            <div class="activity-item d-flex">
+                                <div class="activite-label">{{this.seguimientoPedido.fechaPedido}}</div>
+                                <i class="bi bi-circle-fill activity-badge text-danger align-self-start"></i>
+                                <div class="activity-content">
+                                    Se realizó el pago del pedido
+                                </div>
+                            </div>
 
                             <div class="activity-item d-flex">
                                 <div class="activite-label">{{this.seguimientoPedido.fechaPedido}}</div>
