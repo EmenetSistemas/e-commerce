@@ -251,6 +251,13 @@ export class VentaProductoComponent extends FGenerico implements OnInit, AfterVi
 		);
 	}
 
+	protected abrirModalModificacionUsuario () {
+		this.cerrarModal();
+		setTimeout(() => {
+			this.modalService.abrirModalConComponente(ModificacionUsuarioComponent, {}, '');
+		}, 150);
+	}
+
 	public cerrarModal() {
 		this.modalService.cerrarModal();
 	}

@@ -97,7 +97,7 @@
                                     <div class="col-12 direccion">
                                         <h5 class="t-bold apartado-titulo-detalle">
                                             Dirección
-                                            <span class="badge border-primary border-1 text-primary">Cambiar</span>
+                                            <span class="badge border-primary border-1 text-primary" (click)="abrirModalModificacionUsuario()">Cambiar</span>
                                         </h5>
                                         <p *ngIf="this.usuario.direccion">
                                             {{this.usuario.direccion.calle}} {{this.usuario.direccion.noExterior}}<br>
@@ -110,7 +110,7 @@
                                         <hr>
                                         <h5 class="t-bold apartado-titulo-detalle">
                                             Métdodo de pago
-                                            <span class="badge border-primary border-1 text-primary">Cambiar</span>
+                                            <!--span class="badge border-primary border-1 text-primary">Cambiar</!--span-->
                                         </h5>
                                         <div class="card" style="margin-top: 15px !important;">
                                             <div class="card-body card-w-title">
