@@ -13,8 +13,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title" *ngIf="this.seguimientoPedido.fkStatus == 1">Etrega <span>| {{this.seguimientoPedido.fechaEntregaEstimada ?? this.seguimientoPedido.fechaRetrazo}}</span></h5>
-                        <h5 class="card-title" *ngIf="this.seguimientoPedido.fkStatus == 2">Enviado <span>| {{this.seguimientoPedido.fechaEnvio}}</span></h5>
+                        <h5 class="card-title" *ngIf="this.seguimientoPedido.fkStatus == 1 || this.seguimientoPedido.fkStatus == 2">Etrega <span>| {{this.seguimientoPedido.fechaEntregaEstimada ?? this.seguimientoPedido.fechaRetrazo}}</span></h5>
                         <h5 class="card-title" *ngIf="this.seguimientoPedido.fkStatus == 3">Entregado <span>| {{this.seguimientoPedido.fechaEntrega}}</span></h5>
 
                         <div class="activity">
