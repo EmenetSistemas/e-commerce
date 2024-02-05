@@ -3,6 +3,7 @@ import { ProductosService } from '../../services/productos/productos.service';
 import { VentaProductoComponent } from '../../modules/venta-productos/venta-producto.component';
 import { ModalService } from '../../services/modal/modal.service';
 import { MensajesService } from 'src/app/services/mensajes/mensajes.service';
+import { UsuariosService } from '../../services/usuarios/usuarios.service';
 
 @Component({
 	selector: 'app-carrito-compras',
@@ -15,6 +16,7 @@ export class CarritoComprasComponent implements OnInit {
 
 	constructor(
 		private apiProductos: ProductosService,
+		private apiUsuarios: UsuariosService,
 		private modalService: ModalService,
 		private msj : MensajesService
 	) {}
@@ -33,18 +35,23 @@ export class CarritoComprasComponent implements OnInit {
 					this.noItemsCarrito = respuesta.data.noItemsCarrito;
 				}
 			)
+		} else {
+			this.noItemsCarrito = 0;
 		}
 	}
 
 	protected async obtenerItemsCarritoCompras(): Promise<any> {
+		if (this.apiUsuarios.validarPerfilUsuario()) return;
+
 		const token = localStorage.getItem('token');
+
 		return this.apiProductos.obtenerItemsCarritoCompras(token).toPromise().then(
 			respuesta => {
 				this.itemsCarrito = respuesta.data.carritoCompras;
 			}, error => {
 				this.msj.mensajeGenerico('error', 'error');
 			}
-		)
+		);
 	}
 
 	protected abrirModal ( modal : string ) : any {
