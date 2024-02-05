@@ -3,7 +3,7 @@
     <span class="badge bg-info badge-number t-bold">{{this.noItemsCarrito}}</span>
 </a>
 
-<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages" *ngIf="token != null">
     <li class="dropdown-header">
         Tienes {{this.noItemsCarrito}} {{this.noItemsCarrito == 1 ? 'producto' : 'productos' }} en tu carrito
         <a *ngIf="noItemsCarrito > 3" href="javascript:void(0)" (click)="this.vaciarCarrito()"><span class="badge rounded-pill bg-warning p-2 ms-2">Vaciar</span></a>

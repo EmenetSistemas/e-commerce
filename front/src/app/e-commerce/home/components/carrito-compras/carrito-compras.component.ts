@@ -13,6 +13,7 @@ import { UsuariosService } from '../../services/usuarios/usuarios.service';
 export class CarritoComprasComponent implements OnInit {
 	protected noItemsCarrito: any = 0;
 	protected itemsCarrito: any = [];
+	protected token : any = null;
 
 	constructor(
 		private apiProductos: ProductosService,
@@ -29,6 +30,7 @@ export class CarritoComprasComponent implements OnInit {
 
 	private obtenerNoItemsCarritoCompras(): any {
 		const token = localStorage.getItem('token');
+		this.token = token;
 		if (token != null) {
 			this.apiProductos.obtenerNoItemsCarritoCompras(token).subscribe(
 				respuesta => {
