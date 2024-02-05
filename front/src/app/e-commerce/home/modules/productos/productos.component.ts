@@ -60,6 +60,7 @@ export class ProductosComponent extends FGenerico implements OnInit {
 		return this.apiProductos.obtenerNombresProductosTienda().toPromise().then(
 			respuesta => {
 				this.listaProductosTienda = respuesta.data.nombresProductos;
+				return;
 			}, error => {
 				this.msj.mensajeGenerico('error', 'error');
 			}
@@ -103,7 +104,7 @@ export class ProductosComponent extends FGenerico implements OnInit {
 
 	protected buscarPorductos () : void {
 		this.msj.mensajeEsperar();
-		this.listaProductosTienda = [];
+		this.productosMostrar = [];
 		const producto = this.formBusqueda.get('producto')?.value;
 
 		this.apiProductos.obtenerProductosBusqueda(producto).subscribe(
