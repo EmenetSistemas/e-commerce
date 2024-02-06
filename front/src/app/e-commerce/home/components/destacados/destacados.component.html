@@ -33,5 +33,5 @@
 </div>
 
 <section *ngFor="let producto of this.productosDestacados">
-    <!--app-producto [idProducto]="producto.id"></!--app-producto-->
+    <app-producto [productoGen]="producto"></app-producto>
 </section>

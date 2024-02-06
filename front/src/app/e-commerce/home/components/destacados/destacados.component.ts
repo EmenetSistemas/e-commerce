@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductosService } from '../../services/productos/productos.service';
+import { MensajesService } from 'src/app/services/mensajes/mensajes.service';
 
 @Component({
 	selector: 'app-destacados',
@@ -9,16 +10,16 @@ import { ProductosService } from '../../services/productos/productos.service';
 export class DestacadosComponent implements OnInit {
 	public data_carrousel: any = [
 		{
-			img: 'https://ddtech.mx/assets/uploads/91b25d0a1ee86725d788e7d1de13fbf7.jpg',
-			title: 'La mejor PC Gamer',
-			description: 'El ensamble más competitivo en el mercado actual',
+			img: 'https://ddtech.mx/assets/uploads/a8070fe0acf922d80b912a12ee809f12.png',
+			title: '',
+			description: '',
 			rutaDestino: '',
 			color: 'white',
 			active: true
 		}, {
-			img: 'https://ddtech.mx/assets/uploads/4dbe962e6d576f1e513706e599b5f027.jpg',
-			title: 'La mejor PC Gamer',
-			description: 'El ensamble más competitivo en el mercado actual',
+			img: 'https://ddtech.mx/assets/uploads/089173e649a93447bbf72ebbda2f1bd8.jpg',
+			title: '',
+			description: '',
 			rutaDestino: '',
 			color: 'blue',
 			active: false
@@ -30,16 +31,23 @@ export class DestacadosComponent implements OnInit {
 	public productosDestacados : any = [];
 
 	constructor (
-		private apiProductos : ProductosService
-	) {
-
-	}
+		private apiProductos : ProductosService,
+		private msj : MensajesService
+	) {}
 
 	ngOnInit(): void {
 		this.obtenerProductosDestacados();
 	}
 
 	protected obtenerProductosDestacados () : any {
-		this.productosDestacados = this.apiProductos.obtenerProductosDestacados();
+		this.msj.mensajeEsperar();
+		this.apiProductos.obtenerProductosDestacados().subscribe(
+			respuesta => {
+				this.productosDestacados = respuesta.data.productosDestacados;
+				this.msj.cerrarMensajes();
+			}, error => {
+				this.msj.mensajeGenerico('error', 'error');
+			}
+		);
 	}
 }

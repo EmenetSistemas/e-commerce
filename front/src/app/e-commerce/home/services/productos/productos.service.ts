@@ -21,19 +21,8 @@ export class ProductosService {
 		return this.http.get<any>(this.url + '/e-commerce/productos/obtenerProductosPorApartado/'+idApartado);
 	}
 
-	public obtenerProductosDestacados () : any {
-		/*const calificaciones = productos.map((producto : any) => producto.calificacion);
-		const sumaCalificaciones = calificaciones.reduce((total : any, calificacion : any) => total + calificacion, 0);
-		const mediaCalificaciones = sumaCalificaciones / calificaciones.length;
-
-		let productosDestacados : any = [];
-		productos.forEach((producto : any) => {
-			if (producto.calificaciones > mediaCalificaciones) {
-				productosDestacados = [...productosDestacados, producto];
-			}
-		});
-
-		return productosDestacados;*/
+	public obtenerProductosDestacados () : Observable<any> {
+		return this.http.get<any>(this.url + '/e-commerce/productos/obtenerProductosDestacados');
 	}
 
 	public obtenerDetalleProductoPorId ( idProducto : number ) : Observable<any> {

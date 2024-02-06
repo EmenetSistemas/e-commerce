@@ -56,7 +56,8 @@
                                         <h5><b>Sobre el producto</b></h5>
                                         <br>
                                         <section style="margin-top: -20px;">
-                                            <div style="float: left;"><b>{{producto.calificacion ?? 0 | number:'1.1-1'}}&nbsp;</b></div>
+                                            <div style="float: left;"><b>{{producto.calificacion ?? 0 |
+                                                    number:'1.1-1'}}&nbsp;</b></div>
                                             <div style="float: left; margin-top: -4px;" class="rating">
                                                 <input type="radio" id="star5" name="rating" value="5"
                                                     [checked]="(producto.calificacion == 5)" disabled><label for="star5"
@@ -74,7 +75,8 @@
                                                     [checked]="(producto.calificacion == 1)" disabled><label for="star3"
                                                     disabled></label>
                                             </div>
-                                            <div style="float: left;"><b>&nbsp;|</b>&nbsp;{{producto.calificaciones ?? 0}} calificaciones
+                                            <div style="float: left;"><b>&nbsp;|</b>&nbsp;{{producto.calificaciones ??
+                                                0}} calificaciones
                                             </div>
                                         </section>
                                     </div>
@@ -86,7 +88,8 @@
                                     <div
                                         class="ui-search-item__group__element ui-search-price__part-without-link content-porduct card-text t-justify">
                                         <div class="ui-search-price ui-search-price--size-medium">
-                                            <s *ngIf="producto.descuento && producto.descuento != 0" class="andes-money-amount ui-search-price__part ui-search-price__part--small ui-search-price__original-value andes-money-amount--previous andes-money-amount--cents-superscript andes-money-amount--compact"
+                                            <s *ngIf="producto.descuento && producto.descuento != 0"
+                                                class="andes-money-amount ui-search-price__part ui-search-price__part--small ui-search-price__original-value andes-money-amount--previous andes-money-amount--cents-superscript andes-money-amount--compact"
                                                 style="font-size:16px" role="img" aria-label="Antes: 138 pesos"
                                                 aria-roledescription="Precio">
                                                 <span class="andes-money-amount__currency-symbol"
@@ -94,7 +97,8 @@
                                                 <span class="andes-money-amount__fraction"
                                                     aria-hidden="true">{{producto.precio | number:'1.2-2'}}</span>
                                             </s>
-                                            <span *ngIf="producto.descuento && producto.descuento != 0" class="ui-search-price__second-line__label">
+                                            <span *ngIf="producto.descuento && producto.descuento != 0"
+                                                class="ui-search-price__second-line__label">
                                                 &nbsp;<span
                                                     class="ui-search-price__discount">{{producto.descuento*100}}%
                                                     OFF</span>
@@ -107,8 +111,11 @@
                                                     aria-roledescription="Precio">
                                                     <span class="andes-money-amount__currency-symbol"
                                                         aria-hidden="true">$</span>
-                                                    <span class="andes-money-amount__integer" aria-hidden="true">{{(producto.precio - (producto.precio * producto.descuento)) | number:'1.0-0'}}</span>
-                                                    <span class="andes-money-amount__decimal" aria-hidden="true">.00</span>
+                                                    <span class="andes-money-amount__integer"
+                                                        aria-hidden="true">{{(producto.precio - (producto.precio *
+                                                        producto.descuento)) | number:'1.0-0'}}</span>
+                                                    <span class="andes-money-amount__decimal"
+                                                        aria-hidden="true">.00</span>
                                                 </span>
                                             </div>
                                         </div>
@@ -139,7 +146,8 @@
                                                         <div class="accordion-body">
                                                             <table class="table table-striped">
                                                                 <tbody>
-                                                                    <tr *ngFor="let caracteristica of producto.caracteristicas">
+                                                                    <tr
+                                                                        *ngFor="let caracteristica of producto.caracteristicas">
                                                                         <th scope="row">{{caracteristica.titulo}}</th>
                                                                         <td>{{caracteristica.descripcion}}</td>
                                                                     </tr>
@@ -165,22 +173,25 @@
                                         <br>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text" id="basic-addon1"><b>Total</b></span>
-                                            <input type="text" readonly class="form-control t-center" placeholder="Total"
-                                                   aria-label="Cantidad" aria-describedby="basic-addon1" value="{{'$'+((this.ultimaCantidad * (producto.precio - (producto.precio * producto.descuento))) | number:'1.2-2')}}">
+                                            <input type="text" readonly class="form-control t-center"
+                                                placeholder="Total" aria-label="Cantidad"
+                                                aria-describedby="basic-addon1"
+                                                value="{{'$'+((this.ultimaCantidad * (producto.precio - (producto.precio * producto.descuento))) | number:'1.2-2')}}">
                                         </div>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text" id="basic-addon1"><b>Cantidad</b></span>
-                                            <input #cantidadInput type="number" class="form-control t-center" placeholder="Cantidad"
-                                                   aria-label="Cantidad" aria-describedby="basic-addon1"
-                                                   formControlName="cantidad"
-                                                   (keypress)="soloNumeros($event)"
-                                                   (input)="validarStock()">
+                                            <input #cantidadInput type="number" class="form-control t-center"
+                                                placeholder="Cantidad" aria-label="Cantidad"
+                                                aria-describedby="basic-addon1" formControlName="cantidad"
+                                                (keypress)="soloNumeros($event)" (input)="validarStock()">
                                         </div>
                                         <p style="color:gray; margin-top: -15px;" class="t-center">({{producto.stock}})
                                             disponibles</p>
                                         <br>
-                                        <button #btnCerrar class="btn btn-primary form-control" (click)="abrirModal('detalleCompra')">Comprar</button>
-                                        <button class="btn btn-info form-control" style="margin-top: 5px;" (click)="agregarItemCarrito()">
+                                        <button #btnCerrar class="btn btn-primary form-control"
+                                            (click)="abrirModal('detalleCompra')">Comprar</button>
+                                        <button class="btn btn-info form-control" style="margin-top: 5px;"
+                                            (click)="agregarItemCarrito()">
                                             <b><i class="bi bi-cart-plus"></i></b>
                                         </button>
                                     </form>
@@ -190,6 +201,7 @@
                     </div>
                 </div>
             </div>
+            
         </div>
     </section>
 </div>
