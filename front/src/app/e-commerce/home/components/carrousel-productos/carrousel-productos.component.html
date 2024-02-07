@@ -1,0 +1,99 @@
+<section *ngIf="this.productosPasarela.length > 0">
+    <br><p></p>
+    <div class="card">
+        <h5 class="card-title t-center" style="margin-bottom: -15px;">Productos relacionados</h5>
+        <div class="card-body d-flex justify-content-center">
+    
+            <div class="botones-laterales d-flex align-items-center justify-content-center" *ngIf="this.productosAgrupados.length > this.indices.length">
+                <button class="btn btn-primary" (click)="moveIndicesBackward()"><i class="bi bi-caret-left"></i></button>
+            </div>
+    
+            <div class="productos d-flex justify-content-center">
+                <div class="col-xxl-2 col-lg-3 col-md-4 col-md-6 col-12 apartado-producto section dashboard"
+                    *ngFor="let productoGen of productosPasarela">
+                    <div class="card">
+                        <div class="filter">
+                            <a class="icon" href="#" data-bs-toggle="dropdown" aria-expanded="false"><i
+                                    class="bi bi-three-dots"></i></a>
+                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                <li class="dropdown-header text-start">
+                                    <h6>Opciones</h6>
+                                </li>
+    
+                                <li>
+                                    <a class="dropdown-item" href="javascript:void(0)">
+                                        <span class="badge bg-primary"><span
+                                                class="bi bi-currency-dollar"></span></span>&nbsp;Comprar
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="javascript:void(0)">
+                                        <span class="badge bg-info t-bold"><span
+                                                class="bi bi-cart-plus"></span></span>&nbsp;Agregar al carrito
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="javascript:void(0)">
+                                        <span class="badge bg-warning t-bold"><span
+                                                class="bi bi-info-circle-fill"></span></span>&nbsp;Ver más
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 t-center d-flex justify-content-center align-items-center">
+                                <img src="{{productoGen.imagen}}" class="img-fluid rounded-start producto" alt="...">
+                            </div>
+                            <div class="col-12">
+                                <h5 class="content-porduct card-title" style="margin-top: -15px;">{{productoGen.nombre ??
+                                    ''}}</h5>
+    
+                                <div
+                                    class="ui-search-item__group__element ui-search-price__part-without-link content-porduct card-text t-justify">
+                                    <div class="ui-search-price ui-search-price--size-medium">
+                                        <s class="andes-money-amount ui-search-price__part ui-search-price__part--small ui-search-price__original-value andes-money-amount--previous andes-money-amount--cents-superscript andes-money-amount--compact"
+                                            style="font-size:16px" role="img" aria-label="Antes: 138 pesos"
+                                            aria-roledescription="Precio"
+                                            *ngIf="productoGen.descuento && productoGen.descuento != 0">
+                                            <span class="andes-money-amount__currency-symbol" aria-hidden="true">$</span>
+                                            <span class="andes-money-amount__fraction"
+                                                aria-hidden="true">{{productoGen.precio
+                                                ?? 0 | number:'1.2-2'}}</span>
+                                        </s>
+                                        <span class="ui-search-price__second-line__label"
+                                            *ngIf="productoGen.descuento && productoGen.descuento != 0">
+                                            &nbsp;<span class="ui-search-price__discount">{{productoGen.descuento*100}}%
+                                                OFF</span>
+                                        </span>
+                                        <div class="ui-search-price__second-line t-center">
+                                            <span
+                                                class="andes-money-amount ui-search-price__part ui-search-price__part--medium andes-money-amount--cents-superscript"
+                                                style="font-size:24px" role="img" aria-label="124 pesos con 20 centavos"
+                                                aria-roledescription="Precio">
+                                                <span class="andes-money-amount__currency-symbol"
+                                                    aria-hidden="true">$</span>
+                                                <span class="andes-money-amount__integer" aria-hidden="true">{{
+                                                    ((productoGen.precio -
+                                                    (productoGen.precio * productoGen.descuento)) | number:'1.0-0')
+                                                    }}</span>
+                                                <span class="andes-money-amount__decimal" aria-hidden="true">.{{
+                                                    (productoGen.precio -
+                                                    (productoGen.precio * productoGen.descuento)).toFixed(2).split('.')[1]
+                                                    }}</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="botones-laterales d-flex align-items-center justify-content-center" *ngIf="this.productosAgrupados.length > this.indices.length">
+                <button class="btn btn-primary" (click)="moveIndicesForward()"><i class="bi bi-caret-right"></i></button>
+            </div>
+    
+        </div>
+    </div>
+</section>

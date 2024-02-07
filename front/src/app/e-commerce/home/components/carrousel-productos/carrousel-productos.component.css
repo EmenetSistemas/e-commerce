@@ -1,0 +1,51 @@
+.apartado-producto{
+    margin-top: 40px !important;
+    text-align: center !important;
+}
+
+.botones-laterales > button {
+    border-radius: 50px;
+    font-size: 25px;
+}
+
+@media (min-width: 1200px) {
+    .botones-laterales {
+        width: 5% !important;
+        float: left;
+        margin-top: 20px !important;
+        height: 270px;
+    }
+
+    .productos {
+        width: 90% !important;
+        float: left;
+    }
+}
+
+@media (max-width: 1199px) {
+    .botones-laterales {
+        width: 5% !important;
+        float: left;
+        margin-top: 20px !important;
+        height: 270px;
+    }
+
+    .productos {
+        width: 90% !important;
+        float: left;
+    }
+}
+
+@media (max-width:767px) {
+    .botones-laterales {
+        width: 10% !important;
+        float: left;
+        margin-top: 20px !important;
+        height: 270px;
+    }
+
+    .productos {
+        width: 80% !important;
+        float: left;
+    }
+}

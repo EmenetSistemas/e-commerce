@@ -18,6 +18,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { LoginRegisterComponent } from './modules/login-register/login-register.component';
 import { ModificacionUsuarioComponent } from './modules/modificacion-usuario/modificacion-usuario.component';
 import { SeguimientoPedidoComponent } from './modules/seguimiento-pedido/seguimiento-pedido.component';
+import { CarrouselProductosComponent } from './components/carrousel-productos/carrousel-productos.component';
 
 @NgModule({
   imports: [
@@ -39,7 +40,8 @@ import { SeguimientoPedidoComponent } from './modules/seguimiento-pedido/seguimi
     DetallePedidoComponent,
     LoginRegisterComponent,
     ModificacionUsuarioComponent,
-    SeguimientoPedidoComponent
+    SeguimientoPedidoComponent,
+    CarrouselProductosComponent
   ],
   providers: [
     ModalService,

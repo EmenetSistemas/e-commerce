@@ -363,7 +363,7 @@ button {
 	line-height: 1;
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1199px) {
 	.logo {
 		width: 280px;
 	}
