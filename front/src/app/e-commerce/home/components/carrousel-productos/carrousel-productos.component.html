@@ -5,7 +5,7 @@
         <div class="card-body d-flex justify-content-center">
     
             <div class="botones-laterales d-flex align-items-center justify-content-center" *ngIf="this.productosAgrupados.length > this.indices.length">
-                <button class="btn btn-primary" (click)="moveIndicesBackward()"><i class="bi bi-caret-left"></i></button>
+                <button class="btn btn-primary" (click)="itemSiguiente()"><i class="bi bi-caret-left"></i></button>
             </div>
     
             <div class="productos d-flex justify-content-center">
@@ -41,7 +41,7 @@
                             </ul>
                         </div>
                         <div class="row">
-                            <div class="col-12 t-center d-flex justify-content-center align-items-center">
+                            <div class="col-12 t-center d-flex justify-content-center align-items-center" (click)="emitirDatos(productoGen.id)">
                                 <img src="{{productoGen.imagen}}" class="img-fluid rounded-start producto" alt="...">
                             </div>
                             <div class="col-12">
@@ -49,7 +49,7 @@
                                     ''}}</h5>
     
                                 <div
-                                    class="ui-search-item__group__element ui-search-price__part-without-link content-porduct card-text t-justify">
+                                    class="ui-search-item__group__element ui-search-price__part-without-link content-porduct card-text t-justify" (click)="emitirDatos(productoGen.id)">
                                     <div class="ui-search-price ui-search-price--size-medium">
                                         <s class="andes-money-amount ui-search-price__part ui-search-price__part--small ui-search-price__original-value andes-money-amount--previous andes-money-amount--cents-superscript andes-money-amount--compact"
                                             style="font-size:16px" role="img" aria-label="Antes: 138 pesos"
@@ -91,7 +91,7 @@
             </div>
     
             <div class="botones-laterales d-flex align-items-center justify-content-center" *ngIf="this.productosAgrupados.length > this.indices.length">
-                <button class="btn btn-primary" (click)="moveIndicesForward()"><i class="bi bi-caret-right"></i></button>
+                <button class="btn btn-primary" (click)="itemAnterior()"><i class="bi bi-caret-right"></i></button>
             </div>
     
         </div>

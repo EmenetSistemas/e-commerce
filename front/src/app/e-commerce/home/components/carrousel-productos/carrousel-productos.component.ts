@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit, OnChanges, Output, EventEmitter } from '@angular/core';
 import { ProductosService } from '../../services/productos/productos.service';
 import { MensajesService } from 'src/app/services/mensajes/mensajes.service';
 import { shared } from 'src/environments/environment';
@@ -9,10 +9,15 @@ import { DataService } from '../../services/data.service';
 	templateUrl: './carrousel-productos.component.html',
 	styleUrls: ['./carrousel-productos.component.css']
 })
-export class CarrouselProductosComponent implements OnInit {
+export class CarrouselProductosComponent implements OnChanges {
+	@Input() apartados: any = [];
+	@Output() emitirIdProducto: EventEmitter<any> = new EventEmitter<any>();
+
 	protected productosAgrupados: any[] = [];
 	protected productosPasarela: any[] = [];
 	protected indices: number[] = [];
+
+	private apartadosComp : any = [];
 
 	protected currentIndex = 0;
 
@@ -26,15 +31,17 @@ export class CarrouselProductosComponent implements OnInit {
 		});
 	}
 
-	ngOnInit(): void {
+	ngOnChanges(): void {
 		this.obtenerProductosPorApartados();
 	}
 
-	private obtenerProductosPorApartados(): Promise<any> {
-		return this.apiProductos.obtenerProductosPorApartados().toPromise().then(
+	private obtenerProductosPorApartados() : void {
+		if (this.apartadosComp == this.apartados) return;
+		this.apiProductos.obtenerProductosPorApartados(this.apartados).subscribe(
 			respuesta => {
 				this.productosAgrupados = respuesta.data.productosAgrupados;
 				this.productosMostrar();
+				this.apartadosComp = this.apartados;
 			}, error => {
 				this.msj.mensajeGenerico('error', 'error');
 			}
@@ -68,13 +75,17 @@ export class CarrouselProductosComponent implements OnInit {
 		}
 	}
 
-	moveIndicesForward() {
+	protected itemSiguiente() {
 		this.currentIndex = (this.currentIndex + 1) % this.productosAgrupados.length;
 		this.productosMostrar();
 	}
 
-	moveIndicesBackward() {
+	protected itemAnterior() {
 		this.currentIndex = (this.currentIndex - 1 + this.productosAgrupados.length) % this.productosAgrupados.length;
 		this.productosMostrar();
+	}
+
+	protected emitirDatos (idProducto : number) : void {
+		this.emitirIdProducto.emit(idProducto);
 	}
 }

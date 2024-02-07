@@ -46,14 +46,24 @@ export class DetalleProductoComponent extends FGenerico implements OnInit {
 		});
 	}
 
-	private obtenerDetalleProductoPorId () : Promise<any>{
-		return this.apiProductos.obtenerDetalleProductoPorId(this.idProducto).toPromise().then(
+	private obtenerDetalleProductoPorId (idProducto : number = this.idProducto) : Promise<any>{
+		return this.apiProductos.obtenerDetalleProductoPorId(idProducto).toPromise().then(
 			respuesta => {
 				this.producto = respuesta.data.detalleProducto[0];
 			}, error => {
 				this.msj.mensajeGenerico('error', 'error');
 			}
 		);
+	}
+
+	protected async refrescarInfoProductoRelacionado (idProducto : any) : Promise<void> {
+		if (this.idProducto == idProducto) {
+			this.msj.mensajeGenericoToast('Producto actual', 'success');
+			return
+		};
+		this.msj.mensajeEsperar();
+		await this.obtenerDetalleProductoPorId(idProducto);
+		this.msj.cerrarMensajes();
 	}
 
 	protected agregarItemCarrito(): any {

@@ -201,7 +201,7 @@
                     </div>
                 </div>
 
-                <app-carrousel-productos></app-carrousel-productos>
+                <app-carrousel-productos [apartados]="[producto.idApartado ?? 0]" (emitirIdProducto)="refrescarInfoProductoRelacionado($event)"></app-carrousel-productos>
             </div>
         </div>
     </section>

@@ -85,7 +85,7 @@ export class ProductosService {
 		return this.http.post<any>(this.url + '/e-commerce/productos/obtenerProductosBusqueda', {producto});
 	}
 
-	public obtenerProductosPorApartados () : Observable<any> {
-		return this.http.get<any>(this.url + '/e-commerce/productos/obtenerProductosPorApartados');
+	public obtenerProductosPorApartados (apartados : any) : Observable<any> {
+		return this.http.post<any>(this.url + '/e-commerce/productos/obtenerProductosPorApartados', {apartados});
 	}
 }
