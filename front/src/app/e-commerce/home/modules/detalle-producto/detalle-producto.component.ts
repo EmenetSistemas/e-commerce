@@ -46,8 +46,8 @@ export class DetalleProductoComponent extends FGenerico implements OnInit {
 		});
 	}
 
-	private obtenerDetalleProductoPorId (idProducto : number = this.idProducto) : Promise<any>{
-		return this.apiProductos.obtenerDetalleProductoPorId(idProducto).toPromise().then(
+	private obtenerDetalleProductoPorId () : Promise<any>{
+		return this.apiProductos.obtenerDetalleProductoPorId(this.idProducto).toPromise().then(
 			respuesta => {
 				this.producto = respuesta.data.detalleProducto[0];
 			}, error => {
@@ -131,10 +131,12 @@ export class DetalleProductoComponent extends FGenerico implements OnInit {
 			case 'detalleProducto':
 				if (this.idProducto == data.idProducto) {
 					this.msj.mensajeGenericoToast('Producto actual', 'success');
-					return
+					return;
 				};
+
 				this.msj.mensajeEsperar();
-				await this.obtenerDetalleProductoPorId(data.idProducto);
+				this.idProducto = data.idProducto;
+				await this.obtenerDetalleProductoPorId();
 				this.msj.cerrarMensajes();
 			break;
 			case 'detalleCompra':

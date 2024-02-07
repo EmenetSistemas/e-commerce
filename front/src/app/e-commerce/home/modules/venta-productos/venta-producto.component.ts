@@ -6,6 +6,7 @@ import { PedidosComponent } from '../pedidos/pedidos.component';
 import FGenerico from 'src/app/shared/util/funciones-genericas';
 import { UsuariosService } from '../../services/usuarios/usuarios.service';
 import { ModificacionUsuarioComponent } from '../modificacion-usuario/modificacion-usuario.component';
+import { DetalleProductoComponent } from '../detalle-producto/detalle-producto.component';
 
 declare var Stripe: any;
 
@@ -32,6 +33,7 @@ export class VentaProductoComponent extends FGenerico implements OnInit, AfterVi
 	protected usuario : any = {};
 	protected fechaEntregaEstimada : any = {};
 	protected totalCompra : number = 0;
+	protected apartadosMostrar : number[] = [];
 
 	constructor(
 		private modalService : ModalService,
@@ -91,6 +93,7 @@ export class VentaProductoComponent extends FGenerico implements OnInit, AfterVi
 		return this.apiProductos.obtenerDetalleProductosVenta(this.productos.items).toPromise().then(
 			respuesta => {
 				this.productos.items = respuesta.data.detalleProductos;
+				this.apartadosMostrar = this.productos.items.map((item : any) => item.idApartado);
 				this.fechaEntregaEstimada = respuesta.data.fechaEntregaEstimada;
 			}, error => {
 				this.msj.mensajeGenerico('error', 'error');
@@ -256,6 +259,70 @@ export class VentaProductoComponent extends FGenerico implements OnInit, AfterVi
 		setTimeout(() => {
 			this.modalService.abrirModalConComponente(ModificacionUsuarioComponent, {}, '');
 		}, 150);
+	}
+
+	protected async realizarFuncionPasarela (data : any) : Promise<void> {
+		switch (data.option) {
+			case 'detalleProducto':
+				this.msj.mensajeConfirmacionCustom('¿Está seguro de querer abandonar su compra actual?', 'question', 'Abandonar compra').then(
+					respuesta => {
+						if (respuesta.isConfirmed) {
+							this.cerrarModal();
+							const dataModal1 = {
+								idProducto : data.idProducto
+							};
+			
+							setTimeout(() => {
+								this.modalService.abrirModalConComponente(DetalleProductoComponent, dataModal1);
+							}, 150);
+						}
+					}
+				);
+			break;
+			case 'detalleCompra':
+				this.msj.mensajeConfirmacionCustom('¿Está seguro de querer abandonar su compra actual?', 'question', 'Abandonar compra').then(
+					respuesta => {
+						if (respuesta.isConfirmed) {
+							this.productos.items = [
+								{
+									idItem : data.idProducto,
+									cantidad : 1
+								}
+							];
+			
+							this.msj.mensajeEsperar();
+							this.obtenerDetalleProductosVenta().then(() => {
+								this.msj.cerrarMensajes();
+							});
+						}
+					}
+				);
+			break;
+			case 'agregarCarrito':
+				if (this.apiUsuarios.validarPerfilUsuario()) return;
+		
+				this.msj.mensajeEsperar();
+
+				const dataCarrito = {
+					idItem : data.idProducto,
+					cantidad : 1,
+					token : localStorage.getItem('token')
+				};
+
+				this.apiProductos.agregarItemCarrito(dataCarrito).subscribe(
+					respuesta => {
+						if (respuesta.error == 402) {
+							this.msj.mensajeGenerico(respuesta.mensaje, 'warning', respuesta.titulo);
+							return;
+						}
+
+						this.msj.mensajeGenericoToast(respuesta.mensaje, 'success');
+					}, error => {
+						this.msj.mensajeGenerico('error', 'error');
+					}
+				);
+			break;
+		}
 	}
 
 	public cerrarModal() {
