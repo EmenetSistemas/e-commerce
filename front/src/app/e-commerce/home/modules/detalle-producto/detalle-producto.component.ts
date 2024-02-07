@@ -56,16 +56,6 @@ export class DetalleProductoComponent extends FGenerico implements OnInit {
 		);
 	}
 
-	protected async refrescarInfoProductoRelacionado (idProducto : any) : Promise<void> {
-		if (this.idProducto == idProducto) {
-			this.msj.mensajeGenericoToast('Producto actual', 'success');
-			return
-		};
-		this.msj.mensajeEsperar();
-		await this.obtenerDetalleProductoPorId(idProducto);
-		this.msj.cerrarMensajes();
-	}
-
 	protected agregarItemCarrito(): any {
 		if (this.apiUsuarios.validarPerfilUsuario()) return;
 		
@@ -134,6 +124,61 @@ export class DetalleProductoComponent extends FGenerico implements OnInit {
 				break;
 			}
 		}, 150);
+	}
+
+	protected async realizarFuncionPasarela (data : any) : Promise<void> {
+		switch (data.option) {
+			case 'detalleProducto':
+				if (this.idProducto == data.idProducto) {
+					this.msj.mensajeGenericoToast('Producto actual', 'success');
+					return
+				};
+				this.msj.mensajeEsperar();
+				await this.obtenerDetalleProductoPorId(data.idProducto);
+				this.msj.cerrarMensajes();
+			break;
+			case 'detalleCompra':
+				this.cerrarModal();
+				const dataModal = {
+					productos : {
+						items : [
+							{
+								idItem : data.idProducto,
+								cantidad : 1
+							}
+						]
+					}
+				};
+
+				setTimeout(() => {
+					this.modalService.abrirModalConComponente(VentaProductoComponent, dataModal);
+				}, 150);
+			break;
+			case 'agregarCarrito':
+				if (this.apiUsuarios.validarPerfilUsuario()) return;
+		
+				this.msj.mensajeEsperar();
+
+				const dataCarrito = {
+					idItem : data.idProducto,
+					cantidad : 1,
+					token : localStorage.getItem('token')
+				};
+
+				this.apiProductos.agregarItemCarrito(dataCarrito).subscribe(
+					respuesta => {
+						if (respuesta.error == 402) {
+							this.msj.mensajeGenerico(respuesta.mensaje, 'warning', respuesta.titulo);
+							return;
+						}
+
+						this.msj.mensajeGenericoToast(respuesta.mensaje, 'success');
+					}, error => {
+						this.msj.mensajeGenerico('error', 'error');
+					}
+				);
+			break;
+		}
 	}
 
 	public cerrarModal() {

@@ -75,17 +75,21 @@ export class CarrouselProductosComponent implements OnChanges {
 		}
 	}
 
-	protected itemSiguiente() {
+	protected itemAnterior() {
 		this.currentIndex = (this.currentIndex + 1) % this.productosAgrupados.length;
 		this.productosMostrar();
 	}
 
-	protected itemAnterior() {
+	protected itemSiguiente() {
 		this.currentIndex = (this.currentIndex - 1 + this.productosAgrupados.length) % this.productosAgrupados.length;
 		this.productosMostrar();
 	}
 
-	protected emitirDatos (idProducto : number) : void {
-		this.emitirIdProducto.emit(idProducto);
+	protected emitirDatos (idProducto : number, op : string) : void {
+		const data = {
+			idProducto : idProducto,
+			option : op
+		};
+		this.emitirIdProducto.emit(data);
 	}
 }
