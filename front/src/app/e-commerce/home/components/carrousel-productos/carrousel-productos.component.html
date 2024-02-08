@@ -40,8 +40,8 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="row">
-                            <div class="col-12 t-center d-flex justify-content-center align-items-center" (click)="emitirDatos(productoGen.id, 'detalleProducto')">
+                        <div class="row" (click)="emitirDatos(productoGen.id, 'detalleProducto')">
+                            <div class="col-12 t-center d-flex justify-content-center align-items-center">
                                 <img src="{{productoGen.imagen}}" class="img-fluid rounded-start producto" alt="...">
                             </div>
                             <div class="col-12">
@@ -49,7 +49,7 @@
                                     ''}}</h5>
     
                                 <div
-                                    class="ui-search-item__group__element ui-search-price__part-without-link content-porduct card-text t-center" (click)="emitirDatos(productoGen.id, 'detalleProducto')">
+                                    class="ui-search-item__group__element ui-search-price__part-without-link content-porduct card-text t-center">
                                     <div class="ui-search-price ui-search-price--size-medium">
                                         <s class="andes-money-amount ui-search-price__part ui-search-price__part--small ui-search-price__original-value andes-money-amount--previous andes-money-amount--cents-superscript andes-money-amount--compact"
                                             style="font-size:16px" role="img" aria-label="Antes: 138 pesos"
